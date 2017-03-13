@@ -1,0 +1,36 @@
+{
+  "manifest_version": 2,
+  "name": "Black Ink",
+  "short_name": "BlackInk",
+  "version": "1.0.0.0",
+
+  "description": "Enhance text contrast for bad web pages.",
+  "icons": { 
+    "16": "/images/logos/16.png", 
+    "48":  "/images/logos/48.png", 
+    "128": "/images/logos/128.png" 
+  },
+
+  "browser_action": {
+    "default_icon": "/images/icon.png",
+    "default_popup": "/inc/html/popup.html"
+  },
+
+  "permissions": [
+    "tabs", "activeTab", 
+    "<all_urls>", "debugger", "storage", 
+    "contentSettings", "clipboardRead", "clipboardWrite",
+    "geolocation"
+  ],
+  
+  "web_accessible_resources": [
+    "/images/*.png",
+    "/images/*.gif",
+    "/images/logos/*.png",
+    "/images/cursors/*.cur",
+    "/inc/css/*.css",
+    "/inc/js/*.js",
+    "/inc/html/*.html"
+  ]
+
+}
