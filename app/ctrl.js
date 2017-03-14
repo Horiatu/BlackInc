@@ -127,58 +127,5 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
     	 window.close();
     };
 
-
-    $scope.showLocationAndSunData = function () {
-        // var _this = this;
-        // var override = false;
-        // var showPosition = function (position) {
-
-        //     var precision = 3;
-        //     if($scope.Latitude.toFixed(precision) != position.coords.latitude.toFixed(precision)) {
-        //         //console.log('Latitude:', $scope.Latitude.toFixed(precision), position.coords.latitude.toFixed(precision));
-        //         $scope.storageService.add({Latitude: $scope.Latitude = position.coords.latitude});
-        //         override = true;
-        //     }
-        //     if($scope.Longitude.toFixed(precision) != position.coords.longitude.toFixed(precision)) {
-        //         //console.log('Longitude:', $scope.Longitude.toFixed(precision), position.coords.longitude.toFixed(precision));
-        //         $scope.storageService.add({Longitude: $scope.Longitude = position.coords.longitude});
-        //         override = true;
-        //     }
-            
-        //     if(override) 
-        //     {
-        //         $scope.$apply();
-        //     }
-        //     //console.log('Latitude: '+ position.coords.latitude+' Longitude: '+position.coords.longitude+' '+override);
-        // };
-
-        $scope.ShowLocation = !$scope.ShowLocation;
-        // if(!$scope.ShowLocation) return;
-
-        // if (navigator.geolocation) {
-        //     navigator.geolocation.getCurrentPosition(showPosition);
-        // } else { 
-        //     alert("Geolocation is not supported by this browser.");
-        // }
-
-        // // if(override || !$scope.Sunrise || !$scope.Sunrise.isToday()) 
-        // {
-        //     console.log('isToday', override, $scope.Sunrise);
-        //     sunriseService.getSunrise($scope.Latitude, $scope.Longitude, override).then(
-        //         function mySuccess(response) {
-        //             console.log('mySuccess:', response);
-        //             $scope.Sunrise = response.Sunrise;
-        //             $scope.Sunset = response.Sunset;
-        //             $scope.add({
-        //                 Sunrise: response.Sunrise.toString(),
-        //                 Sunset: response.Sunset.toString()
-        //             });
-        //         },
-        //         function myError(response) {
-        //             console.log('myError:', response);
-        //         });
-        // }
-    };
-
 });
 
