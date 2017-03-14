@@ -86,7 +86,7 @@
                 </tr>
             </table>
         </div>
-        <div id='location' class='roundBorder lightgray' style="display:none;" toggle-class='show'>
+        <div id='location' class='roundBorder lightgray' style="display:none;" on-class-change='show: locationShowing()'>
             <table id="location">
                 <tr>
                     <td>Latitude:</td>
@@ -108,8 +108,8 @@
         </div>
     </form>
 
-    <script type="text/javascript" src="/lib/angular/angular.js"></script>
     <script type="text/javascript" src="/app/utils.js"></script>
+    <script type="text/javascript" src="/lib/angular/angular.js"></script>
     <script type="text/javascript" src="/app/app.js"></script>
     <script type="text/javascript" src="/app/storageService.js"></script>
     <script type="text/javascript" src="/app/locationService.js"></script>

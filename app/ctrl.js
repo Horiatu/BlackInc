@@ -127,5 +127,9 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
     	 window.close();
     };
 
+    $scope.locationShowing = function(element, cls, show) {
+        console.log('locationShowing', element, cls, show);
+    };
+
 });
 

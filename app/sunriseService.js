@@ -24,4 +24,8 @@ angular.module('blackInkApp').service('sunriseService', function ($q, $http) {
         // }
         return defer.promise;
     };
+
+    this.isNightTime = function() {
+
+    };
 });
