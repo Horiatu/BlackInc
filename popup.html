@@ -11,7 +11,7 @@
 
 <body ng-controller='BlackInkCtrl'>
     <form id='form'>
-        <div class='header' role='banner'>
+        <div class='header lightgray' role='banner'>
             <img src='/images/logos/32.png' style='width:32px; height:32px;' class='shadow'/>
             <h1>Black Ink</h1>
             <input type="image" id='closeBtn' class='toolbarBtn' alt='Close' title='Close [esc]' 
@@ -81,12 +81,12 @@
                     </td>
                     <td colspan='2' style="text-align: end;">
                         <label for='myLocation'>Location and Sun Data</label>
-                        <input type="image" id='myLocation' src='/images/MyLocation.16.png' class='toolbarBtn' toggle-class='show' toggle-class-on='#location'>
+                        <input type="image" id='myLocation' src='/images/MyLocation.16.png' class='toolbarBtn' toggle-class='show: #location'>
                     </td>
                 </tr>
             </table>
         </div>
-        <div id='location' class='roundBorder' style="display:none;" >
+        <div id='location' class='roundBorder lightgray' style="display:none;" toggle-class='show'>
             <table id="location">
                 <tr>
                     <td>Latitude:</td>

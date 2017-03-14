@@ -9,9 +9,10 @@
 				restrict: 'A', 
 				link: function(scope, element, attrs) { 
 					element.bind('click', function() { 
-						if (attrs.toggleClassOn) { 
-							var e = document.querySelectorAll(attrs.toggleClassOn); 
-							angular.element(e).toggleClass(attrs.toggleClass); 
+						if (attrs.toggleClass.indexOf(':')>0) { 
+							var cc = attrs.toggleClass.split(':');
+							var e = document.querySelectorAll(cc[1].trim()); 
+							angular.element(e).toggleClass(cc[0].trim()); 
 						} 
 						else 
 						{ 
