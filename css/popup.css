@@ -105,3 +105,7 @@ body {
 .show {
     display:inherit !important;
 }
+
+.right {
+    text-align: right;
+}

@@ -63,27 +63,23 @@
         <div id='auto' class='roundBorder'>
             <table role='presentation' style="width: 100%;">
                 <tr>
-                    <td style="padding-bottom:6px;">Night mode:</td>
-                    <td>
-                        <label class="switch {{NightMode}}"><input type="checkbox" checked><i></i></label>
-                    </td><td>
-                        <input type="radio" name="nightMode" id="nPink" ng-model="NightMode" value="pink"/>
-                        <label for="nPink">Pink</label>
-                        <!-- </td><td> --> <br/>
-                        <input type="radio" name="nightMode" id="nInvert" ng-model="NightMode" value="black"/>
-                        <label for="nInvert">Invert</label>
+                    <td class='right'>
+                        <label class="switch {{NightMode}}">Night mode:<input type="checkbox" checked><i></i></label>
                     </td>
-                    <td style="padding-bottom:6px;">Auto:</td>
                     <td>
-                        <label class="switch red"><input type="checkbox" ng-model="NightAuto"><i></i></label>
+                        <label><input type="radio" name="nightMode" ng-model="NightMode" value="pink"/>Pink</label>
+                        <br/>
+                        <label><input type="radio" name="nightMode" ng-model="NightMode" value="black"/>Invert</label>
+                    </td>
+                    <td>
+                        <label class="switch red">Auto:<input type="checkbox" ng-model="NightAuto"><i></i></label>
                     </td>
                 </tr>
                 <tr>
-                    <td>Invert:</td>
-                    <td>
-                        <label class="switch black"><input type="checkbox"><i></i></label>
+                    <td class='right'>
+                        <label class="switch black">Invert:<input type="checkbox"><i></i></label>
                     </td>
-                    <td colspan='3' style="text-align: end;">
+                    <td colspan='2' style="text-align: end;">
                         <label for='myLocation'>Get My Location</label>
                         <input type="image" id='myLocation' src='/images/MyLocation.16.png' class='toolbarBtn' ng-click='getLocation()'>
                     </td>
