@@ -129,6 +129,9 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
 
     $scope.locationShowing = function(element, cls, show) {
         console.log('locationShowing', element, cls, show);
+        if(show) {
+            console.log('isNightTime:', sunriseService.isNightTime());
+        }
     };
 
 });

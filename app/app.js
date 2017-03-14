@@ -24,6 +24,7 @@
 		})
 
 		.directive('onClassChange', function() {
+			var context = {};
 			return {
 				restrict: 'AC',
 				link: function(scope, element, attrs) { 
@@ -33,10 +34,13 @@
 						var cls = cc[0].trim();
 						var fnc = cc[1].trim().replace(/\(\s*\)$/g,'');
 						scope.$watch(function() {return element.attr('class'); }, function(newValue){
-							console.log("scope.$watch:", newValue);
+							// console.log("scope.$watch:", newValue);
 							var vv = newValue.split(' ');
-
-							scope[fnc].call(scope, element, cls, vv.indexOf(cls)>=0);
+							var showing = vv.indexOf(cls) >= 0;
+							if (!context.hasOwnProperty(cls) || context[cls] != showing) {
+								scope[fnc].call(scope, element, cls, showing);
+								context[cls] = showing;
+							}
 						});
 					}
 				}
