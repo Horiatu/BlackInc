@@ -81,12 +81,12 @@
                     </td>
                     <td colspan='2' style="text-align: end;">
                         <label for='myLocation'>Location and Sun Data</label>
-                        <input type="image" id='myLocation' src='/images/MyLocation.16.png' class='toolbarBtn' ng-click='ShowLocation = !ShowLocation'>
+                        <input type="image" id='myLocation' src='/images/MyLocation.16.png' class='toolbarBtn' toggle-class='show' toggle-class-on='#location'>
                     </td>
                 </tr>
             </table>
         </div>
-        <div id='location' class='roundBorder' ng-class='{show: ShowLocation,}' style="display:none;" >
+        <div id='location' class='roundBorder' style="display:none;" >
             <table id="location">
                 <tr>
                     <td>Latitude:</td>
