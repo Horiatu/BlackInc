@@ -24,6 +24,7 @@ angular.module('blackInkApp').service('blackInkStorage', function ($q) {
     };
 
     this.add = function (newValues) {
+        var defer = $q.defer();
 
     	//if(newValues=={}) return;
     	// console.log('add', newValues, _this.Data);
@@ -65,6 +66,7 @@ angular.module('blackInkApp').service('blackInkStorage', function ($q) {
     };
 
     this.sync = function() {
+        var defer = $q.defer();
         //this.removeAll();
     	// console.log('update:', update);
     	//_this.Data.date = new Date().toLocaleTimeString();
