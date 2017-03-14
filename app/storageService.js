@@ -31,6 +31,7 @@ angular.module('blackInkApp').service('blackInkStorage', function ($q) {
         newValues.forEachProp(function(prop, val) {
         	if(!_this.Data[prop] || _this.Data[prop].toString() !== val.toString())
         	{
+                console.log('Add:', prop, val, _this.Data[prop]);
         		_this.Data[prop] = val;
         		changed = true;
         	}

@@ -1,6 +1,7 @@
-angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http, blackInkStorage, sunriseService, tabService) {
+angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http, blackInkStorage, locationService, sunriseService, tabService) {
 
 	$scope.blackInkStorage = blackInkStorage;
+    $scope.locationService = locationService;
 
     var defaults = {
         InkColor: 'black',
@@ -59,6 +60,20 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
                 $scope.add({'AutoNightMode': value});
             }
         });
+
+        locationService.getLocation().then(
+            function success(position) {
+                console.log(position);
+                $scope.add({
+                    Latitude:  position.latitude,
+                    Longitude:  position.longitude
+                });
+            },
+            function error(msg) {
+                console.log(msg);
+                console.error(msg);
+            }
+        );
 
     });
 
