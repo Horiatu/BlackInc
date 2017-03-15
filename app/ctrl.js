@@ -119,7 +119,8 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
                         }, {
                             allFrames: false,
                             file: true,
-                            content: "/lib/angular/test.js"
+                            content: "/mainTab/blackInkTab.js"
+                        }, {
                         //     allFrames: false,
                         //     file: true,
                         //     content: "/inc/js/scrollstop.js"

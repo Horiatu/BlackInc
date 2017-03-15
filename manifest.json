@@ -28,9 +28,9 @@
     "/images/*.gif",
     "/images/logos/*.png",
     "/images/cursors/*.cur",
-    "/inc/css/*.css",
-    "/inc/js/*.js",
-    "/inc/html/*.html"
+    "/mainTab/*.css",
+    "/mainTab/*.js",
+    "/mainTab/*.html"
   ]
 
 }
