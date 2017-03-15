@@ -10,7 +10,7 @@ angular.module('blackInkApp').service('blackInkStorage', function ($q) {
             //console.log('keys', keys);
         	keys.forEachProp(function(name, value) {
         		value.forEachProp(function(k, v) {
-                    //console.log('--'+k+':',v);
+                    // console.log('--'+k+':',v);
         			if((k == 'Sunrise' || k == 'Sunset') && v && (typeof v == 'string')) {
                         v = new Date(v);
                     }
@@ -70,11 +70,15 @@ angular.module('blackInkApp').service('blackInkStorage', function ($q) {
         //this.removeAll();
     	// console.log('update:', update);
     	//_this.Data.date = new Date().toLocaleTimeString();
-        chrome.storage.sync.set({'blackInk': _this.Data}, function() {
-            // console.log('Data is stored in Chrome storage');
+        var data = Object.assign({}, _this.Data);
+        data.Sunrise = data.Sunrise.toString();
+        data.Sunset = data.Sunset.toString();
+        chrome.storage.sync.set({'blackInk': data}, function() {
             chrome.storage.sync.get('blackInk', function(keys) {
+                // console.log('Data is stored in Chrome storage');
         		// console.log('Sync:', keys.blackInk);
                 defer.resolve(keys.blackInk);
+
         	});
         });
         return defer.promise;

@@ -73,7 +73,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
                 }).then(
                     function success(override){
                         // console.log('isToday', override, $scope.Sunrise);
-                        if(override || !$scope.Sunrise || !$scope.Sunrise.isToday($scope.Sunrise, $scope.Sunset)) 
+                        if(override || !$scope.Sunrise || !$scope.Sunrise.isToday()) 
                         {
                             sunriseService.getSunrise($scope.Latitude, $scope.Longitude, override).then(
                                 function mySuccess(response) {
