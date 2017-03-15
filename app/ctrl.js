@@ -103,6 +103,8 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
             }
         );
 
+        $scope.isNightTime = sunriseService.isNightTime();
+
     });
 
 
@@ -133,6 +135,8 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
             console.log('isNightTime:', sunriseService.isNightTime());
         }
     };
+
+    
 
 });
 
