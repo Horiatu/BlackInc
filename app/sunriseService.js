@@ -1,7 +1,5 @@
 angular.module('blackInkApp').service('sunriseService', function ($q, $http) {
     var _this = this;
-    var _sunrise  = null;
-    var _sunset  = null;
 
     this.getSunrise = function(latitude, longitude) {
 
@@ -13,11 +11,9 @@ angular.module('blackInkApp').service('sunriseService', function ($q, $http) {
                 url : "http://api.sunrise-sunset.org/json?lat="+latitude+"&lng="+longitude+"&date=today"
             }).then(
             function mySucces(response) {
-                _sunrise = response.data.results.sunrise.utcTime2Local();
-                _sunset = response.data.results.sunset.utcTime2Local();
                 defer.resolve({
-                    Sunrise: _sunrise,
-                    Sunset: _sunset
+                    Sunrise: response.data.results.sunrise.utcTime2Local(),
+                    Sunset: response.data.results.sunset.utcTime2Local()
                 });
             }, 
             function myError(response) {
@@ -29,10 +25,13 @@ angular.module('blackInkApp').service('sunriseService', function ($q, $http) {
         return defer.promise;
     };
 
-    this.isNightTime = function() {
+    this.isNightTime = function(sunrise, sunset) {
         var now = new Date();
-        var isit = _sunrise < now  || now < _sunset;
-        // console.log('now:', now, isit);
-        return isit;
+        var isit = sunrise < now  || now < sunset;
+        console.log('now:', now, isit);
+        console.log('now:', sunrise);
+        console.log('now:', sunset);
+        // console.log('now:', sunrise.getTime() < now.getTime(), now.getTime() < sunset.getTime());
+        return !isit;
     };
 });

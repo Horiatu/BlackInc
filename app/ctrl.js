@@ -73,7 +73,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
                 }).then(
                     function success(override){
                         // console.log('isToday', override, $scope.Sunrise);
-                        if(override || !$scope.Sunrise || !$scope.Sunrise.isToday()) 
+                        if(override || !$scope.Sunrise || !$scope.Sunrise.isToday($scope.Sunrise, $scope.Sunset)) 
                         {
                             sunriseService.getSunrise($scope.Latitude, $scope.Longitude, override).then(
                                 function mySuccess(response) {
@@ -104,7 +104,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
             }
         );
 
-        $scope.isNightTime = sunriseService.isNightTime();
+        $scope.isNightTime = sunriseService.isNightTime($scope.Sunrise, $scope.Sunset);
     });
 
 
@@ -132,7 +132,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
     $scope.locationShowing = function(element, cls, show) {
         console.log('locationShowing', element, cls, show);
         if(show) {
-            console.log('isNightTime:', sunriseService.isNightTime());
+            console.log('isNightTime:', sunriseService.isNightTime($scope.Sunrise, $scope.Sunset));
         }
     };
 
