@@ -79,8 +79,8 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
                                 function mySuccess(response) {
                                     //console.log('mySuccess:', response);
                                     blackInkStorage.add({
-                                        Sunrise: response.Sunrise.toString(),
-                                        Sunset: response.Sunset.toString()
+                                        Sunrise: response.Sunrise,
+                                        Sunset: response.Sunset
                                     }).then(function() {
                                         $scope.Sunrise = response.Sunrise;
                                         $scope.Sunset = response.Sunset;
