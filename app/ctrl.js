@@ -23,7 +23,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
     //$scope.blackInkStorage.removeAll();
 
     $scope.blackInkStorage.findAll(defaults).then(function(data){
-        console.log('findAll:', data);
+        // console.log('findAll:', data);
         $scope.blackInkStorage.Data = data;
         data.forEachProp(function(k, v) {
             //console.log('--'+k+':',v ? v.toString() : v);
@@ -66,18 +66,18 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
 
         locationService.getLocation().then(
             function locationSuccess(position) {
-                console.log(position);
+                //console.log(position);
                 blackInkStorage.add({
                     Latitude:  position.latitude,
                     Longitude:  position.longitude
                 }).then(
                     function success(override){
+                        // console.log('isToday', override, $scope.Sunrise);
                         if(override || !$scope.Sunrise || !$scope.Sunrise.isToday()) 
                         {
-                            console.log('isToday', override, $scope.Sunrise);
                             sunriseService.getSunrise($scope.Latitude, $scope.Longitude, override).then(
                                 function mySuccess(response) {
-                                    console.log('mySuccess:', response);
+                                    //console.log('mySuccess:', response);
                                     blackInkStorage.add({
                                         Sunrise: response.Sunrise.toString(),
                                         Sunset: response.Sunset.toString()
@@ -86,25 +86,25 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
                                         $scope.Sunset = response.Sunset;
                                     });
                                 },
-                                function myError(response) {
-                                    console.log('myError:', response);
+                                function myError(msg) {
+                                    console.log('getLocation.getSunrise.error:', msg);
+                                    console.error('getLocation.getSunrise.error:', msg);
                                 });
                         }
                     },
                     function addError(msg) {
-                        console.log(msg);
-                        console.error(msg);
+                        console.log('getLocation.add.error:', msg);
+                        console.error('getLocation.add.error:', msg);
                     }
                 );
             },
             function locationError(msg) {
-                console.log(msg);
-                console.error(msg);
+                console.log('getLocation.error:', msg);
+                console.error('getLocation.error:', msg);
             }
         );
 
         $scope.isNightTime = sunriseService.isNightTime();
-
     });
 
 

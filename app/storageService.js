@@ -42,7 +42,7 @@ angular.module('blackInkApp').service('blackInkStorage', function ($q) {
         if(changed) {
             _this.sync().then(
                 function success(blackInkData) {
-                    console.log('Sync Updated:', blackInkData);
+                    // console.log('Sync Updated:', blackInkData);
                     defer.resolve(true);
                 },
                 function error(err) {
@@ -71,9 +71,9 @@ angular.module('blackInkApp').service('blackInkStorage', function ($q) {
     	// console.log('update:', update);
     	//_this.Data.date = new Date().toLocaleTimeString();
         chrome.storage.sync.set({'blackInk': _this.Data}, function() {
-            console.log('Data is stored in Chrome storage');
+            // console.log('Data is stored in Chrome storage');
             chrome.storage.sync.get('blackInk', function(keys) {
-        		console.log('Sync:', keys.blackInk);
+        		// console.log('Sync:', keys.blackInk);
                 defer.resolve(keys.blackInk);
         	});
         });
