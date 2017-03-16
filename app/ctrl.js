@@ -68,8 +68,6 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
             function locationSuccess(position) {
                 //console.log(position);
                 blackInkStorage.add({
-                    Latitude:  position.latitude,
-                    Longitude:  position.longitude
                 }).then(
                     function success(override){
                         // console.log('isToday', override, $scope.Sunrise);
@@ -120,7 +118,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
                             allFrames: false,
                             file: true,
                             content: "/mainTab/blackInkTab.js"
-                        }, {
+                        // }, {
                         //     allFrames: false,
                         //     file: true,
                         //     content: "/inc/js/scrollstop.js"

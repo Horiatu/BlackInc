@@ -13,7 +13,7 @@ angular.module('blackInkApp').service('sunriseService', function ($q, $http) {
                 Sunrise: response.data.results.sunrise.utcTime2Local(),
                 Sunset: response.data.results.sunset.utcTime2Local()
             };
-            // console.log('getSunrise:', sunData);
+            console.log('getSunrise:', sunData);
             defer.resolve(sunData);
         }, 
         function myError(response) {
@@ -25,10 +25,10 @@ angular.module('blackInkApp').service('sunriseService', function ($q, $http) {
 
     this.isNightTime = function(sunrise, sunset) {
         var now = new Date();
-        var isit = !(sunrise < now  || now < sunset);
+        var isit = sunrise > now || now > sunset;
         // console.log('now:', now, isit);
-        // console.log('sunrise:', sunrise);
-        // console.log('sunset:', sunset);
+        // console.log('sunrise:', sunrise, sunrise > now);
+        // console.log('sunset:', sunset, now > sunset);
         return isit;
     };
 });
