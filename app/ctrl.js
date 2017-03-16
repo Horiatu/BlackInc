@@ -68,6 +68,8 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
             function locationSuccess(position) {
                 //console.log(position);
                 blackInkStorage.add({
+                    Latitude: Math.round(position.latitude*10000)/10000,
+                    Longitude: Math.round(position.longitude*10000)/10000
                 }).then(
                     function success(override){
                         // console.log('isToday', override, $scope.Sunrise);
