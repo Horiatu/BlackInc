@@ -67,6 +67,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
         locationService.getLocation().then(
             function locationSuccess(position) {
                 //console.log(position);
+                //locationService.getCity(position.latitude, position.longitude);
                 blackInkStorage.add({
                     Latitude: Math.round(position.latitude*10000)/10000,
                     Longitude: Math.round(position.longitude*10000)/10000

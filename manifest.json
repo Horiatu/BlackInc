@@ -22,7 +22,7 @@
     "contentSettings", "clipboardRead", "clipboardWrite",
     "geolocation"
   ],
-  
+
   "web_accessible_resources": [
     "/images/*.png",
     "/images/*.gif",

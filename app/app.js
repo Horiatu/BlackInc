@@ -2,7 +2,7 @@
     'use strict';
 
 	angular
-		.module("blackInkApp", [])
+		.module("blackInkApp", []);
 
 		// .directive('toggleClass', function() { 
 		// 	return { 
