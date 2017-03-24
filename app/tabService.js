@@ -65,6 +65,11 @@ angular.module('blackInkApp').service('tabService', function ($q) {
         return dfr.promise;
     };
 
+    this.sendMessage = function(message, callback) {
+        chrome.tabs.getSelected(null, function(tab) {
+            chrome.tabs.sendMessage(tab.id, message, callback);
+        });
+    };
 
 
     // this.injectCss = function(contentDocument) {

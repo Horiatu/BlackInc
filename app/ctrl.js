@@ -20,6 +20,55 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
         RedoDis: true,
     };
 
+        tabService.getSelectedTab().then(
+            function(tab) {
+                tabService.validateTab(tab).then(
+                    function(tabId) {
+                        tabService.loadScripts(tabId, [{
+                            allFrames: false,
+                            file: true,
+                            content: "/lib/jquery/jquery-2.1.4.min.js"
+                        }, {
+                            allFrames: false,
+                            file: true,
+                            content: "/mainTab/blackInkTab.js"
+                        // }, {
+                        //     allFrames: false,
+                        //     file: true,
+                        //     content: "/inc/js/scrollstop.js"
+                        // }, {
+                        //     allFrames: false,
+                        //     file: true,
+                        //     content: "/inc/js/ColorPicker.js"
+                        // }, {
+                        //     allFrames: false,
+                        //     file: false,
+                        //     content: 
+                        //         "ColorPicker.Hide(document);\n" +
+                        //         "ColorPicker.Show(document);\n" +
+                        //         "//ColorPicker.refresh();"
+                        }]).then(
+                            // tabService.sendMessage({
+                            //         type: "msg",
+                            //         msg: 'Helo there!'
+                            //     })
+                            // // function() {
+                            // //     chrome.tabs.sendMessage(tabId, {
+                            // //         type: "msg",
+                            // //         msg: 'Helo there!'
+                            // //     });
+                        );
+
+                    },
+                    function(err) {
+                        if (err) {
+                            console.log('getSelectedTab.error:', err);
+                            console.error('getSelectedTab:', err);
+                        } 
+                    }
+                );
+            });
+
     //$scope.blackInkStorage.removeAll();
 
     $scope.blackInkStorage.findAll(defaults).then(function(data){
@@ -36,6 +85,11 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
         $scope.$watch('InkColor', function(value) {
             if(value && value !== undefined) {
                 blackInkStorage.add({'InkColor': value});
+
+                tabService.sendMessage({
+                    type: "msg",
+                    msg: 'IncColor: '+value
+                });
             }
         });
 
@@ -108,50 +162,54 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
         $scope.isNightTime = sunriseService.isNightTime($scope.Sunrise, $scope.Sunset);
 
 
+        // tabService.getSelectedTab().then(
+        //     function(tab) {
+        //         tabService.validateTab(tab).then(
+        //             function(tabId) {
+        //                 tabService.loadScripts(tabId, [{
+        //                     allFrames: false,
+        //                     file: true,
+        //                     content: "/lib/jquery/jquery-2.1.4.min.js"
+        //                 }, {
+        //                     allFrames: false,
+        //                     file: true,
+        //                     content: "/mainTab/blackInkTab.js"
+        //                 // }, {
+        //                 //     allFrames: false,
+        //                 //     file: true,
+        //                 //     content: "/inc/js/scrollstop.js"
+        //                 // }, {
+        //                 //     allFrames: false,
+        //                 //     file: true,
+        //                 //     content: "/inc/js/ColorPicker.js"
+        //                 // }, {
+        //                 //     allFrames: false,
+        //                 //     file: false,
+        //                 //     content: 
+        //                 //         "ColorPicker.Hide(document);\n" +
+        //                 //         "ColorPicker.Show(document);\n" +
+        //                 //         "//ColorPicker.refresh();"
+        //                 }]).then(
+        //                     // tabService.sendMessage({
+        //                     //         type: "msg",
+        //                     //         msg: 'Helo there!'
+        //                     //     })
+        //                     // // function() {
+        //                     // //     chrome.tabs.sendMessage(tabId, {
+        //                     // //         type: "msg",
+        //                     // //         msg: 'Helo there!'
+        //                     // //     });
+        //                 );
 
-        tabService.getSelectedTab().then(
-            function(tab) {
-                tabService.validateTab(tab).then(
-                    function(tabId) {
-                        tabService.loadScripts(tabId, [{
-                            allFrames: false,
-                            file: true,
-                            content: "/lib/jquery/jquery-2.1.4.min.js"
-                        }, {
-                            allFrames: false,
-                            file: true,
-                            content: "/mainTab/blackInkTab.js"
-                        // }, {
-                        //     allFrames: false,
-                        //     file: true,
-                        //     content: "/inc/js/scrollstop.js"
-                        // }, {
-                        //     allFrames: false,
-                        //     file: true,
-                        //     content: "/inc/js/ColorPicker.js"
-                        // }, {
-                        //     allFrames: false,
-                        //     file: false,
-                        //     content: 
-                        //         "ColorPicker.Hide(document);\n" +
-                        //         "ColorPicker.Show(document);\n" +
-                        //         "//ColorPicker.refresh();"
-                        }]).then(
-                            // function() {
-                            //     try {
-                            //         window.close();
-                            //     } catch (e) {alert(e.message);}
-                            // }
-                        );
-                    },
-                    function(err) {
-                        if (err) {
-                            console.log('getSelectedTab.error:', err);
-                            console.error('getSelectedTab:', err);
-                        } 
-                    }
-                );
-            });
+        //             },
+        //             function(err) {
+        //                 if (err) {
+        //                     console.log('getSelectedTab.error:', err);
+        //                     console.error('getSelectedTab:', err);
+        //                 } 
+        //             }
+        //         );
+        //     });
 
     });
 
