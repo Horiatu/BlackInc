@@ -2,6 +2,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
 
 	$scope.blackInkStorage = blackInkStorage;
     $scope.locationService = locationService;
+    $scope.tabService = tabService;
 
     var defaults = {
         InkColor: 'black',
@@ -20,198 +21,117 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
         RedoDis: true,
     };
 
-        tabService.getSelectedTab().then(
-            function(tab) {
-                tabService.validateTab(tab).then(
-                    function(tabId) {
-                        tabService.loadScripts(tabId, [{
-                            allFrames: false,
-                            file: true,
-                            content: "/lib/jquery/jquery-2.1.4.min.js"
-                        }, {
-                            allFrames: false,
-                            file: true,
-                            content: "/mainTab/blackInkTab.js"
-                        // }, {
-                        //     allFrames: false,
-                        //     file: true,
-                        //     content: "/inc/js/scrollstop.js"
-                        // }, {
-                        //     allFrames: false,
-                        //     file: true,
-                        //     content: "/inc/js/ColorPicker.js"
-                        // }, {
-                        //     allFrames: false,
-                        //     file: false,
-                        //     content: 
-                        //         "ColorPicker.Hide(document);\n" +
-                        //         "ColorPicker.Show(document);\n" +
-                        //         "//ColorPicker.refresh();"
-                        }]).then(
-                            // tabService.sendMessage({
-                            //         type: "msg",
-                            //         msg: 'Helo there!'
-                            //     })
-                            // // function() {
-                            // //     chrome.tabs.sendMessage(tabId, {
-                            // //         type: "msg",
-                            // //         msg: 'Helo there!'
-                            // //     });
-                        );
-
-                    },
-                    function(err) {
-                        if (err) {
-                            console.log('getSelectedTab.error:', err);
-                            console.error('getSelectedTab:', err);
-                        } 
-                    }
-                );
-            });
-
     //$scope.blackInkStorage.removeAll();
 
-    $scope.blackInkStorage.findAll(defaults).then(function(data){
-        // console.log('findAll:', data);
-        $scope.blackInkStorage.Data = data;
-        data.forEachProp(function(k, v) {
-            //console.log('--'+k+':',v ? v.toString() : v);
-            $scope[k] = v;
-        });
+    tabService.initTab(
+        [{
+            allFrames: false,
+            file: true,
+            content: "/lib/jquery/jquery-2.1.4.min.js"
+        }, {
+            allFrames: false,
+            file: true,
+            content: "/mainTab/blackInkTab.js"
+        }]
+    ).then(
+        function() {
+            $scope.blackInkStorage.findAll(defaults).then(
+                function(data) {
+                    // console.log('findAll:', data);
+                    $scope.blackInkStorage.Data = data;
+                    data.forEachProp(function(k, v) {
+                        //console.log('--'+k+':',v ? v.toString() : v);
+                        $scope[k] = v;
+                    });
 
-        $scope.Sunrise = $scope.blackInkStorage.Data.Sunrise;
-        $scope.Sunset = $scope.blackInkStorage.Data.Sunset;
+                    $scope.Sunrise = $scope.blackInkStorage.Data.Sunrise;
+                    $scope.Sunset = $scope.blackInkStorage.Data.Sunset;
 
-        $scope.$watch('InkColor', function(value) {
-            if(value && value !== undefined) {
-                blackInkStorage.add({'InkColor': value});
-
-                tabService.sendMessage({
-                    type: "msg",
-                    msg: 'IncColor: '+value
-                });
-            }
-        });
-
-        $scope.$watch('TextWeight', function(value) {
-            if(value && value !== undefined) {
-                blackInkStorage.add({'TextWeight': value});
-            }
-        });
-
-        $scope.$watch('ShowHelp', function(value) {
-            if(value && value !== undefined) {
-                blackInkStorage.add({'ShowHelp': value});
-                $scope.helpTooltip = (value==='none') ? 'Show Help' : 'Hide Help';
-            }
-        });
-
-        $scope.$watch('NightMode', function(value) {
-            if(value && value !== undefined) {
-                blackInkStorage.add({'NightMode': value});
-            }
-        });
-
-        $scope.$watch('AutoNightMode', function(value) {
-            if(value && value !== undefined) {
-                blackInkStorage.add({'AutoNightMode': value});
-            }
-        });
-
-        locationService.getLocation().then(
-            function locationSuccess(position) {
-                //console.log(position);
-                //locationService.getCity(position.latitude, position.longitude);
-                blackInkStorage.add({
-                    Latitude: Math.round(position.latitude*10000)/10000,
-                    Longitude: Math.round(position.longitude*10000)/10000
-                }).then(
-                    function success(override){
-                        // console.log('isToday', override, $scope.Sunrise);
-                        if(override || !$scope.Sunrise || !$scope.Sunrise.isToday()) 
-                        {
-                            sunriseService.getSunrise($scope.Latitude, $scope.Longitude, override).then(
-                                function mySuccess(response) {
-                                    //console.log('mySuccess:', response);
-                                    blackInkStorage.add({
-                                        Sunrise: response.Sunrise,
-                                        Sunset: response.Sunset
-                                    }).then(function() {
-                                        $scope.Sunrise = response.Sunrise;
-                                        $scope.Sunset = response.Sunset;
-                                    });
-                                },
-                                function myError(msg) {
-                                    console.log('getLocation.getSunrise.error:', msg);
-                                    console.error('getLocation.getSunrise.error:', msg);
-                                });
+                    $scope.$watch('InkColor', function(value) {
+                        if(value && value !== undefined) {
+                            blackInkStorage.add({'InkColor': value});
                         }
-                    },
-                    function addError(msg) {
-                        console.log('getLocation.add.error:', msg);
-                        console.error('getLocation.add.error:', msg);
-                    }
-                );
-            },
-            function locationError(msg) {
-                console.log('getLocation.error:', msg);
-                console.error('getLocation.error:', msg);
-            }
-        );
+                    });
 
-        $scope.isNightTime = sunriseService.isNightTime($scope.Sunrise, $scope.Sunset);
+                    $scope.$watch('TextWeight', function(value) {
+                        if(value && value !== undefined) {
+                            blackInkStorage.add({'TextWeight': value});
+                        }
+                    });
 
+                    $scope.$watch('ShowHelp', function(value) {
+                        if(value && value !== undefined) {
+                            blackInkStorage.add({'ShowHelp': value});
+                            $scope.helpTooltip = (value==='none') ? 'Show Help' : 'Hide Help';
+                        }
+                    });
 
-        // tabService.getSelectedTab().then(
-        //     function(tab) {
-        //         tabService.validateTab(tab).then(
-        //             function(tabId) {
-        //                 tabService.loadScripts(tabId, [{
-        //                     allFrames: false,
-        //                     file: true,
-        //                     content: "/lib/jquery/jquery-2.1.4.min.js"
-        //                 }, {
-        //                     allFrames: false,
-        //                     file: true,
-        //                     content: "/mainTab/blackInkTab.js"
-        //                 // }, {
-        //                 //     allFrames: false,
-        //                 //     file: true,
-        //                 //     content: "/inc/js/scrollstop.js"
-        //                 // }, {
-        //                 //     allFrames: false,
-        //                 //     file: true,
-        //                 //     content: "/inc/js/ColorPicker.js"
-        //                 // }, {
-        //                 //     allFrames: false,
-        //                 //     file: false,
-        //                 //     content: 
-        //                 //         "ColorPicker.Hide(document);\n" +
-        //                 //         "ColorPicker.Show(document);\n" +
-        //                 //         "//ColorPicker.refresh();"
-        //                 }]).then(
-        //                     // tabService.sendMessage({
-        //                     //         type: "msg",
-        //                     //         msg: 'Helo there!'
-        //                     //     })
-        //                     // // function() {
-        //                     // //     chrome.tabs.sendMessage(tabId, {
-        //                     // //         type: "msg",
-        //                     // //         msg: 'Helo there!'
-        //                     // //     });
-        //                 );
+                    $scope.$watch('NightMode', function(value) {
+                        if(value && value !== undefined) {
+                            blackInkStorage.add({'NightMode': value});
+                        }
+                    });
 
-        //             },
-        //             function(err) {
-        //                 if (err) {
-        //                     console.log('getSelectedTab.error:', err);
-        //                     console.error('getSelectedTab:', err);
-        //                 } 
-        //             }
-        //         );
-        //     });
+                    $scope.$watch('AutoNightMode', function(value) {
+                        if(value && value !== undefined) {
+                            blackInkStorage.add({'AutoNightMode': value});
+                        }
+                    });
 
-    });
+                    locationService.getLocation().then(
+                        function locationSuccess(position) {
+                            //console.log(position);
+                            //locationService.getCity(position.latitude, position.longitude);
+                            blackInkStorage.add({
+                                Latitude: Math.round(position.latitude*10000)/10000,
+                                Longitude: Math.round(position.longitude*10000)/10000
+                            }).then(
+                                function success(override){
+                                    // console.log('isToday', override, $scope.Sunrise);
+                                    if(override || !$scope.Sunrise || !$scope.Sunrise.isToday()) 
+                                    {
+                                        sunriseService.getSunrise($scope.Latitude, $scope.Longitude, override).then(
+                                            function mySuccess(response) {
+                                                //console.log('mySuccess:', response);
+                                                blackInkStorage.add({
+                                                    Sunrise: response.Sunrise,
+                                                    Sunset: response.Sunset
+                                                }).then(function() {
+                                                    $scope.Sunrise = response.Sunrise;
+                                                    $scope.Sunset = response.Sunset;
+                                                });
+                                            },
+                                            function myError(msg) {
+                                                console.log('getLocation.getSunrise.error:', msg);
+                                                console.error('getLocation.getSunrise.error:', msg);
+                                            });
+                                    }
+                                },
+                                function addError(msg) {
+                                    console.log('getLocation.add.error:', msg);
+                                    console.error('getLocation.add.error:', msg);
+                                }
+                            );
+                        },
+                        function locationError(msg) {
+                            console.log('getLocation.error:', msg);
+                            console.error('getLocation.error:', msg);
+                        }
+                    );
+
+                    $scope.isNightTime = sunriseService.isNightTime($scope.Sunrise, $scope.Sunset);
+                },
+                function(err) {
+                    console.log('blackInkStorage.error:', err);
+                    console.error('blackInkStorage:', err);
+                }
+            );
+        },
+        function(err){
+            console.log('initTab.error:', err);
+            console.error('initTab:', err);
+        }
+    );
 
 
     // $scope.add = function(newContent) {
@@ -242,7 +162,17 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
         }
     };
 
-    
+    $scope.apply = function() {
+        $scope.tabService.sendMessage({
+            type: "css",
+            cssId: 'BlackIncColor',
+            cssContent:
+                '<style id="BlackIncColor" class="BlackInc">* {'+
+                    'color:'+$scope.InkColor+' !important; '+
+                    (($scope.TextWeight !== '') ? 'font-weight:'+$scope.TextWeight+' !important; ' : '') +
+                '}</style>'
+        });
+    };
 
 });
 

@@ -71,6 +71,29 @@ angular.module('blackInkApp').service('tabService', function ($q) {
         });
     };
 
+    this.initTab = function(scripts) {
+        dfr = $q.defer();
+        _this.getSelectedTab().then(
+            function(tab) {
+                _this.validateTab(tab).then(
+                    function(tabId) {
+                        _this.loadScripts(tabId, scripts).then(
+                            dfr.resolve()
+                        );
+                    },
+                    function(err) {
+                        if (err) {
+                            console.log('getSelectedTab.error:', err);
+                            console.error('getSelectedTab:', err);
+                            dfr.reject('getSelectedTab.error:', err);
+                        } 
+                    }
+                );
+            }
+        );
+        return dfr.promise;
+    };
+
 
     // this.injectCss = function(contentDocument) {
     //     if(!contentDocument.getElementById("blackInkCss")) {
