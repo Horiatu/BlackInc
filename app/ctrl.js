@@ -78,6 +78,14 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
                         }
                     });
 
+                    $scope.$watch('Invert', function(value) {
+                        //alert('Invert: '+ value);
+                        $scope.tabService.sendMessage({
+                            'type': 'invert', 
+                            'mode': value
+                        });
+                    });
+
                     locationService.getLocation().then(
                         function locationSuccess(position) {
                             //console.log(position);

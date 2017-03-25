@@ -1,37 +1,44 @@
 console.log('blackInkTab.js loaded');
 
 init = function() {
-	// var optionsDfr = $.Deferred();
     chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
-    	// debugger;
         switch (req.type) {
         	case 'css':
 	        	var cssId = req.cssId || "BlackInkColor";
-	        		injectCss(req.cssId, req.cssContent);
-	        		break;
-            // case 'defaults':
-            //     options = req;
-            //     optionsDfr.resolve(req);
-            //     break;
-            case 'msg':
-                console.log(req.msg);
-                //alert(req.msg);
+        		injectCss(req.cssId, req.cssContent);
+        		break;
+            case 'invert':
+                switch(req.mode) {
+                    case false :
+                        $('html').removeClass("InvertVision");
+                        break;
+                    case true :
+                        $('html').addClass("InvertVision");
+                        break;
+                }
                 break;
         }
     });
 
-    //_private.getAllOptionsAsync(optionsDfr).done(function() {
-	    if(!document.getElementById("PickerOvr")) {
-	        //$("body").wrapInner("<div id='bodyNew'></div>");
-	        $("body").append('<div id="PickerLdr"></div>');
-	        $("#PickerLdr").append('<div id="PickerOvr" style="display:none; cursor: url(' + 
-	        	chrome.extension.getURL("images/cursors/pickColor.cur") + '), crosshair !important; '+
-	        	'width: 100%; height: 100%; position: absolute; top: 0; left: 0;"></div>');
-	        // addFilters('#PickerLdr');
-	    }
+    if(!document.getElementById("PickerOvr")) {
+        $("body").append('<div id="PickerLdr"></div>');
+        $("#PickerLdr").append('<div id="PickerOvr" style="display:none; cursor: url(' + 
+        	chrome.extension.getURL("images/cursors/pickColor.cur") + '), crosshair !important; '+
+        	'width: 100%; height: 100%; position: absolute; top: 0; left: 0;"></div>');
+    }
 
-	//});
+    var _injectCss = function(css) {
+        if ($("head").length === 0) {
+            $("body").before(css);
+        } else {
+            $("head").append(css);
+        }
+    };
 
+    if(!document.getElementById("blackInkCss")) {
+        _injectCss('<link id="blackInkCss" rel="stylesheet" type="text/css" href="' + 
+            chrome.extension.getURL('/mainTab/blackInk.css') + '" />');
+    }
 };
 
 init();
