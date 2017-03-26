@@ -85,7 +85,7 @@ angular.module('blackInkApp').service('tabService', function ($q) {
                         if (err) {
                             console.log('getSelectedTab.error:', err);
                             console.error('getSelectedTab:', err);
-                            dfr.reject('getSelectedTab.error:', err);
+                            dfr.reject(err);
                         } 
                     }
                 );

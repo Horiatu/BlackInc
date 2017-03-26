@@ -10,3 +10,34 @@
 	background-color: white;
 }
 
+.normalFilter {
+	-webkit-filter: url(#normalMatrix);
+	   -moz-filter: url(#normalMatrix);
+	    -ms-filter: url(#normalMatrix);
+	     -o-filter: url(#normalMatrix);
+	        filter: url(#normalMatrix); /* Firefox 3.5+ */
+}
+
+.invertFilter, 
+.invertFilter img, 
+.invertFilter video {
+	-webkit-filter: url(#invertMatrix);
+	   -moz-filter: url(#invertMatrix);
+	    -ms-filter: url(#invertMatrix);
+	     -o-filter: url(#invertMatrix);
+	        filter: url(#invertMatrix); /* Firefox 3.5+ */
+}
+.sepiaFilter {
+	-webkit-filter: url(#sepiaMatrix);
+	   -moz-filter: url(#sepiaMatrix);
+	    -ms-filter: url(#sepiaMatrix);
+	     -o-filter: url(#sepiaMatrix);
+	        filter: url(#sepiaMatrix); /* Firefox 3.5+ */
+}
+.pinkFilter {
+	-webkit-filter: url(#pinkMatrix);
+	   -moz-filter: url(#pinkMatrix);
+	    -ms-filter: url(#pinkMatrix);
+	     -o-filter: url(#pinkMatrix);
+	        filter: url(#pinkMatrix); /* Firefox 3.5+ */
+}

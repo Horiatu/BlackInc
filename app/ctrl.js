@@ -132,12 +132,14 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
                 function(err) {
                     console.log('blackInkStorage.error:', err);
                     console.error('blackInkStorage:', err);
+                    alert(err);
                 }
             );
         },
         function(err){
             console.log('initTab.error:', err);
             console.error('initTab:', err);
+            alert(err);
         }
     );
 
@@ -179,6 +181,15 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
                     'color:'+$scope.InkColor+' !important; '+
                     (($scope.TextWeight !== '') ? 'font-weight:'+$scope.TextWeight+' !important; ' : '') +
                 '}</style>'
+        });
+    };
+
+    $scope.nightMode = function(e) {
+        console.log($scope.nightOn);
+        $scope.tabService.sendMessage({
+            type: "nightMode",
+            mode: $scope.nightOn,
+            cls: $scope.NightMode
         });
     };
 

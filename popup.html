@@ -33,7 +33,7 @@
                 <tr>
                     <td style="color:{{InkColor}};font-weight:{{TextWeight}};">Color</td>
                     <td>
-                        <input type="radio" name="color" id="clBlack" ng-model="InkColor" value="black"/>
+                        <input type="radio" name="color" id="clBlack" ng-model="InkColor" value="invert"/>
                         <label for="clBlack">Black</label>
                     </td>
                     <td>
@@ -69,12 +69,12 @@
             <table role='presentation' style="width: 100%; margin-bottom:6px;">
                 <tr>
                     <td class='right'>
-                        <label class="switch {{NightMode}}">Night mode:<input type="checkbox" checked><i></i></label>
+                        <label class="switch {{NightMode}}">Night mode:<input type="checkbox" ng-click="nightMode()" ng-model="nightOn"><i></i></label>
                     </td>
                     <td>
                         <label><input type="radio" name="nightMode" ng-model="NightMode" value="pink"/>Pink</label>
                         <br/>
-                        <label><input type="radio" name="nightMode" ng-model="NightMode" value="black"/>Invert</label>
+                        <label><input type="radio" name="nightMode" ng-model="NightMode" value="invert"/>Invert</label>
                     </td>
                     <td>
                         <label class="switch red">Auto:<input type="checkbox" ng-model="NightAuto"><i></i></label>
@@ -82,7 +82,7 @@
                 </tr>
                 <tr>
                     <td class='right'>
-                        <label class="switch black">Invert:<input type="checkbox" ng-model="Invert"><i></i></label>
+                        <label class="switch invert">Invert:<input type="checkbox" ng-model="Invert"><i></i></label>
                     </td>
                     <td colspan='2' style="text-align: end;">
                         <label for='myLocation'>Location and Sun Data</label>

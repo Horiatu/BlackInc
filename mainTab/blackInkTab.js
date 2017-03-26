@@ -10,10 +10,20 @@ init = function() {
             case 'invert':
                 switch(req.mode) {
                     case false :
-                        $('html').removeClass("InvertVision");
+                        $('body').removeClass("invertFilter");
                         break;
                     case true :
-                        $('html').addClass("InvertVision");
+                        $('body').addClass("invertFilter");
+                        break;
+                }
+                break;
+            case 'nightMode':
+                switch(req.mode) {
+                    case false :
+                        $('html').removeClass(req.cls+"Filter");
+                        break;
+                    case true :
+                        $('html').addClass(req.cls+"Filter");
                         break;
                 }
                 break;
@@ -39,6 +49,34 @@ init = function() {
         _injectCss('<link id="blackInkCss" rel="stylesheet" type="text/css" href="' + 
             chrome.extension.getURL('/mainTab/blackInk.css') + '" />');
     }
+
+    var addFilters = function() {
+        if(!document.getElementById("svgFilters")) {
+            var s = 
+                "<svg id='svgFilters' xmlns='http://www.w3.org/2000/svg' style='display:none'>\n"+
+                "    <filter id='invertMatrix'>\n"+
+                "        <feColorMatrix type='matrix' values='-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1 0 0 0 1 0'/>\n"+
+                "    </filter>\n"+
+                // "    <filter id='normalMatrix'>\n"+
+                // "        <feColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0'/>\n"+
+                // "    </filter>\n"+
+                // "    <filter id='sepiaMatrix'>\n"+
+                // "        <feColorMatrix type='matrix' values='0.393 0.769 0.189 0 0 0.349 0.686 0.168 0 0 0.272 0.534 0.131 0 0 0   0   0   1 0'/>\n"+
+                // "    </filter>\n"+
+                "    <filter id='pinkMatrix'>\n"+
+                "        <feColorMatrix type='matrix' values='"+
+                "1     0.769 0.189 0 0 "+
+                "0     0.99  0     0 0 "+
+                "0     0     0.99  0 0 "+
+                "0     0     0     1 0 '/>\n"+
+                "    </filter>\n"+
+                "</svg>";
+
+            $("body").append(s);
+        }
+    };
+
+    addFilters();
 };
 
 init();
@@ -60,7 +98,3 @@ injectCss = function(id, css) {
 sendMessage = function(message) {
     chrome.extension.connect().postMessage(message);
 };
-
-
-
- //injectCss("BlackInkColor", '<style id="BlackIncColor" class="BlackInc">* {color:black !important;}</style>');
