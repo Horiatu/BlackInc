@@ -36,15 +36,28 @@ init = function() {
                         break;
                 }
                 break;
+            case 'pick' :
+                sendResponse($PickElements());
+                break;
         }
     });
 
-    if(!document.getElementById("PickerOvr")) {
-        $("body").append('<div id="PickerLdr"></div>');
-        $("#PickerLdr").append('<div id="PickerOvr" style="display:none; cursor: url(' + 
-        	chrome.extension.getURL("images/cursors/pickColor.cur") + '), crosshair !important; '+
-        	'width: 100%; height: 100%; position: absolute; top: 0; left: 0;"></div>');
-    }
+    $PickElements = function() {
+        if(!document.getElementById("PickerOvr")) {
+            $("body").append('<div id="PickerLdr" style="display:block;""></div>');
+            $("#PickerLdr").append('<div id="PickerOvr" style="cursor: url(' + 
+            	chrome.extension.getURL("images/cursors/pickColor.cur") + '), crosshair !important; '+
+            	'"></div>');
+        }
+        else {
+            $("#PickerLdr").css('display','block');
+        }
+
+        $BlackIncKeyExit().then(function() {
+            $("#PickerLdr").css('display','none');
+            return {message: 'Helo!'};
+        });
+    };
 
     var _injectCss = function(css) {
         if ($("head").length === 0) {
@@ -89,6 +102,41 @@ init = function() {
 };
 
 init();
+
+$BlackIncKeyExit = function() {
+    var defer = $.Deferred();
+    var blackInkKeyPress = function(e) {
+        switch (e.keyCode) {
+            case 13:
+            case 27:
+                $(window).unbind('keyup', blackInkKeyPress);
+                $(window).unbind('scroll', blackInkScroll);
+                $(window).unbind('mousedown', blackInkClick);
+                defer.resolve();
+                break;
+        }
+    };
+
+    var blackInkScroll = function(e) {
+        $("#PickerLdr")
+            .css('top', window.scrollY+'px')
+            .css('left', window.scrollX+'px');
+    };
+
+    blackInkScroll(null);
+
+    var blackInkClick = function(e) {
+        console.log(e);
+        e.stopPropagation();
+        e.preventDefault();
+    };
+
+    $(window).bind('keyup', blackInkKeyPress);
+    $(window).bind('scroll', blackInkScroll);
+    $(window).bind('mousedown', blackInkClick);
+
+    return defer.promise();
+};
 
 injectCss = function(id, css) {
 	var element = document.getElementById(id);

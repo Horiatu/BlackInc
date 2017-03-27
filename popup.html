@@ -20,9 +20,10 @@
             src='/images/X.png' ng-click='closeExtension()'>
         </div>
         <div id='toolbar' class='roundBorder shadow'>
-            <input type="image" class='toolbarBtn' ng-disabled='UndoDis' id='undoBtn' alt='Undo' title='Undo [^z]' src='/images/undo.png'/>
-            <input type="image"  class='toolbarBtn' ng-disabled='RedoDis' id='redoBtn' alt='Redo' title='Redo [^y]' src='/images/redo.png'/>
-            <input type="image"  class='toolbarBtn' id='optionsBtn' alt='Help' title='{{helpTooltip}}' src='/images/help.png' ng-click='toggleShowHelp()'/>
+            <input type="image" class='toolbarBtn' id='pickBtn' alt='Pick' title='Pick Elements' src='/images/pick-color.png' ng-click='pickElements()'/>
+            <!-- <input type="image" class='toolbarBtn' ng-disabled='UndoDis' id='undoBtn' alt='Undo' title='Undo [^z]' src='/images/undo.png'/>
+            <input type="image" class='toolbarBtn' ng-disabled='RedoDis' id='redoBtn' alt='Redo' title='Redo [^y]' src='/images/redo.png'/> -->
+            <input type="image" class='toolbarBtn' id='optionsBtn' alt='Help' title='{{helpTooltip}}' src='/images/help.png' ng-click='toggleShowHelp()'/>
         </div>
         <div id='help' class='roundBorder' style='display:{{ShowHelp}};'>
             <h2>Enhance text contrast for bad web pages</h2>
