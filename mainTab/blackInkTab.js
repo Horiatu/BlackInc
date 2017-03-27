@@ -125,10 +125,68 @@ $BlackIncKeyExit = function() {
 
     blackInkScroll(null);
 
+    var elementsFromPoint = function (x, y, selector) {
+        var elements = [], previousPointerEvents = [], current, i, d;
+
+        // get all elements via elementFromPoint, and remove them from hit-testing in order
+        while ((current = document.elementFromPoint(x,y)) && elements.indexOf(current)===-1 && current !== null) {
+            
+            // push the element and its current style
+            elements.push(current);
+            
+            previousPointerEvents.push({
+                element: current,
+                value: current.style.getPropertyValue('pointer-events'),
+                priority: current.style.getPropertyPriority('pointer-events')
+            });
+              
+            // add "pointer-events: none", to get to the underlying element
+            current.style.setProperty('pointer-events', 'none', 'important');
+        }
+
+        // restore the previous pointer-events values
+        for(var ii = previousPointerEvents.length; --ii>=0; ) {
+            var dd = previousPointerEvents[ii]; 
+            if(dd && dd.element)
+            {
+                if(dd.value && dd.value !== "") 
+                {
+                    dd.element.style.setProperty('pointer-events', dd.value?dd.value:'', dd.priority); 
+                } 
+                else 
+                {
+                    dd.element.style.removeProperty ('pointer-events');
+                }
+            }
+        }
+          
+        if(selector && selector !== undefined && selector !=='') {
+            elements = $(elements).filter(selector).toArray();
+        }
+        return elements;
+    };
+
+    $.manualCss = [];
+
     var blackInkClick = function(e) {
-        console.log(e);
+        var button = e.button;
+        var x = e.pageX;
+        var y = e.pageY;
         e.stopPropagation();
         e.preventDefault();
+        var elemntsAtPoint = elementsFromPoint(x, y, 
+            '*:not("#PickerOvr"):not("#PickerLdr"):not("html")');
+        elemntsAtPoint.forEach(function(element) {
+            if(element.id && $(element).css('color')) {
+                $.manualCss.push('#'+element.id+' { color: '+$(element).css('color')+'; }');
+            }
+
+
+            var classList = element.className.split(/\s+/);
+            console.log(element, classList);
+        });
+
+        console.log($.manualCss.join('\n'));
     };
 
     $(window).bind('keyup', blackInkKeyPress);
