@@ -20,10 +20,12 @@ init = function() {
             case 'nightMode':
                 switch(req.mode) {
                     case false :
-                        $('html').removeClass(req.cls+"Filter");
+                        if($.NightModeClass)
+                            $('html').removeClass($.NightModeClass);
                         break;
                     case true :
-                        $('html').addClass(req.cls+"Filter");
+                        $.NightModeClass = req.cls+"Filter";
+                        $('html').addClass($.NightModeClass);
                         break;
                 }
                 break;
