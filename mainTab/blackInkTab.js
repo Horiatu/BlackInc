@@ -5,7 +5,14 @@ init = function() {
         switch (req.type) {
         	case 'css':
 	        	var cssId = req.cssId || "BlackInkColor";
-        		injectCss(req.cssId, req.cssContent);
+                if(req.cssContent != '')
+        		    injectCss(req.cssId, 
+                        '<style id="BlackIncColor" class="BlackInc">' +
+                        req.cssContent +
+                        '</style>');
+                else {
+                    $('#'+cssId).remove();
+                }
         		break;
             case 'invert':
                 switch(req.mode) {

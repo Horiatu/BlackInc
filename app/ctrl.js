@@ -177,10 +177,14 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
             type: "css",
             cssId: 'BlackIncColor',
             cssContent:
-                '<style id="BlackIncColor" class="BlackInc">* {'+
-                    'color:'+$scope.InkColor+' !important; '+
-                    (($scope.TextWeight !== '') ? 'font-weight:'+$scope.TextWeight+' !important; ' : '') +
-                '}</style>'
+                $scope.applyCss 
+                    ? //'<style id="BlackIncColor" class="BlackInc">'+
+                    '* {'+
+                        'color:'+$scope.InkColor+' !important; '+
+                        (($scope.TextWeight !== '') ? 'font-weight:'+$scope.TextWeight+' !important; ' : '') +
+                      '}'
+                      // '</style>'
+                    : ''
         });
     };
 
