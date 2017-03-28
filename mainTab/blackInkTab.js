@@ -1,22 +1,21 @@
 console.log('blackInkTab.js loaded');
 
-$.manualCss = '';
-$.cssId = 'BlackInkColor';
+$.BlackIncData = { manualCss: '', cssId: 'BlackInkColor' };
 
 init = function() {
     chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
         switch (req.type) {
         	case 'css':
-	        	$.cssId = req.cssId || "BlackInkColor";
+	        	$.BlackIncData.cssId = req.cssId || "BlackInkColor";
                 if(req.cssContent !== '')
                 {
-                    $.manualCss = '<style id="'+$.cssId+'" class="BlackInc">' +
+                    $.BlackIncData.manualCss = '<style id="'+$.BlackIncData.cssId+'">' +
                         req.cssContent +
                         '</style>';
-        		    injectCss(req.cssId, $.manualCss);
+        		    injectCss($.BlackIncData.cssId, $.BlackIncData.manualCss);
                 }
                 else {
-                    $('#'+$.cssId).remove();
+                    $('#'+$.BlackIncData.cssId).remove();
                 }
         		break;
             case 'invert':
@@ -113,22 +112,28 @@ BlackInkToggles = function(e) {
     console.log(e);
     if(e.ctrlKey && e.shiftKey) {
         switch (e.key) {
+            case 'N':
+            case 'n':
             case 'F1' :
                 $('html').toggleClass($.NightModeClass);
                 // e.stopPropagation();
                 // e.preventDefault();
                 break;
+            case 'I':
+            case 'i':
             case 'F2' :
-                if($.cssId !== '' && $.manualCss !== '')
+                if($.BlackIncData.cssId !== '' && $.BlackIncData.manualCss !== '')
                 {
-                    if($('#'+$.cssId).length === 0)
-                        injectCss($.cssId, $.manualCss);
+                    if($('#'+$.BlackIncData.cssId).length === 0)
+                        injectCss($.BlackIncData.cssId, $.BlackIncData.manualCss);
                     else 
-                        $('#'+$.cssId).remove();
+                        $('#'+$.BlackIncData.cssId).remove();
                 }
                 // e.stopPropagation();
                 // e.preventDefault();
                 break;
+            case 'P':
+            case 'p':
             case 'F3' :
                 PickElements();
                 e.stopPropagation();
@@ -204,8 +209,6 @@ BlackIncKeyExit = function() {
         return elements;
     };
 
-    $.manualCss = [];
-
     var blackInkClick = function(e) {
         var button = e.button;
         var x = e.pageX;
@@ -214,9 +217,10 @@ BlackIncKeyExit = function() {
         e.preventDefault();
         var elemntsAtPoint = elementsFromPoint(x, y, 
             '*:not("#PickerOvr"):not("#PickerLdr"):not("html")');
+        var manualRules = [];
         elemntsAtPoint.forEach(function(element) {
             if(element.id && $(element).css('color')) {
-                $.manualCss.push('#'+element.id+' { color: '+$(element).css('color')+'; }');
+                manualRules.push('#'+element.id+' { color: '+$(element).css('color')+'; }');
             }
 
 
@@ -224,7 +228,8 @@ BlackIncKeyExit = function() {
             console.log(element, classList);
         });
 
-        console.log($.manualCss.join('\n'));
+        $.BlackIncData.manualCss = manualRules.join('\n');
+        console.log($.BlackIncData.manualCss);
     };
 
     $(window).bind('keyup', blackInkKeyPress);
