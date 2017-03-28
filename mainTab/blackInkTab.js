@@ -1,17 +1,22 @@
 console.log('blackInkTab.js loaded');
 
+$.manualCss = '';
+$.cssId = 'BlackInkColor';
+
 init = function() {
     chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
         switch (req.type) {
         	case 'css':
-	        	var cssId = req.cssId || "BlackInkColor";
-                if(req.cssContent != '')
-        		    injectCss(req.cssId, 
-                        '<style id="BlackIncColor" class="BlackInc">' +
+	        	$.cssId = req.cssId || "BlackInkColor";
+                if(req.cssContent !== '')
+                {
+                    $.manualCss = '<style id="'+$.cssId+'" class="BlackInc">' +
                         req.cssContent +
-                        '</style>');
+                        '</style>';
+        		    injectCss(req.cssId, $.manualCss);
+                }
                 else {
-                    $('#'+cssId).remove();
+                    $('#'+$.cssId).remove();
                 }
         		break;
             case 'invert':
@@ -37,12 +42,12 @@ init = function() {
                 }
                 break;
             case 'pick' :
-                sendResponse($PickElements());
+                PickElements();
                 break;
         }
     });
 
-    $PickElements = function() {
+    PickElements = function() {
         if(!document.getElementById("PickerOvr")) {
             $("body").append('<div id="PickerLdr" style="display:block;""></div>');
             $("#PickerLdr").append('<div id="PickerOvr" style="cursor: url(' + 
@@ -53,7 +58,7 @@ init = function() {
             $("#PickerLdr").css('display','block');
         }
 
-        $BlackIncKeyExit().then(function() {
+        BlackIncKeyExit().then(function() {
             $("#PickerLdr").css('display','none');
             return {message: 'Helo!'};
         });
@@ -99,11 +104,44 @@ init = function() {
     };
 
     addFilters();
+
 };
 
 init();
 
-$BlackIncKeyExit = function() {
+BlackInkToggles = function(e) {
+    console.log(e);
+    if(e.ctrlKey && e.shiftKey) {
+        switch (e.key) {
+            case 'F1' :
+                $('html').toggleClass($.NightModeClass);
+                // e.stopPropagation();
+                // e.preventDefault();
+                break;
+            case 'F2' :
+                if($.cssId !== '' && $.manualCss !== '')
+                {
+                    if($('#'+$.cssId).length === 0)
+                        injectCss($.cssId, $.manualCss);
+                    else 
+                        $('#'+$.cssId).remove();
+                }
+                // e.stopPropagation();
+                // e.preventDefault();
+                break;
+            case 'F3' :
+                PickElements();
+                e.stopPropagation();
+                e.preventDefault();
+                break;
+        }
+    }
+};
+
+$(window).unbind('keyup', BlackInkToggles);
+$(window).bind('keyup', BlackInkToggles);
+
+BlackIncKeyExit = function() {
     var defer = $.Deferred();
     var blackInkKeyPress = function(e) {
         switch (e.keyCode) {
