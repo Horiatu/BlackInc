@@ -1,4 +1,4 @@
-angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http, blackInkStorage, locationService, sunriseService, tabService) {
+angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $http, blackInkStorage, locationService, sunriseService, tabService) {
 
 	$scope.blackInkStorage = blackInkStorage;
     $scope.locationService = locationService;
@@ -92,6 +92,8 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
                         });
                     });
 
+                    var completted = $q.defer();
+                    
                     locationService.getLocation().then(
                         function locationSuccess(position) {
                             //console.log(position);
@@ -114,35 +116,66 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
                                                     $scope.Sunrise = response.Sunrise;
                                                     $scope.Sunset = response.Sunset;
                                                 });
+                                                completted.resolve();
                                             },
                                             function myError(msg) {
                                                 console.log('getLocation.getSunrise.error:', msg);
                                                 console.error('getLocation.getSunrise.error:', msg);
+                                                completted.reject(msg);
                                             });
+                                    }
+                                    else {
+                                        completted.resolve();
                                     }
                                 },
                                 function addError(msg) {
                                     console.log('getLocation.add.error:', msg);
                                     console.error('getLocation.add.error:', msg);
+                                    completted.reject(msg);
+                                    return completed.promise;
                                 }
                             );
                         },
                         function locationError(msg) {
                             console.log('getLocation.error:', msg);
                             console.error('getLocation.error:', msg);
+                            completted.reject(msg);
                         }
+
                     );
 
-                    $scope.isNightTime = sunriseService.isNightTime($scope.Sunrise, $scope.Sunset);
+                    completted.promise.then(
+                        function() {
+                            console.log('completed');
 
-                    $scope.tabService.sendMessage({type:'getDefaults'},
-                        function(msg) {
-                            console.log(msg);
-                            if(msg) {
-                                $scope.nightOn = msg.hasNightMode;
-                                $scope.applyCss = msg.hasManualCss;
-                            }
-                        });
+                            $scope.isNightTime = sunriseService.isNightTime($scope.Sunrise, $scope.Sunset);
+
+                            $scope.tabService.sendMessage({type:'getDefaults'},
+                                function(msg) {
+                                    console.log('getDefaults: ',msg);
+
+                                    if(msg) {
+                                        $scope.nightOn = msg.hasNightMode;
+                                        $scope.applyCss = msg.hasManualCss;
+                                        $scope.apply();
+
+                                        // console.log($scope.nightOn, $scope.applyCss);
+                                        // console.log(msg.hasNightMode, msg.hasManualCss);
+                                        console.log($scope);
+                                    }
+                                    else {
+                                        $scope.tabService.sendMessage({
+                                            type:'setDefaults',
+                                            inkColor: $scope.InkColor,
+                                            textWeight: $scope.TextWeight,
+                                        });
+                                    }
+                                }
+                            );
+                        },
+                        function(msg) {console.log('completed Error ',msg);}
+                        );
+
                 },
                 function(err) {
                     console.log('blackInkStorage.error:', err);

@@ -28,10 +28,11 @@ if(!BlackInkLoaded)
                     case 'setDefaults':
                         BlackInkModule.defaults.inkColor = req.inkColor;
                         BlackInkModule.defaults.textWeight = req.textWeight;
+                        console.log('setDefaults: ',BlackInkModule.defaults);
                         break;
                     case 'getDefaults':
                         sendResponse({
-                            defaults:BlackInkModule.defaults,
+                            defaults:BlackInkModule.defaults || {},
                             hasNightMode: BlackInkModule.NightModeClass !== null && $('html').hasClass(BlackInkModule.NightModeClass), 
                             hasManualCss: $('#'+BlackInkModule.cssId).length > 0, 
                         });
