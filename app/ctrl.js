@@ -23,17 +23,23 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
 
     //$scope.blackInkStorage.removeAll();
 
-    tabService.initTab(
-        [{
+    tabService.initTab([
+        {
             allFrames: false,
             file: true,
             content: "/lib/jquery/jquery-2.1.4.min.js"
-        }, {
+        }, 
+        {
+            allFrames: false,
+            file: true,
+            content: "/lib/jquery/jquery-ui.min.js"
+        }, 
+        {
             allFrames: false,
             file: true,
             content: "/mainTab/blackInkTab.js"
-        }]
-    ).then(
+        }
+    ]).then(
         function() {
             $scope.blackInkStorage.findAll(defaults).then(
                 function(data) {

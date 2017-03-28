@@ -54,55 +54,18 @@ if(!BlackInkLoaded)
                         }
                         break;
                     case 'pick' :
-                        pickElements();
+                        BlackInkModule.pickElements();
                         break;
                 }
 
             });
-
-            pickElements = function() {
-                if(!document.getElementById("PickerOvr")) {
-                    $("body").append('<div id="PickerLdr" style="display:block;""></div>');
-                    $("#PickerLdr").append('<div id="PickerOvr" style="cursor: url(' + 
-                        chrome.extension.getURL("images/cursors/pickColor.cur") + '), crosshair !important; '+
-                        '"></div>');
-                }
-                else {
-                    $("#PickerLdr").css('display','block');
-                }
-
-                BlackInkModule.blackIncKeyExit().then(function() {
-                    $("#PickerLdr").css('display','none');
-                    return {message: 'Helo!'};
-                });
-            };
 
             if(!document.getElementById("blackInkCss")) {
                 BlackInkModule._injectCss('<link id="blackInkCss" rel="stylesheet" type="text/css" href="' + 
                     chrome.extension.getURL('/mainTab/blackInk.css') + '" />');
             }
 
-            var addFilters = function() {
-                if(!document.getElementById("svgFilters")) {
-                    var s = 
-                        "<svg id='svgFilters' xmlns='http://www.w3.org/2000/svg' style='display:none'>\n"+
-                        "    <filter id='invertMatrix'>\n"+
-                        "        <feColorMatrix type='matrix' values='-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1 0 0 0 1 0'/>\n"+
-                        "    </filter>\n"+
-                        "    <filter id='pinkMatrix'>\n"+
-                        "        <feColorMatrix type='matrix' values='"+
-                        "1     0.769 0.189 0 0 "+
-                        "0     0.99  0     0 0 "+
-                        "0     0     0.99  0 0 "+
-                        "0     0     0     1 0 '/>\n"+
-                        "    </filter>\n"+
-                        "</svg>";
-
-                    $("body").append(s);
-                }
-            };
-
-            addFilters();
+            BlackInkModule.addFilters();
 
             // $(window).unbind('keyup', BlackInkModule.blackInkToggles);
             $(window).bind('keyup', BlackInkModule.blackInkToggles);
@@ -179,7 +142,7 @@ if(!BlackInkLoaded)
                     case 'P':
                     case 'p':
                     case 'F3' :
-                        pickElements();
+                        BlackInkModule.pickElements();
                         e.stopPropagation();
                         e.preventDefault();
                         break;
@@ -262,6 +225,48 @@ if(!BlackInkLoaded)
 
             return BlackInkModule.defer.promise();
         },
+
+        addFilters: function() {
+            if(!document.getElementById("svgFilters")) {
+                var s = 
+                    "<svg id='svgFilters' xmlns='http://www.w3.org/2000/svg' style='display:none'>\n"+
+                    "    <filter id='invertMatrix'>\n"+
+                    "        <feColorMatrix type='matrix' values='-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1 0 0 0 1 0'/>\n"+
+                    "    </filter>\n"+
+                    "    <filter id='pinkMatrix'>\n"+
+                    "        <feColorMatrix type='matrix' values='"+
+                    "1     0.769 0.189 0 0 "+
+                    "0     0.99  0     0 0 "+
+                    "0     0     0.99  0 0 "+
+                    "0     0     0     1 0 '/>\n"+
+                    "    </filter>\n"+
+                    "</svg>";
+
+                $("body").append(s);
+            }
+        },
+
+        pickElements: function() {
+            if(!document.getElementById("PickerOvr")) {
+                $("body").append('<div id="PickerLdr" style="display:block;""></div>');
+                $("#PickerLdr").append('<div id="PickerOvr" style="cursor: url(' + 
+                    chrome.extension.getURL("images/cursors/pickColor.cur") + '), crosshair !important; '+
+                    '"></div>');
+                $('#PickerOvr').append('<div id="PickerOvrHelp" class="Left"><h1>Pick elements</h1>(work in progress.)</div>');
+                $('#PickerOvrHelp').mouseenter(function() {
+                    $(this).toggleClass("Left Right", 250);
+                });
+            }
+            else {
+                $("#PickerLdr").css('display','block');
+            }
+
+            BlackInkModule.blackIncKeyExit().then(function() {
+                $("#PickerLdr").css('display','none');
+                return {message: 'Helo!'};
+            });
+        },
+
     };
 
     BlackInkModule.init();
