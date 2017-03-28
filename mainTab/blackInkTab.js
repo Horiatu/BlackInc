@@ -54,13 +54,13 @@ if(!BlackInkLoaded)
                         }
                         break;
                     case 'pick' :
-                        PickElements();
+                        pickElements();
                         break;
                 }
 
             });
 
-            PickElements = function() {
+            pickElements = function() {
                 if(!document.getElementById("PickerOvr")) {
                     $("body").append('<div id="PickerLdr" style="display:block;""></div>');
                     $("#PickerLdr").append('<div id="PickerOvr" style="cursor: url(' + 
@@ -71,20 +71,7 @@ if(!BlackInkLoaded)
                     $("#PickerLdr").css('display','block');
                 }
 
-                var BlackIncKeyExit = function() {
-                    BlackInkModule.defer = $.Deferred();
-
-                    BlackInkModule.blackInkScroll(null);
-
-                    $(window).bind('keyup', BlackInkModule.blackInkKeyPress);
-                    $(window).bind('scroll', BlackInkModule.blackInkScroll);
-                    $(window).bind('mousedown', BlackInkModule.blackInkClick);
-
-                    return BlackInkModule.defer.promise();
-                };
-
-
-                BlackIncKeyExit().then(function() {
+                BlackInkModule.blackIncKeyExit().then(function() {
                     $("#PickerLdr").css('display','none');
                     return {message: 'Helo!'};
                 });
@@ -192,7 +179,7 @@ if(!BlackInkLoaded)
                     case 'P':
                     case 'p':
                     case 'F3' :
-                        PickElements();
+                        pickElements();
                         e.stopPropagation();
                         e.preventDefault();
                         break;
@@ -261,6 +248,20 @@ if(!BlackInkLoaded)
             return elements;
         },
 
+        blackIncKeyExit: function() {
+            if(BlackInkModule.defer && BlackInkModule.defer.state() === "pending") 
+                return BlackInkModule.defer.promise();
+
+            BlackInkModule.defer = $.Deferred();
+
+            BlackInkModule.blackInkScroll(null);
+
+            $(window).bind('keyup', BlackInkModule.blackInkKeyPress);
+            $(window).bind('scroll', BlackInkModule.blackInkScroll);
+            $(window).bind('mousedown', BlackInkModule.blackInkClick);
+
+            return BlackInkModule.defer.promise();
+        },
     };
 
     BlackInkModule.init();
