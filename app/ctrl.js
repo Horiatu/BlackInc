@@ -17,8 +17,8 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
         Sunset:  null,
 
         helpTooltip: 'hide help',
-        UndoDis: true,
-        RedoDis: true,
+        // UndoDis: true,
+        // RedoDis: true,
     };
 
     //$scope.blackInkStorage.removeAll();
@@ -134,6 +134,15 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
                     );
 
                     $scope.isNightTime = sunriseService.isNightTime($scope.Sunrise, $scope.Sunset);
+
+                    $scope.tabService.sendMessage({type:'getDefaults'},
+                        function(msg) {
+                            console.log(msg);
+                            if(msg) {
+                                $scope.nightOn = msg.hasNightMode;
+                                $scope.applyCss = msg.hasManualCss;
+                            }
+                        });
                 },
                 function(err) {
                     console.log('blackInkStorage.error:', err);
@@ -168,7 +177,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
     };
 
     $scope.closeExtension = function() {
-    	 window.close();
+    	window.close();
     };
 
     $scope.locationShowing = function(element, cls, show) {
@@ -182,6 +191,8 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
         $scope.tabService.sendMessage({
             type: "css",
             cssId: 'BlackIncColor',
+            inkColor: $scope.InkColor,
+            textWeight: $scope.TextWeight,
             cssContent:
                 $scope.applyCss 
                     ? '* {'+
@@ -202,11 +213,10 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $http,
     };
 
     $scope.pickElements = function() {
+        window.close();
         $scope.tabService.sendMessage({
-            type: "pick"}, function(content) {
-                alert(content.message);
-            }
-        );
+            type: "pick",
+        });
     };
 
 });

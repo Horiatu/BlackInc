@@ -14,14 +14,35 @@ if(!BlackInkLoaded)
         manualCss: '', 
         cssId: 'BlackInkColor',
         NightModeClass: null, 
+        defaults: {
+            inkColor: null,
+            textWeight: null,
+            auto: false,
+            sunRise: null,
+            sunSet: null,
+        },
 
         init: function() {
             chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
                 switch (req.type) {
+                    case 'setDefaults':
+                        BlackInkModule.defaults.inkColor = req.inkColor;
+                        BlackInkModule.defaults.textWeight = req.textWeight;
+                        break;
+                    case 'getDefaults':
+                        sendResponse({
+                            defaults:BlackInkModule.defaults,
+                            hasNightMode: BlackInkModule.NightModeClass !== null && $('html').hasClass(BlackInkModule.NightModeClass), 
+                            hasManualCss: $('#'+BlackInkModule.cssId).length > 0, 
+                        });
+                        break;
                     case 'css':
                         BlackInkModule.cssId = req.cssId || "BlackInkColor";
                         if(req.cssContent !== '')
                         {
+                            BlackInkModule.defaults.inkColor = req.inkColor;
+                            BlackInkModule.defaults.textWeight = req.textWeight;
+
                             BlackInkModule.manualCss = '<style id="'+BlackInkModule.cssId+'">' +
                                 req.cssContent +
                                 '</style>';
