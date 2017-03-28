@@ -10,37 +10,25 @@ catch (e) {
 
 if(!BlackInkLoaded)
 {
-    BlackInkData = { 
+    BlackInkModule = { 
         manualCss: '', 
         cssId: 'BlackInkColor',
         NightModeClass: null, 
 
         init: function() {
-            var injectCss = function(id, css) {
-                var element = document.getElementById(id);
-                if(element) {
-                    element.parentNode.removeChild(element);
-                }
-                if ($("head").length === 0) {
-                    $("body").before(css);
-                } else {
-                    $("head").append(css);
-                }
-            };
-
             chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
                 switch (req.type) {
                     case 'css':
-                        BlackInkData.cssId = req.cssId || "BlackInkColor";
+                        BlackInkModule.cssId = req.cssId || "BlackInkColor";
                         if(req.cssContent !== '')
                         {
-                            BlackInkData.manualCss = '<style id="'+BlackInkData.cssId+'">' +
+                            BlackInkModule.manualCss = '<style id="'+BlackInkModule.cssId+'">' +
                                 req.cssContent +
                                 '</style>';
-                            injectCss(BlackInkData.cssId, BlackInkData.manualCss);
+                            BlackInkModule.injectCss(BlackInkModule.cssId, BlackInkModule.manualCss);
                         }
                         else {
-                            $('#'+BlackInkData.cssId).remove();
+                            $('#'+BlackInkModule.cssId).remove();
                         }
                         break;
                     case 'invert':
@@ -56,12 +44,12 @@ if(!BlackInkLoaded)
                     case 'nightMode':
                         switch(req.mode) {
                             case false :
-                                if(BlackInkData.NightModeClass)
-                                    $('html').removeClass(BlackInkData.NightModeClass);
+                                if(BlackInkModule.NightModeClass)
+                                    $('html').removeClass(BlackInkModule.NightModeClass);
                                 break;
                             case true :
-                                BlackInkData.NightModeClass = req.cls+"Filter";
-                                $('html').addClass(BlackInkData.NightModeClass);
+                                BlackInkModule.NightModeClass = req.cls+"Filter";
+                                $('html').addClass(BlackInkModule.NightModeClass);
                                 break;
                         }
                         break;
@@ -84,9 +72,9 @@ if(!BlackInkLoaded)
                 }
 
                 var BlackIncKeyExit = function() {
-                    var defer = $.Deferred();
+                    BlackInkModule.defer = $.Deferred();
 
-                    BlackInkData.blackInkScroll(null);
+                    BlackInkModule.blackInkScroll(null);
 
                     var elementsFromPoint = function (x, y, selector) {
                         var elements = [], previousPointerEvents = [], current, i, d;
@@ -129,11 +117,11 @@ if(!BlackInkLoaded)
                         return elements;
                     };
 
-                    $(window).bind('keyup', BlackInkData.blackInkKeyPress);
-                    $(window).bind('scroll', BlackInkData.blackInkScroll);
-                    $(window).bind('mousedown', BlackInkData.blackInkClick);
+                    $(window).bind('keyup', BlackInkModule.blackInkKeyPress);
+                    $(window).bind('scroll', BlackInkModule.blackInkScroll);
+                    $(window).bind('mousedown', BlackInkModule.blackInkClick);
 
-                    return defer.promise();
+                    return BlackInkModule.defer.promise();
                 };
 
 
@@ -143,16 +131,8 @@ if(!BlackInkLoaded)
                 });
             };
 
-            var _injectCss = function(css) {
-                if ($("head").length === 0) {
-                    $("body").before(css);
-                } else {
-                    $("head").append(css);
-                }
-            };
-
             if(!document.getElementById("blackInkCss")) {
-                _injectCss('<link id="blackInkCss" rel="stylesheet" type="text/css" href="' + 
+                BlackInkModule._injectCss('<link id="blackInkCss" rel="stylesheet" type="text/css" href="' + 
                     chrome.extension.getURL('/mainTab/blackInk.css') + '" />');
             }
 
@@ -178,43 +158,8 @@ if(!BlackInkLoaded)
 
             addFilters();
 
-            var BlackInkToggles = function(e) {
-                // console.log(e);
-                if(e.ctrlKey && e.shiftKey) {
-                    switch (e.key) {
-                        case 'N':
-                        case 'n':
-                        case 'F1' :
-                            $('html').toggleClass(BlackInkData.NightModeClass);
-                            // e.stopPropagation();
-                            // e.preventDefault();
-                            break;
-                        case 'I':
-                        case 'i':
-                        case 'F2' :
-                            if(BlackInkData.cssId !== '' && BlackInkData.manualCss !== '')
-                            {
-                                if($('#'+BlackInkData.cssId).length === 0)
-                                    injectCss(BlackInkData.cssId, BlackInkData.manualCss);
-                                else 
-                                    $('#'+BlackInkData.cssId).remove();
-                            }
-                            // e.stopPropagation();
-                            // e.preventDefault();
-                            break;
-                        case 'P':
-                        case 'p':
-                        case 'F3' :
-                            PickElements();
-                            e.stopPropagation();
-                            e.preventDefault();
-                            break;
-                    }
-                }
-            };
-
-            $(window).unbind('keyup', BlackInkToggles);
-            $(window).bind('keyup', BlackInkToggles);
+            // $(window).unbind('keyup', BlackInkModule.blackInkToggles);
+            $(window).bind('keyup', BlackInkModule.blackInkToggles);
         
             BlackInkLoaded = true;
             console.log('blackInkTab initialized');
@@ -245,24 +190,80 @@ if(!BlackInkLoaded)
                 console.log(element, classList);
             });
 
-            BlackInkData.manualCss = manualRules.join('\n');
-            console.log(BlackInkData.manualCss);
+            BlackInkModule.manualCss = manualRules.join('\n');
+            console.log(BlackInkModule.manualCss);
         },
 
         blackInkKeyPress: function(e) {
             switch (e.keyCode) {
                 case 13:
                 case 27:
-                    $(window).unbind('keyup', BlackInkData.blackInkKeyPress);
-                    $(window).unbind('scroll', BlackInkData.blackInkScroll);
-                    $(window).unbind('mousedown', BlackInkData.blackInkClick);
-                    defer.resolve();
+                    $(window).unbind('keyup', BlackInkModule.blackInkKeyPress);
+                    $(window).unbind('scroll', BlackInkModule.blackInkScroll);
+                    $(window).unbind('mousedown', BlackInkModule.blackInkClick);
+                    BlackInkModule.defer.resolve();
                     break;
             }
         },
+            
+        blackInkToggles: function(e) {
+            // console.log(e);
+            if(e.ctrlKey && e.shiftKey) {
+                switch (e.key) {
+                    case 'N':
+                    case 'n':
+                    case 'F1' :
+                        $('html').toggleClass(BlackInkModule.NightModeClass);
+                        // e.stopPropagation();
+                        // e.preventDefault();
+                        break;
+                    case 'I':
+                    case 'i':
+                    case 'F2' :
+                        if(BlackInkModule.cssId !== '' && BlackInkModule.manualCss !== '')
+                        {
+                            if($('#'+BlackInkModule.cssId).length === 0)
+                                BlackInkModule.injectCss(BlackInkModule.cssId, BlackInkModule.manualCss);
+                            else 
+                                $('#'+BlackInkModule.cssId).remove();
+                        }
+                        // e.stopPropagation();
+                        // e.preventDefault();
+                        break;
+                    case 'P':
+                    case 'p':
+                    case 'F3' :
+                        PickElements();
+                        e.stopPropagation();
+                        e.preventDefault();
+                        break;
+                }
+            }
+        },
+
+        injectCss: function(id, css) {
+            var element = document.getElementById(id);
+            if(element) {
+                element.parentNode.removeChild(element);
+            }
+            if ($("head").length === 0) {
+                $("body").before(css);
+            } else {
+                $("head").append(css);
+            }
+        },
+
+        _injectCss: function(css) {
+            if ($("head").length === 0) {
+                $("body").before(css);
+            } else {
+                $("head").append(css);
+            }
+        },
+
     };
 
-    BlackInkData.init();
+    BlackInkModule.init();
 }
 
 
