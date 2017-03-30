@@ -30,7 +30,7 @@
             <p>Select your options bellow, then click element to change ink color.</p>
         </div>
         <div id='options' class='roundBorder'>
-            <table role='presentation'>
+            <table role='presentation' style="width: 100%;">
                 <tr>
                     <td style="color:{{InkColor}};font-weight:{{TextWeight}};">Color</td>
                     <td>
@@ -45,7 +45,7 @@
                         <input type="radio" name="color" id="clRed" ng-model="InkColor" value="#b60000"/>
                         <label for="clRed">Red</label>
                     </td>
-                    <td>
+                    <td class='right'>
                         <label class="switch green"><input type="checkbox" ng-click="apply()" ng-model="applyCss"><i></i></label>
                         <!-- <input type="button" ng-click="apply()" Value="Apply"/> -->
                     </td>
@@ -68,37 +68,40 @@
             </table>
         </div>
         <div id='auto' class='roundBorder'>
-            <table role='presentation' style="width: 100%; margin-bottom:6px;">
+            <table role='presentation' style="width: 100%;">
                 <tr>
                     <td class='right'>
-                        <label class="switch {{NightMode}}">Night mode:<input type="checkbox" ng-click="nightMode()" ng-model="nightOn"><i></i></label>
+                        <label>Night mode:</label>
                     </td>
                     <td>
                         <label><input type="radio" name="nightMode" ng-model="NightMode" value="pink"/>Pink</label>
-                        <!-- <br/> -->
                     </td>
                     <td>
                         <label><input type="radio" name="nightMode" ng-model="NightMode" value="black"/>Invert</label>
-                        <!-- <label class="switch red">Auto:<input type="checkbox" ng-model="NightAuto"><i></i></label> -->
+                    </td>
+                    <td class='right'>
+                        <label class="switch {{NightMode}}"><input type="checkbox" ng-click="nightMode()" ng-model="nightOn"><i></i></label>
                     </td>
                 </tr>
                 <tr>
-                    <td class='right'>
+<!--                     <td class='right'>
                         <label class="switch red">Auto:<input type="checkbox" ng-model="NightAuto"><i></i></label>
-                        <!-- <label class="switch black">Invert:<input type="checkbox" ng-model="Invert"><i></i></label> -->
                     </td>
-                    <td colspan='2' style="text-align: end;">
+ -->                    <!-- <td colspan='2' style="text-align: end;">
                         <label for='myLocation'>Location and Sun Data</label>
                         <input type="image" id='myLocation' src='/images/MyLocation.16.png' class='toolbarBtn' ng-click='ShowLocation = !ShowLocation'>
-                    </td>
+                    </td> -->
                 </tr>
             </table>
         </div>
-        <div id='location' class='roundBorder' ng-class='{show: ShowLocation, lightgray: isNightTime}' style="display:none;">
+        <div id='location' class='roundBorder' ng-class='{lightgray: isNightTime}'>
             <table id="location">
                 <tr>
                     <td>Latitude:</td>
                     <th>{{Latitude | number : 4}}</th>
+                    <td class='right'>
+                        <label class="switch red">Auto:<input type="checkbox" ng-model="NightAuto"><i></i></label>
+                    </td>
                 </tr>
                 <tr>
                     <td>Longitude:</td>

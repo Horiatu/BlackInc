@@ -12,7 +12,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
         AutoNightMode: false,
         Latitude:  43.7303873,
         Longitude:  -79.32944619999999,
-        ShowLocation:  false,
+        // ShowLocation:  false,
         Sunrise:  null,
         Sunset:  null,
 
