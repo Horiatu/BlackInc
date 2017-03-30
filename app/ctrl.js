@@ -42,7 +42,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
     ]).then(
         function() {
             $scope.blackInkStorage.findAll(defaults).then(
-                function(data) {
+                function blackInkStorageSuccess(data) {
                     // console.log('findAll:', data);
                     $scope.blackInkStorage.Data = data;
                     data.forEachProp(function(k, v) {
@@ -96,8 +96,6 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                     
                     locationService.getLocation().then(
                         function locationSuccess(position) {
-                            //console.log(position);
-                            //locationService.getCity(position.latitude, position.longitude);
                             blackInkStorage.add({
                                 Latitude: Math.round(position.latitude*10000)/10000,
                                 Longitude: Math.round(position.longitude*10000)/10000
@@ -132,7 +130,6 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                                     console.log('getLocation.add.error:', msg);
                                     console.error('getLocation.add.error:', msg);
                                     completted.reject(msg);
-                                    return completed.promise;
                                 }
                             );
                         },
@@ -144,8 +141,10 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
 
                     );
 
+                    var getDefaultsDefer = $q.defer();
+                    
                     completted.promise.then(
-                        function() {
+                        function completedSuccess() {
                             console.log('completed');
 
                             $scope.isNightTime = sunriseService.isNightTime($scope.Sunrise, $scope.Sunset);
@@ -155,15 +154,13 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                                     console.log('getDefaults: ',msg);
 
                                     if(msg) {
-                                        $scope.nightOn = msg.hasNightMode;
-                                        $scope.applyCss = msg.hasManualCss;
-                                        $scope.apply();
-
-                                        // console.log($scope.nightOn, $scope.applyCss);
-                                        // console.log(msg.hasNightMode, msg.hasManualCss);
-                                        console.log($scope);
+                                        getDefaultsDefer.resolve({
+                                            nightOn: msg.hasNightMode,
+                                            applyCss: msg.hasManualCss
+                                        });
                                     }
                                     else {
+                                        console.log('setDefaults');
                                         $scope.tabService.sendMessage({
                                             type:'setDefaults',
                                             inkColor: $scope.InkColor,
@@ -173,18 +170,24 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                                 }
                             );
                         },
-                        function(msg) {console.log('completed Error ',msg);}
-                        );
+                        function completedError(msg) {
+                            console.log('completed Error ',msg);
+                        }
+                    );
 
+                    getDefaultsDefer.promise.then(function(msgData) {
+                        $scope.nightOn = msgData.nightOn;
+                        $scope.applyCss = msgData.applyCss;
+                    });
                 },
-                function(err) {
+                function blackInkStorageError(err) {
                     console.log('blackInkStorage.error:', err);
                     console.error('blackInkStorage:', err);
                     alert(err);
                 }
             );
         },
-        function(err){
+        function initTabError(err){
             console.log('initTab.error:', err);
             console.error('initTab:', err);
             alert(err);
