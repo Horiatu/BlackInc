@@ -18,9 +18,9 @@
 	        filter: url(#normalMatrix); /* Firefox 3.5+ */
 }
 
-.invertFilter, 
-.invertFilter img, 
-.invertFilter video {
+.blackFilter, 
+.blackFilter img, 
+.blackFilter video {
 	-webkit-filter: url(#invertMatrix);
 	   -moz-filter: url(#invertMatrix);
 	    -ms-filter: url(#invertMatrix);
