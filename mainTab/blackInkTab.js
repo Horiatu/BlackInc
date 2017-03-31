@@ -141,16 +141,9 @@ if(!BlackInkLoaded)
             // console.log(e);
             if(e.ctrlKey && e.shiftKey) {
                 switch (e.key) {
-                    case 'N':
-                    case 'n':
-                    case 'F1' :
-                        $('html').toggleClass(BlackInkModule.NightModeClass);
-                        // e.stopPropagation();
-                        // e.preventDefault();
-                        break;
                     case 'I':
                     case 'i':
-                    case 'F2' :
+                    case 'F1' :
                         if(BlackInkModule.cssId !== '' && BlackInkModule.manualCss !== '')
                         {
                             if($('#'+BlackInkModule.cssId).length === 0)
@@ -158,6 +151,13 @@ if(!BlackInkLoaded)
                             else 
                                 $('#'+BlackInkModule.cssId).remove();
                         }
+                        // e.stopPropagation();
+                        // e.preventDefault();
+                        break;
+                    case 'N':
+                    case 'n':
+                    case 'F2' :
+                        $('html').toggleClass(BlackInkModule.NightModeClass);
                         // e.stopPropagation();
                         // e.preventDefault();
                         break;

@@ -23,6 +23,10 @@
 	        filter: url(#normalMatrix); /* Firefox 3.5+ */
 }
 
+body {
+	background-color: white;
+}
+
 .blackFilter, 
 .blackFilter img, 
 .blackFilter video {

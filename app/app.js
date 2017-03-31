@@ -2,7 +2,14 @@
     'use strict';
 
 	angular
-		.module("blackInkApp", []);
+		.module("blackInkApp", [])
+		.directive('myKey', function() {
+		    return {
+		        restrict: 'EA',
+		        replace: true,
+		        template: '-All that Html here-'
+		    };
+		});
 
 		// .directive('toggleClass', function() { 
 		// 	return { 
