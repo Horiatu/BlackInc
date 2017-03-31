@@ -256,5 +256,9 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
         });
     };
 
+    $scope.fShare = function() {
+        window.open("https://www.facebook.com/sharer?u=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fblack-ink%2Fjhpghaenkakfmpfkhokmglbhhooonbeg%3Fhl%3Den%26gl%3DCA", "_blank");
+    };
+
 });
 

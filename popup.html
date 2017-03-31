@@ -20,6 +20,7 @@
             src='/images/X.png' ng-click='closeExtension()'>
         </div>
         <div id='toolbar' class='roundBorder shadow'>
+            <input type="image" class='toolbarBtn' id='Share' alt='Share' title='Share on Facebook' src='/images/fShare.png' ng-click='fShare()' />
             <input type="image" class='toolbarBtn' id='pickBtn' alt='Pick' title='Pick Elements' src='/images/pick-color.png' ng-click='pickElements()' ng-hide="errorMessage!=''"/>
             <!-- <input type="image" class='toolbarBtn' ng-disabled='UndoDis' id='undoBtn' alt='Undo' title='Undo [^z]' src='/images/undo.png'/>
             <input type="image" class='toolbarBtn' ng-disabled='RedoDis' id='redoBtn' alt='Redo' title='Redo [^y]' src='/images/redo.png'/> -->
