@@ -71,8 +71,8 @@ angular.module('blackInkApp').service('blackInkStorage', function ($q) {
     	// console.log('update:', update);
     	//_this.Data.date = new Date().toLocaleTimeString();
         var data = Object.assign({}, _this.Data);
-        data.Sunrise = data.Sunrise.toString();
-        data.Sunset = data.Sunset.toString();
+        data.Sunrise = data.Sunrise ? data.Sunrise.toString() : '';
+        data.Sunset = data.Sunset ? data.Sunset.toString() : '';
         chrome.storage.sync.set({'blackInk': data}, function() {
             chrome.storage.sync.get('blackInk', function(keys) {
                 // console.log('Data is stored in Chrome storage');
