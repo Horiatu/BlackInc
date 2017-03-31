@@ -30,7 +30,7 @@
             <p>Select your options bellow, then click element to change ink color.</p>
         </div>
         <div id='options' class='roundBorder'>
-            <table role='presentation' style="width: 100%;">
+            <table role='presentation'>
                 <tr>
                     <td style="color:{{InkColor}};font-weight:{{TextWeight}};">Color</td>
                     <td>
@@ -68,7 +68,7 @@
             </table>
         </div>
         <div id='auto' class='roundBorder'>
-            <table role='presentation' style="width: 100%;">
+            <table role='presentation'>
                 <tr>
                     <td class='right'>
                         <label>Night mode:</label>
@@ -116,6 +116,13 @@
                     <th>{{Sunset | date:'h:mm:ss a' | lowercase}}</th>
                 </tr>
             </table>                
+        </div>
+        <div 
+            id='error' 
+            class='roundBorder' 
+            ng-show="errorMessage!=''"
+            ng-click="closeExtension()">
+            {{errorMessage}}
         </div>
     </form>
 

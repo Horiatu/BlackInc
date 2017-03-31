@@ -3,6 +3,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
 	$scope.blackInkStorage = blackInkStorage;
     $scope.locationService = locationService;
     $scope.tabService = tabService;
+    $scope.errorMessage = '';
 
     var defaults = {
         InkColor: 'black',
@@ -183,14 +184,14 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                 function blackInkStorageError(err) {
                     console.log('blackInkStorage.error:', err);
                     console.error('blackInkStorage:', err);
-                    alert(err);
+                    $scope.errorMessage = err;
                 }
             );
         },
         function initTabError(err){
             console.log('initTab.error:', err);
             console.error('initTab:', err);
-            alert(err);
+            $scope.errorMessage = err;
         }
     );
 
