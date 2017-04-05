@@ -17,11 +17,24 @@ angular.module('blackInkApp').service('tabService', function ($q) {
     this.validateTab = function(tab) {
         var dfr = $q.defer();
         var url = tab.url;
+        var stop = function() {
+            chrome.browserAction.setBadgeBackgroundColor({
+                color: [255, 0, 0, 255],
+                tabId: tab.id
+            });
+            chrome.browserAction.setBadgeText({
+                text: "!",
+                tabId: tab.id
+            });
+        };
 
+        chrome.browserAction.setBadgeText({text: ""});
         if (url.indexOf("chrome://") === 0 || url.indexOf("chrome-extension://") === 0) {
+            stop();
             dfr.reject("Warning: Does not work on internal browser pages.");
         } else if (url.indexOf("https://chrome.google.com/extensions/") === 0 || 
             url.indexOf("https://chrome.google.com/webstore/") === 0) {
+            stop();
             dfr.reject("Warning: BlackInk does not work on the Chrome Pages.");
         } else {
             dfr.resolve(tab.id);
@@ -33,7 +46,8 @@ angular.module('blackInkApp').service('tabService', function ($q) {
     this.loadScripts = function(tabid, scripts, dfr, self) {
         var scriptDesc = function(script) {
             return (
-                script.file ? {
+                script.file ? 
+                {
                     allFrames: script.allFrames,
                     "file": script.content
                 } : 
@@ -78,7 +92,7 @@ angular.module('blackInkApp').service('tabService', function ($q) {
                 _this.validateTab(tab).then(
                     function(tabId) {
                         _this.loadScripts(tabId, scripts).then(
-                            dfr.resolve()
+                            dfr.resolve(tabId)
                         );
                     },
                     function(err) {
@@ -93,20 +107,4 @@ angular.module('blackInkApp').service('tabService', function ($q) {
         );
         return dfr.promise;
     };
-
-
-    // this.injectCss = function(contentDocument) {
-    //     if(!contentDocument.getElementById("blackInkCss")) {
-    //         this._injectCss('<link id="blackInkCss" rel="stylesheet" type="text/css" href="' + 
-    //             chrome.extension.getURL('/inc/css/blackInkTab.css') + '" />');
-    //     }
-    // };
-
-    // this._injectCss = function(css) {
-    //     if ($$("head").length === 0) {
-    //         $$("body").before(css);
-    //     } else {
-    //         $$("head").append(css);
-    //     }
-    // };
 });

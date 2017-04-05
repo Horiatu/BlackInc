@@ -4,6 +4,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
     $scope.locationService = locationService;
     $scope.tabService = tabService;
     $scope.errorMessage = '';
+    $scope.tabId = 0;
 
     var defaults = {
         InkColor: 'black',
@@ -41,7 +42,8 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
             content: "/mainTab/blackInkTab.js"
         }
     ]).then(
-        function() {
+        function(tabId) {
+            $scope.tabId = tabId;
             $scope.blackInkStorage.findAll(defaults).then(
                 function blackInkStorageSuccess(data) {
                     // console.log('findAll:', data);
@@ -227,7 +229,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
     $scope.apply = function() {
         $scope.tabService.sendMessage({
             type: "css",
-            cssId: 'BlackIncColor',
+            cssId: 'BlackInkColor',
             inkColor: $scope.InkColor,
             textWeight: $scope.TextWeight,
             cssContent:
@@ -238,6 +240,18 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                       '}'
                     : ''
         });
+        $scope.badge('On', [0, 153, 51, 1]);
+    };
+
+    $scope.badge = function(text, color) {
+        chrome.browserAction.setBadgeBackgroundColor({
+            color: color,
+            tabId: $scope.tabId
+        });
+        chrome.browserAction.setBadgeText({
+            text: text,
+            tabId: $scope.tabId
+        });
     };
 
     $scope.nightMode = function(e) {
@@ -247,6 +261,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
             mode: $scope.nightOn,
             cls: $scope.NightMode
         });
+        $scope.badge('On', [0, 153, 51, 1]);
     };
 
     $scope.pickElements = function() {

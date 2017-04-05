@@ -137,32 +137,37 @@ if(!BlackInkLoaded)
             }
         },
             
+        toggleBlackInk: function() {
+            if(BlackInkModule.cssId !== '' && BlackInkModule.manualCss !== '')
+            {
+                if($('#'+BlackInkModule.cssId).length === 0)
+                    BlackInkModule.injectCss(BlackInkModule.cssId, BlackInkModule.manualCss);
+                else 
+                    $('#'+BlackInkModule.cssId).remove();
+            }
+        },
+
+        toggleBlackInkNightMode: function() {
+            $('html').toggleClass(BlackInkModule.NightModeClass);
+        },
+
         blackInkToggles: function(e) {
             // console.log(e);
             if(e.ctrlKey && e.shiftKey) {
                 switch (e.key) {
-                    case 'I':
-                    case 'i':
+                    // case '1' :
                     case 'F1' :
-                        if(BlackInkModule.cssId !== '' && BlackInkModule.manualCss !== '')
-                        {
-                            if($('#'+BlackInkModule.cssId).length === 0)
-                                BlackInkModule.injectCss(BlackInkModule.cssId, BlackInkModule.manualCss);
-                            else 
-                                $('#'+BlackInkModule.cssId).remove();
-                        }
+                        BlackInkModule.toggleBlackInk();
                         // e.stopPropagation();
                         // e.preventDefault();
                         break;
-                    case 'N':
-                    case 'n':
+                    // case '2' :
                     case 'F2' :
-                        $('html').toggleClass(BlackInkModule.NightModeClass);
+                        BlackInkModule.toggleBlackInkNightMode();
                         // e.stopPropagation();
                         // e.preventDefault();
                         break;
-                    case 'P':
-                    case 'p':
+                    // case '3':
                     case 'F3' :
                         BlackInkModule.pickElements();
                         e.stopPropagation();
