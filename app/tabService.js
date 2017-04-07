@@ -17,24 +17,24 @@ angular.module('blackInkApp').service('tabService', function ($q) {
     this.validateTab = function(tab) {
         var dfr = $q.defer();
         var url = tab.url;
-        var stop = function() {
-            chrome.browserAction.setBadgeBackgroundColor({
-                color: [255, 0, 0, 255],
-                tabId: tab.id
-            });
-            chrome.browserAction.setBadgeText({
-                text: "!",
-                tabId: tab.id
-            });
-        };
+        // var stop = function() {
+        //     chrome.browserAction.setBadgeBackgroundColor({
+        //         color: [255, 0, 0, 255],
+        //         tabId: tab.id
+        //     });
+        //     chrome.browserAction.setBadgeText({
+        //         text: "!",
+        //         tabId: tab.id
+        //     });
+        // };
 
-        chrome.browserAction.setBadgeText({text: ""});
+        // chrome.browserAction.setBadgeText({text: ""});
         if (url.indexOf("chrome://") === 0 || url.indexOf("chrome-extension://") === 0) {
-            stop();
+            // stop();
             dfr.reject("Warning: Does not work on internal browser pages.");
         } else if (url.indexOf("https://chrome.google.com/extensions/") === 0 || 
             url.indexOf("https://chrome.google.com/webstore/") === 0) {
-            stop();
+            // stop();
             dfr.reject("Warning: BlackInk does not work on the Chrome Pages.");
         } else {
             dfr.resolve(tab.id);

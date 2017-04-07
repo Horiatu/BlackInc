@@ -11,9 +11,26 @@
     "128": "/images/logos/128.png" 
   },
 
-  "browser_action": {
+  "page_action": {
     "default_icon": "/images/icon.png",
-    "default_popup": "/popup.html"
+    "default_title" : "BlackInk Little"
+  },
+
+  "background": {
+    "page": "/mainTab/background.html"
+  },
+
+  "options_page": "/OptionsTab/options.html",
+
+  "commands": {
+    "toggle-blackInk": {
+      "suggested_key": { "default": "Ctrl+Shift+1" },
+      "description": "Toggle BlackInk"
+    },
+    "toggle-nightMode": {
+      "suggested_key": { "default": "Ctrl+Shift+2" },
+      "description": "Toggle Night Mode"
+    }
   },
 
   "permissions": [
