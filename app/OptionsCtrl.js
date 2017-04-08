@@ -23,6 +23,8 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl', function($scope,
         // RedoDis: true,
     };
 
+    $scope.version = chrome.runtime.getManifest().version;
+
     //$scope.blackInkStorage.removeAll();
 
     // tabService.initTab([
