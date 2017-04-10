@@ -27,31 +27,74 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
     //$scope.blackInkStorage.removeAll();
     chrome.tabs.onSelectionChanged.addListener(function(tabId) {
         $scope.tabId = tabId;
-        // alert(tabId);
+        console.log('onSelectionChanged: ', tabId);
+    });
+
+    chrome.tabs.onUpdated.addListener(function(tabId) {
+        // console.log('initTabs: ', $scope.initTabs);
+        $scope.initTabs.removeItem(function(item) {
+            return item.tabId === tabId;
+        });
+        // console.log('onUpdated: ', tabId, $scope.initTabs);
+    });
+
+    chrome.tabs.onRemoved.addListener(function(tabId) {
+        // console.log('initTabs: ', $scope.initTabs);
+        $scope.initTabs.removeItem(function(item) {
+            return item.tabId === tabId;
+        });
+        // console.log('onRemoved: ', tabId, $scope.initTabs);
     });
 
     chrome.browserAction.onClicked.addListener(function(tab) { 
         // alert('icon clicked: '+tab.id);
-        var tabExists = $scope.initTabs.filter(function(item) {
+        var tabExists = $scope.initTabs.some(function(item) {
             return item.tabId === tab.id;
-        }).length>0;
+        });
 
-        // if(!tabExists) {
-            alert(tab.id + ' ' + tabExists);
+        // console.log('tabExists: ', tabExists);
+        if(!tabExists) {
+        //     $scope.initTabs.push({tabId: tab.id});
+        //     console.log('initTabs: ', $scope.initTabs);
         // }
 
-        $scope.init().then(
-            function(r){
-                $scope.initTabs.push({tabId: tab.id});
-                $scope.apply();
-                $scope.nightMode();
-            },
-            function(err) {
-                $scope.badge('X', [0, 153, 51, 1]);
-                alert(err);
-            }
-        );
+            $scope.init().then(
+                function(r){
+                    $scope.initTabs.push({tabId: tab.id});
+                    console.log('initTabs: ', $scope.initTabs);                
+
+                    $scope.toggle();
+                },
+                function(err) {
+                    $scope.badge('X', [0, 153, 51, 1]);
+                    alert(err);
+                }
+            );
+        } else {
+            $scope.toggle();
+        }
     });
+
+    $scope.toggle = function() {
+        $scope.tabService.sendMessage($scope.tabId, {type:'getDefaults'},
+        function(msg) {
+            // console.log('getDefaults: ',msg);
+
+            if(msg) {
+                var nightOn = msg.hasNightMode;
+                var applyCss = msg.hasManualCss;
+                $scope.apply(applyCss, nightOn);
+            }
+            else {
+                console.log('setDefaults');
+                $scope.tabService.sendMessage($scope.tabId, {
+                    type:'setDefaults',
+                    inkColor: $scope.InkColor,
+                    textWeight: $scope.TextWeight,
+                });
+            }
+        });
+    };
 
     $scope.init = function() {
         // alert('init');
@@ -114,7 +157,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                                                 },
                                                 function myError(msg) {
                                                     console.log('getLocation.getSunrise.error:', msg);
-                                                    console.error('getLocation.getSunrise.error:', msg);
+                                                    // console.error('getLocation.getSunrise.error:', msg);
                                                     alert('getLocation.getSunrise.error: '+ msg);
                                                     completted.reject(msg);
                                                 });
@@ -125,7 +168,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                                     },
                                     function addError(msg) {
                                         console.log('getLocation.add.error:', msg);
-                                        console.error('getLocation.add.error:', msg);
+                                        // console.error('getLocation.add.error:', msg);
                                         alert('getLocation.add.error: '+ msg);
                                         completted.reject(msg);
                                     }
@@ -133,7 +176,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                             },
                             function locationError(msg) {
                                 console.log('getLocation.error:', msg);
-                                console.error('getLocation.error:', msg);
+                                // console.error('getLocation.error:', msg);
                                 alert('getLocation.error: '+ msg);
                                 completted.reject(msg);
                             }
@@ -144,13 +187,13 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                         
                         completted.promise.then(
                             function completedSuccess() {
-                                console.log('completed');
+                                // console.log('completed');
 
                                 $scope.isNightTime = sunriseService.isNightTime($scope.Sunrise, $scope.Sunset);
 
                                 $scope.tabService.sendMessage($scope.tabId, {type:'getDefaults'},
                                     function(msg) {
-                                        console.log('getDefaults: ',msg);
+                                        // console.log('getDefaults: ',msg);
 
                                         if(msg) {
                                             getDefaultsDefer.resolve({
@@ -160,7 +203,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                                         }
                                         else {
                                             console.log('setDefaults');
-                                            $scope.tabService.sendMessage({
+                                            $scope.tabService.sendMessage($scope.tabId, {
                                                 type:'setDefaults',
                                                 inkColor: $scope.InkColor,
                                                 textWeight: $scope.TextWeight,
@@ -212,30 +255,14 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
         blackInkStorage.removeAll();
     };
 
-    $scope.toggleShowHelp = function() {
-    	if($scope.ShowHelp === 'none') {
-    		$scope.ShowHelp = 'inherit';
-    	}
-    	else {
-    		$scope.ShowHelp = 'none';
-    	}
-    };
-
-    $scope.locationShowing = function(element, cls, show) {
-        console.log('locationShowing', element, cls, show);
-        if(show) {
-            console.log('isNightTime:', sunriseService.isNightTime($scope.Sunrise, $scope.Sunset));
-        }
-    };
-
-    $scope.apply = function() {
+    $scope.apply = function(applyCss, nightOn) {
         $scope.tabService.sendMessage($scope.tabId, {
             type: "css",
             cssId: 'BlackInkColor',
             inkColor: $scope.InkColor,
             textWeight: $scope.TextWeight,
             cssContent:
-                $scope.applyCss ? 
+                !applyCss ? 
                     '* {'+
                         'color:'+$scope.InkColor+' !important; '+
                         (($scope.TextWeight !== '') ? 'font-weight:'+$scope.TextWeight+' !important; ' : '') +
@@ -258,7 +285,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
     };
 
     $scope.nightMode = function(e) {
-        console.log($scope.nightOn);
+        // console.log('nightOn', $scope.nightOn);
         $scope.tabService.sendMessage($scope.tabId, {
             type: "nightMode",
             mode: $scope.nightOn,

@@ -102,6 +102,16 @@ if (!('filter' in Array.prototype)) {
     };
 }
 
+if(!('removeItem' in Array.prototype)) {
+    Array.prototype.removeItem= function(tester, that /*opt*/) {
+        for (var i = 0, n = this.length; i<n; i++)
+            if (i in this && tester.call(that, this[i], i, this)) {
+                this.splice(i, 1);
+                return this;
+            }
+    };
+}
+
 if (!('every' in Array.prototype)) {
     Array.prototype.every= function(tester, that /*opt*/) {
         for (var i= 0, n= this.length; i<n; i++)
