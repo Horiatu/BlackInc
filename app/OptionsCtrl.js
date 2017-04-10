@@ -174,34 +174,6 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl', function($scope,
         }
     };
 
-    $scope.apply = function() {
-        // $scope.tabService.sendMessage({
-        //     type: "css",
-        //     cssId: 'BlackInkColor',
-        //     inkColor: $scope.InkColor,
-        //     textWeight: $scope.TextWeight,
-        //     cssContent:
-        //         $scope.applyCss 
-        //             ? '* {'+
-        //                 'color:'+$scope.InkColor+' !important; '+
-        //                 (($scope.TextWeight !== '') ? 'font-weight:'+$scope.TextWeight+' !important; ' : '') +
-        //               '}'
-        //             : ''
-        // });
-        // $scope.badge('On', [0, 153, 51, 1]);
-    };
-
-    // $scope.badge = function(text, color) {
-    //     chrome.browserAction.setBadgeBackgroundColor({
-    //         color: color,
-    //         tabId: $scope.tabId
-    //     });
-    //     chrome.browserAction.setBadgeText({
-    //         text: text,
-    //         tabId: $scope.tabId
-    //     });
-    // };
-
     $scope.nightMode = function(e) {
         console.log($scope.nightOn);
         // $scope.tabService.sendMessage({
@@ -210,13 +182,6 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl', function($scope,
         //     cls: $scope.NightMode
         // });
         // $scope.badge('On', [0, 153, 51, 1]);
-    };
-
-    $scope.pickElements = function() {
-        // window.close();
-        // $scope.tabService.sendMessage({
-        //     type: "pick",
-        // });
     };
 
     $scope.fShare = function() {

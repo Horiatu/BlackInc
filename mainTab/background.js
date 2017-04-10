@@ -16,11 +16,11 @@ chrome.runtime.onInstalled.addListener(function() {
 	//chrome.runtime.openOptionsPage(function callback)
 });
 
-chrome.tabs.onSelectionChanged.addListener(function(tabId) {
-	// alert(tabId);
-	// // lastTabId = tabId;
-	// // chrome.pageAction.show(lastTabId);
-});
+// chrome.tabs.onSelectionChanged.addListener(function(tabId) {
+// 	// alert(tabId);
+// 	// // lastTabId = tabId;
+// 	// // chrome.pageAction.show(lastTabId);
+// });
 
 // chrome.browserAction.onClicked.addListener(function(tab) {
 //    chrome.tabs.executeScript(null, {file: "testScript.js"});
