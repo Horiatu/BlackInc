@@ -102,13 +102,19 @@ if (!('filter' in Array.prototype)) {
     };
 }
 
-if(!('removeItem' in Array.prototype)) {
-    Array.prototype.removeItem= function(tester, that /*opt*/) {
-        for (var i = 0, n = this.length; i<n; i++)
-            if (i in this && tester.call(that, this[i], i, this)) {
+if(!('filterRemove' in Array.prototype)) {
+    Array.prototype.filterRemove= function(tester, that /*opt*/) {
+        // var toRemove = this.filter(tester, that);
+        // toRemove.forEach(function(remove) {
+        //     var i = this.indexOf(remove);
+        //     this.splice(i, 1);
+        // });
+        // return this;
+        for (var i = this.length -1; i >=0; i--)
+            if (tester.call(that, this[i], i, this)) {
                 this.splice(i, 1);
-                return this;
             }
+        return this;
     };
 }
 

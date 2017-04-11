@@ -73,9 +73,9 @@ if(!BlackInkLoaded)
                                 break;
                         }
                         break;
-                    case 'pick' :
-                        BlackInkModule.pickElements();
-                        break;
+                    // case 'pick' :
+                    //     BlackInkModule.pickElements();
+                    //     break;
                 }
             });
 

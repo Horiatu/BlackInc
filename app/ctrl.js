@@ -31,18 +31,18 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
 
     chrome.tabs.onUpdated.addListener(function(tabId) {
         // console.log('initTabs: ', $scope.initTabs);
-        $scope.initTabs.removeItem(function(item) {
+        $scope.initTabs.filterRemove(function(item) {
             return item.tabId === tabId;
         });
         // console.log('onUpdated: ', tabId, $scope.initTabs);
     });
 
     chrome.tabs.onRemoved.addListener(function(tabId) {
-        // console.log('initTabs: ', $scope.initTabs);
-        $scope.initTabs.removeItem(function(item) {
+        console.log('initTabs: ', $scope.initTabs);
+        $scope.initTabs.filterRemove(function(item) {
             return item.tabId === tabId;
         });
-        // console.log('onRemoved: ', tabId, $scope.initTabs);
+        console.log('onRemoved: ', tabId, $scope.initTabs);
     });
 
     chrome.browserAction.onClicked.addListener(function(tab) { 
@@ -52,12 +52,12 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
         });
 
         if(!tabExists) {
-            $scope.initTabs.push({tabId: tab.id});
+            // $scope.initTabs.push({tabId: tab.id});
 
             $scope.init().then(
                 function(r){
                     $scope.initTabs.push({tabId: tab.id});
-                    console.log('initTabs: ', $scope.initTabs);                
+                    // console.log('initTabs: ', $scope.initTabs);                
 
                     $scope.toggle();
                 },
