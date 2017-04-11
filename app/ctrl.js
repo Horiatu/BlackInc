@@ -54,7 +54,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
 
         // console.log('tabExists: ', tabExists);
         if(!tabExists) {
-        //     $scope.initTabs.push({tabId: tab.id});
+            $scope.initTabs.push({tabId: tab.id});
         //     console.log('initTabs: ', $scope.initTabs);
         // }
 
