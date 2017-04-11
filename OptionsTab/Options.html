@@ -16,10 +16,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="coll-xs-12">
-                    <div class="jumbotron">
-                        <h1>BlackInk Little</h1>
+                    <div class="jumbotron" role='banner'>
+                        <h1><img src='/images/logos/32.png' style='width:46px; height:46px; margin-bottom: 8px;' class='shadow'/>
+                        BlackInk Little</h1>
                         <h2>Aren't you tired of low-contrast pages using gray ink for text?!</h2>
-                        <h2>{{version}}</h2>
+                        <h2 style="display:inline;">{{version}}</h2>
+                        <input type="image" class='toolbarBtn' id='Share' alt='Share' style='display:inline; float: right;' title='Share on Facebook' src='/images/fShare.png' ng-click='fShare()' />
                     </div>
                 </div>
             </div>
