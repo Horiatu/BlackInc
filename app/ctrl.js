@@ -38,11 +38,11 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
     });
 
     chrome.tabs.onRemoved.addListener(function(tabId) {
-        console.log('initTabs: ', $scope.initTabs);
+        // console.log('initTabs: ', $scope.initTabs);
         $scope.initTabs.filterRemove(function(item) {
             return item.tabId === tabId;
         });
-        console.log('onRemoved: ', tabId, $scope.initTabs);
+        // console.log('onRemoved: ', tabId, $scope.initTabs);
     });
 
     chrome.browserAction.onClicked.addListener(function(tab) { 

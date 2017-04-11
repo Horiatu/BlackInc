@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Black Ink",
   "short_name": "BlackInk",
-  "version": "1.0.1.0",
+  "version": "1.0.5.1",
 
   "description": "Enhance text contrast for bad web pages.",
   "icons": { 
@@ -21,17 +21,6 @@
   },
 
   "options_page": "/OptionsTab/options.html",
-
-  "commands": {
-    "toggle-blackInk": {
-      "suggested_key": { "default": "Ctrl+Shift+1" },
-      "description": "Toggle BlackInk"
-    },
-    "toggle-nightMode": {
-      "suggested_key": { "default": "Ctrl+Shift+2" },
-      "description": "Toggle Night Mode"
-    }
-  },
 
   "permissions": [
     "tabs", "activeTab", 
