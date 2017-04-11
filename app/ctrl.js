@@ -20,14 +20,13 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
         Sunset:  null,
 
         helpTooltip: 'hide help',
-        // UndoDis: true,
-        // RedoDis: true,
     };
 
     //$scope.blackInkStorage.removeAll();
+
     chrome.tabs.onSelectionChanged.addListener(function(tabId) {
         $scope.tabId = tabId;
-        console.log('onSelectionChanged: ', tabId);
+        // console.log('onSelectionChanged: ', tabId);
     });
 
     chrome.tabs.onUpdated.addListener(function(tabId) {
@@ -52,11 +51,8 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
             return item.tabId === tab.id;
         });
 
-        // console.log('tabExists: ', tabExists);
         if(!tabExists) {
             $scope.initTabs.push({tabId: tab.id});
-        //     console.log('initTabs: ', $scope.initTabs);
-        // }
 
             $scope.init().then(
                 function(r){
@@ -105,11 +101,11 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                 file: true,
                 content: "/lib/jquery/jquery-2.1.4.min.js"
             }, 
-            {
-                allFrames: false,
-                file: true,
-                content: "/lib/jquery/jquery-ui.min.js"
-            }, 
+            // {
+            //     allFrames: false,
+            //     file: true,
+            //     content: "/lib/jquery/jquery-ui.min.js"
+            // }, 
             {
                 allFrames: false,
                 file: true,
@@ -294,12 +290,12 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
         $scope.badge('On', [0, 153, 51, 1]);
     };
 
-    $scope.pickElements = function() {
-        window.close();
-        $scope.tabService.sendMessage($scope.tabId, {
-            type: "pick",
-        });
-    };
+    // $scope.pickElements = function() {
+    //     window.close();
+    //     $scope.tabService.sendMessage($scope.tabId, {
+    //         type: "pick",
+    //     });
+    // };
 
     $scope.fShare = function() {
         window.open("https://www.facebook.com/sharer?u=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fblack-ink%2Fjhpghaenkakfmpfkhokmglbhhooonbeg%3Fhl%3Den%26gl%3DCA", "_blank");

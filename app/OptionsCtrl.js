@@ -18,13 +18,10 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl', function($scope,
         NightMode: 'pink',
         Latitude:  43.7303873,
         Longitude:  -79.32944619999999,
-        // ShowLocation:  false,
         Sunrise:  null,
         Sunset:  null,
 
         helpTooltip: 'hide help',
-        // UndoDis: true,
-        // RedoDis: true,
     };
 
     $scope.version = chrome.runtime.getManifest().version;
