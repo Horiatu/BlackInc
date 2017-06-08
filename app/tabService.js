@@ -86,6 +86,7 @@ angular.module('blackInkApp').service('tabService', function ($q) {
             function(tab) {
                 _this.validateTab(tab).then(
                     function(tabId) {
+                        debugger;
                         _this.loadScripts(tabId, scripts).then(
                             dfr.resolve(tabId)
                         );
