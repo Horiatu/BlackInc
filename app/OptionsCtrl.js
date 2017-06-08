@@ -37,6 +37,12 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl', function($scope,
                 }
             });
 
+            $scope.$watch('NightMode', function(value) {
+                if(value && value !== undefined) {
+                    blackInkStorage.add({'TextWeight': value});
+                }
+            });
+
             $scope.$watch('applyCss', function(value) {
                 blackInkStorage.add({'applyCss': value});
             });
