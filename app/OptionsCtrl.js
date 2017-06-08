@@ -32,7 +32,7 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl', function($scope,
             });
 
             $scope.$watch('TextWeight', function(value) {
-                if(value !== null && value !== undefined) {
+                if(value && value !== undefined) {
                     blackInkStorage.add({'TextWeight': value});
                 }
             });
