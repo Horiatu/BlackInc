@@ -34,7 +34,7 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl', function($scope,
             console.log('findAll:', data);
             $scope.blackInkStorage.Data = data;
             data.forEachProp(function(k, v) {
-                console.log('--'+k+':',v ? v.toString() : v);
+                // console.log('--'+k+':',v ? v.toString() : v);
                 $scope[k] = v;
             });
 
