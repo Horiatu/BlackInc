@@ -21,10 +21,7 @@
                         BlackInk Little</h1>
                         <h2>Aren't you tired of low-contrast pages using gray ink for text?!</h2>
                         <h2 style="display:inline;">{{version}}</h2>
-                        <div style='display:inline; float: right;'>
-                            <input type="image" class='toolbarBtn' id='Share' alt='Share' title='Share on Facebook' src='/images/fShare.png' ng-click='fShare()' />
-                            <input type="image" class='toolbarBtn' id='Refresh' alt='Share' title='Clear Settings' src='/images/Refresh.png' ng-click='Refresh()' />
-                        </div>
+                        <input type="image" class='toolbarBtn' id='Share' alt='Share' style='display:inline; float: right;' title='Share on Facebook' src='/images/fShare.png' ng-click='fShare()' />
                     </div>
                 </div>
             </div>
@@ -33,9 +30,13 @@
                 <form id='form'>
                     <div class="col-sm-6 col-md-6">
                         <legend>Enhance text contrast for bad web pages</legend>
-                        <p>Select your options for text color and weight, then click the switch to change the main dominant text on the page.<br/>
+                        <p>Select your options bellow for text color and weght, then click the switch to change the main dominant text on the page.<br/>
                         Use <myKey>ctrl</myKey>+<myKey>shift</myKey>+<myKey>F1</myKey> to switch without opening the extension the second time.
                         </p>
+                        <p>Select your options for night filter, then click the switch to change the color temperature of the whole page.<br />
+                        Use <myKey>ctrl</myKey>+<myKey>shift</myKey>+<myKey>F2</myKey> to switch without opening again the extension.
+                        </p>
+                        <p>Auto and Night Mode - work in progress.</p>
                     </div>
 
                     <div class="col-sm-6 col-md-6">
@@ -57,6 +58,10 @@
                                             <input type="radio" name="color" id="clRed" ng-model="InkColor" value="#b60000"/>
                                             <label for="clRed">Red</label>
                                         </td>
+                                        <td class='right'>
+                                            <label class="switch green"><input type="checkbox" ng-click="apply()" ng-model="applyCss"><i></i></label>
+                                            <!-- <input type="button" ng-click="apply()" Value="Apply"/> -->
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td style="color:{{InkColor}};font-weight:{{TextWeight}};">Weight</td>
@@ -75,6 +80,53 @@
                                     </tr>
                                 </table>
                             </div>
+                            <div id='auto' class='roundBorder' ng-hide="errorMessage!=''">
+                                <table role='presentation'>
+                                    <tr>
+                                        <td class='right'>
+                                            <label>Night mode:</label>
+                                        </td>
+                                        <td>
+                                            <label><input type="radio" name="nightMode" ng-model="NightMode" value="pink"/>Pink</label>
+                                        </td>
+                                        <td>
+                                            <label><input type="radio" name="nightMode" ng-model="NightMode" value="black"/>Invert</label>
+                                        </td>
+                                        <td class='right'>
+                                            <label class="switch {{NightMode}}"><input type="checkbox" ng-click="nightMode()" ng-model="nightOn"><i></i></label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                    </tr>
+                                </table>
+                            </div>
+                        <!-- </div> -->
+                        <!-- <div class="row"> -->
+                            <div id='location' class='roundBorder' ng-class='{lightgray: isNightTime}' ng-hide="errorMessage!=''" style='display:{{ShowHelp}};'>
+                                <table id="location">
+                                    <tr>
+                                        <td>Latitude:</td>
+                                        <th>{{Latitude | number : 4}}</th>
+                                        <td class='right'>
+                                            <label class="switch red">Auto:<input type="checkbox" ng-model="nightAuto"><i></i></label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Longitude:</td>
+                                        <th>{{Longitude | number : 4}}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sunrise:</td>
+                                        <th>{{Sunrise | date:'h:mm:ss a' | lowercase}}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sunset:</td>
+                                        <th>{{Sunset | date:'h:mm:ss a' | lowercase}}</th>
+                                    </tr>
+                                </table>                
+                            </div>
+                        <!-- </div> -->
                         <div class="row">
                             <div 
                                 id='error' 
@@ -93,7 +145,9 @@
             <script type="text/javascript" src="/lib/angular/angular.js"></script>
             <script type="text/javascript" src="/app/app.js"></script>
             <script type="text/javascript" src="/app/storageService.js"></script>
-            <script type="text/javascript" src="/app/tabService.js"></script>
+            <script type="text/javascript" src="/app/locationService.js"></script>
+            <!-- <script type="text/javascript" src="/app/tabService.js"></script> -->
+            <script type="text/javascript" src="/app/sunriseService.js"></script>
             <script type="text/javascript" src="/app/OptionsCtrl.js"></script>
 
         </div>
