@@ -1,7 +1,7 @@
-angular.module('blackInkApp').controller('BlackInkOptionsCtrl', function($scope, $q, $http, blackInkStorage, locationService, sunriseService) {//, tabService
+angular.module('blackInkApp').controller('BlackInkOptionsCtrl', function($scope, $q, $http, blackInkStorage) {//, tabService
 
     $scope.blackInkStorage = blackInkStorage;
-    $scope.locationService = locationService;
+    // $scope.locationService = locationService;
     // $scope.tabService = tabService;
     $scope.errorMessage = '';
     $scope.tabId = 0;
@@ -74,52 +74,52 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl', function($scope,
 
             var completted = $q.defer();
             
-            locationService.getLocation().then(
-                function locationSuccess(position) {
-                    blackInkStorage.add({
-                        Latitude: Math.round(position.latitude*10000)/10000,
-                        Longitude: Math.round(position.longitude*10000)/10000
-                    }).then(
-                        function success(override){
-                            // console.log('isToday', override, $scope.Sunrise);
-                            if(override || !$scope.Sunrise || !$scope.Sunrise.isToday()) 
-                            {
-                                sunriseService.getSunrise($scope.Latitude, $scope.Longitude, override).then(
-                                    function mySuccess(response) {
-                                        //console.log('mySuccess:', response);
-                                        blackInkStorage.add({
-                                            Sunrise: response.Sunrise,
-                                            Sunset: response.Sunset
-                                        }).then(function() {
-                                            $scope.Sunrise = response.Sunrise;
-                                            $scope.Sunset = response.Sunset;
-                                        });
-                                        completted.resolve();
-                                    },
-                                    function myError(msg) {
-                                        console.log('getLocation.getSunrise.error:', msg);
-                                        console.error('getLocation.getSunrise.error:', msg);
-                                        completted.reject(msg);
-                                    });
-                            }
-                            else {
-                                completted.resolve();
-                            }
-                        },
-                        function addError(msg) {
-                            console.log('getLocation.add.error:', msg);
-                            console.error('getLocation.add.error:', msg);
-                            completted.reject(msg);
-                        }
-                    );
-                },
-                function locationError(msg) {
-                    console.log('getLocation.error:', msg);
-                    console.error('getLocation.error:', msg);
-                    completted.reject(msg);
-                }
+            // locationService.getLocation().then(
+            //     function locationSuccess(position) {
+            //         blackInkStorage.add({
+            //             Latitude: Math.round(position.latitude*10000)/10000,
+            //             Longitude: Math.round(position.longitude*10000)/10000
+            //         }).then(
+            //             function success(override){
+            //                 // console.log('isToday', override, $scope.Sunrise);
+            //                 if(override || !$scope.Sunrise || !$scope.Sunrise.isToday()) 
+            //                 {
+            //                     sunriseService.getSunrise($scope.Latitude, $scope.Longitude, override).then(
+            //                         function mySuccess(response) {
+            //                             //console.log('mySuccess:', response);
+            //                             blackInkStorage.add({
+            //                                 Sunrise: response.Sunrise,
+            //                                 Sunset: response.Sunset
+            //                             }).then(function() {
+            //                                 $scope.Sunrise = response.Sunrise;
+            //                                 $scope.Sunset = response.Sunset;
+            //                             });
+            //                             completted.resolve();
+            //                         },
+            //                         function myError(msg) {
+            //                             console.log('getLocation.getSunrise.error:', msg);
+            //                             console.error('getLocation.getSunrise.error:', msg);
+            //                             completted.reject(msg);
+            //                         });
+            //                 }
+            //                 else {
+            //                     completted.resolve();
+            //                 }
+            //             },
+            //             function addError(msg) {
+            //                 console.log('getLocation.add.error:', msg);
+            //                 console.error('getLocation.add.error:', msg);
+            //                 completted.reject(msg);
+            //             }
+            //         );
+            //     },
+            //     function locationError(msg) {
+            //         console.log('getLocation.error:', msg);
+            //         console.error('getLocation.error:', msg);
+            //         completted.reject(msg);
+            //     }
 
-            );
+            // );
 
             var getDefaultsDefer = $q.defer();
             
