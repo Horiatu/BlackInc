@@ -54,8 +54,9 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                     $scope.toggle();
                 },
                 function(err) {
-                    $scope.badge('X', [0, 153, 51, 1]);
-                    alert(err);
+                    // $scope.badge('X', 'red');
+                    chrome.browserAction.disable(tab.id);
+                    // alert(err);
                 }
             );
         } else {
@@ -92,11 +93,6 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                 file: true,
                 content: "/lib/jquery/jquery-2.1.4.min.js"
             }, 
-            // {
-            //     allFrames: false,
-            //     file: true,
-            //     content: "/lib/jquery/jquery-ui.min.js"
-            // }, 
             {
                 allFrames: false,
                 file: true,
@@ -141,21 +137,11 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                         });
                     },
                     function blackInkStorageError(err) {
-                        // console.log('blackInkStorage.error:', err);
-                        // console.error('blackInkStorage:', err);
-                        // $scope.errorMessage = err;
-                        // // $scope.badge('X', [0, 153, 51, 1]);
-                        // alert(err);
                         defer.reject(err);
                     }
                 );
             },
             function initTabError(err){
-                // console.log('initTab.error:', err);
-                // console.error('initTab:', err);
-                // $scope.errorMessage = err;
-                // // $scope.badge('X', [0, 153, 51, 1]);
-                // alert(err);
                 defer.reject(err);
             }
         );
