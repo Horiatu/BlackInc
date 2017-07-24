@@ -180,7 +180,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                       '}'
                     : ''
         });
-        $scope.badge('On', [0, 153, 51, 1]);
+        $scope.badge('On', applyCss ? 'gray' : $scope.InkColor);
     };
 
     $scope.badge = function(text, color) {
