@@ -59,7 +59,7 @@ angular.module('blackInkApp').service('blackInkStorage', function ($q) {
 
     this.removeAll = function() {
         _this.Data = {};
-        // _this.sync();
+        _this.sync();
         chrome.storage.sync.set({'blackInk': {}}, function() {
             console.log('Data in Chrome storage erased');
         });

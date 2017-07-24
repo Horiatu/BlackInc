@@ -11,13 +11,10 @@ if(!BlackInkLoaded)
     BlackInkModule = { 
         manualCss: '', 
         cssId: 'BlackInkColor',
-        NightModeClass: null, 
         defaults: {
             inkColor: null,
             textWeight: null,
             auto: false,
-            sunRise: null,
-            sunSet: null,
         },
 
         init: function() {
@@ -26,12 +23,11 @@ if(!BlackInkLoaded)
                     case 'setDefaults':
                         BlackInkModule.defaults.inkColor = req.inkColor;
                         BlackInkModule.defaults.textWeight = req.textWeight;
-                        console.log('setDefaults: ',BlackInkModule.defaults);
+                        // console.log('setDefaults: ',BlackInkModule.defaults);
                         break;
                     case 'getDefaults':
                         sendResponse({
                             defaults:BlackInkModule.defaults || {},
-                            hasNightMode: BlackInkModule.NightModeClass !== null && $('html').hasClass(BlackInkModule.NightModeClass), 
                             hasManualCss: $('#'+BlackInkModule.cssId).length > 0, 
                         });
                         break;
@@ -61,21 +57,6 @@ if(!BlackInkLoaded)
                                 break;
                         }
                         break;
-                    case 'nightMode':
-                        switch(req.mode) {
-                            case false :
-                                if(BlackInkModule.NightModeClass)
-                                    $('html').removeClass(BlackInkModule.NightModeClass);
-                                break;
-                            case true :
-                                BlackInkModule.NightModeClass = req.cls+"Filter";
-                                $('html').addClass(BlackInkModule.NightModeClass);
-                                break;
-                        }
-                        break;
-                    // case 'pick' :
-                    //     BlackInkModule.pickElements();
-                    //     break;
                 }
             });
 
@@ -111,11 +92,6 @@ if(!BlackInkLoaded)
                 switch (e.key) {
                     case 'F1' :
                         BlackInkModule.toggleBlackInk();
-                        e.stopPropagation();
-                        e.preventDefault();
-                        break;
-                    case 'F2' :
-                        BlackInkModule.toggleBlackInkNightMode();
                         e.stopPropagation();
                         e.preventDefault();
                         break;
