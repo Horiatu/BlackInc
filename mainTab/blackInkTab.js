@@ -76,7 +76,7 @@ if(!BlackInkLoaded)
                     chrome.extension.getURL('/mainTab/blackInk.css') + '" />');
             }
 
-            // BlackInkModule.addFilters();
+            BlackInkModule.addFilters();
 
             $(window).bind('keyup', BlackInkModule.blackInkToggles);
         
@@ -153,10 +153,17 @@ if(!BlackInkLoaded)
                     "    </filter>\n"+
                     "    <filter id='pinkMatrix'>\n"+
                     "        <feColorMatrix type='matrix' values='"+
-                    "1     0.769 0.189 0 0 "+
-                    "0     0.99  0     0 0 "+
-                    "0     0     0.99  0 0 "+
-                    "0     0     0     1 0 '/>\n"+
+                    "       1     0.769 0.189 0 0 "+
+                    "       0     0.99  0     0 0 "+
+                    "       0     0     0.99  0 0 "+
+                    "       0     0     0     1 0 '/>\n"+
+                    "    </filter>\n"+
+                    "    <filter id='blueish'>\n"+
+                    "        <feColorMatrix type='matrix' values='"+
+                    "       0.272 0.534 0.131 0    0 "+
+                    "       0.272 0.534 0.131 0    0 "+
+                    "       0.393 0.769 0.189 0    0 "+
+                    "       0     0     0     0.95 0'/>\n"+
                     "    </filter>\n"+
                     "</svg>";
 
