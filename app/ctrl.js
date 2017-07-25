@@ -94,17 +94,13 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
         // alert('init');
         var defer = $q.defer();
 
-        // var maskElements = function(total) {
-        //     // console.log('getRightClick', total);
-        // };
-
         chrome.contextMenus.create({
             id: 'BlackIncMenuItem',
             title: 'BlackInc Little',
             contexts: [chrome.contextMenus.ContextType.ALL],
             onclick: function(info, tab) {
                 // console.log('click info:', info, tab);
-                $scope.tabService.sendMessage($scope.tabId, {type:'getRightClick'});//, maskElements);
+                $scope.tabService.sendMessage($scope.tabId, {type:'getRightClick'});
             },
         });
 
@@ -125,10 +121,6 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                 // alert("tabId: "+ tabId);
                 $scope.blackInkStorage.findAll(defaults).then(
                     function blackInkStorageSuccess(data) {
-                        // console.log('findAll:', data);
-                        // chrome.contextMenus.removeAll(function() {
-                        // });
-
                         $scope.blackInkStorage.Data = data;
                         data.forEachProp(function(k, v) {
                             $scope[k] = v;

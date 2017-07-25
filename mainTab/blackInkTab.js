@@ -14,6 +14,7 @@ if(!BlackInkLoaded)
         cssId: 'BlackInkColor',
         rightClickEvn: null,
         elementsFromPoint: [],
+        inSelectElementsMode: false,
         defaults: {
             inkColor: null,
             textWeight: null,
@@ -36,15 +37,16 @@ if(!BlackInkLoaded)
                         });
                         break;
                     case 'getRightClick':
+                        if(BlackInkModule.inSelectElementsMode) break;
                         var f = function(total) {
-                            console.log('getRightClick', total);
-                            if(total===0) return;
+                            // console.log('getRightClick', total);
+                            if(total === 0) return;
 
                             var index = 0;
                             $(BlackInkModule.elementsFromPoint[index]).addClass('AccessAuditMarker');
                             
                             var arrowKeys = function(e) {
-                                console.log('arrowKeys', e);
+                                // console.log('arrowKeys', e);
                                 // if(e.ctrlKey && e.shiftKey) {
                                 switch (e.key) {
                                     case 'ArrowUp' :
@@ -64,12 +66,21 @@ if(!BlackInkLoaded)
                                     case 'Enter' :
                                         $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
                                         
+                                        BlackInkModule.inSelectElementsMode = false;
                                         $(window).unbind('keydown', arrowKeys);
                                         e.stopPropagation();
                                         e.preventDefault();
                                         break;
                                     case 'Escape' :
                                         $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
+                                        BlackInkModule.inSelectElementsMode = false;
+                                        $(window).unbind('keydown', arrowKeys);
+                                        e.stopPropagation();
+                                        e.preventDefault();
+                                        break;
+                                    case 'Delete' :
+                                        $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
+                                        BlackInkModule.inSelectElementsMode = false;
                                         $(window).unbind('keydown', arrowKeys);
                                         e.stopPropagation();
                                         e.preventDefault();
@@ -79,6 +90,7 @@ if(!BlackInkLoaded)
                             };
 
                             $(window).bind('keydown', arrowKeys);
+                            BlackInkModule.inSelectElementsMode = true;
 
                         }(BlackInkModule.elementsFromPoint.length);
                         break;
@@ -118,21 +130,23 @@ if(!BlackInkLoaded)
 
             BlackInkModule.addFilters();
 
-            // $(window).bind('keyup', BlackInkModule.blackInkToggles);
+            $(window).bind('keyup', BlackInkModule.blackInkToggles);
         
             // https://stackoverflow.com/questions/7703697/how-to-retrieve-the-element-where-a-contextmenu-has-been-executed
             $(window).bind('mousedown', function(event){
-                //right click
-                if(event.button == 2) { 
-                    BlackInkModule.rightClickEvn = event;
-                    // console.log(BlackInkModule.rightClickEvn);
+                if(!BlackInkModule.inSelectElementsMode) {
+                    //right click
+                    if(event.button == 2) { 
+                        BlackInkModule.rightClickEvn = event;
+                        // console.log(BlackInkModule.rightClickEvn);
 
-                    var x = event.clientX;
-                    var y = event.clientY;
+                        var x = event.clientX;
+                        var y = event.clientY;
 
-                    BlackInkModule.elementsFromPoint = document.elementsFromPoint(x, y);
+                        BlackInkModule.elementsFromPoint = document.elementsFromPoint(x, y);
 
-                    // sconsole.log('elementsFromPoint', BlackInkModule.elementsFromPoint);
+                        // sconsole.log('elementsFromPoint', BlackInkModule.elementsFromPoint);
+                    }
                 }
             });
 
@@ -151,18 +165,30 @@ if(!BlackInkLoaded)
             }
         },
 
-        // blackInkToggles: function(e) {
-        //     // console.log(e);
-        //     if(e.ctrlKey && e.shiftKey) {
-        //         switch (e.key) {
-        //             case 'F1' :
-        //                 BlackInkModule.toggleBlackInk();
-        //                 e.stopPropagation();
-        //                 e.preventDefault();
-        //                 break;
-        //         }
-        //     }
-        // },
+        blackInkToggles: function(e) {
+            // console.log(e);
+            
+            switch (e.key) {
+                case 'F1' :
+                    if(e.ctrlKey && e.shiftKey) {
+                        BlackInkModule.toggleBlackInk();
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }
+                    break;
+                case 'ArrowUp' :
+                case 'ArrowDown' :
+                case 'Enter' :
+                case 'Escape' :
+                case 'Delete' :
+                    if(BlackInkModule.inSelectElementsMode)
+                    {
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }
+                    break;                
+            }
+        },
 
         injectCss: function(id, css) {
             var element = document.getElementById(id);
