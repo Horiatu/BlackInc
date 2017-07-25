@@ -18,12 +18,13 @@ if(!BlackInkLoaded)
             inkColor: null,
             textWeight: null,
             auto: false,
-        },
+            },
 
         init: function() {
             chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
                 switch (req.type) {
                     case 'setDefaults':
+                        // console.log('BlackInkModule', BlackInkModule);
                         BlackInkModule.defaults.inkColor = req.inkColor;
                         BlackInkModule.defaults.textWeight = req.textWeight;
                         // console.log('setDefaults: ',BlackInkModule.defaults);
@@ -57,16 +58,16 @@ if(!BlackInkLoaded)
                             $('#'+BlackInkModule.cssId).remove();
                         }
                         break;
-                    case 'invert':
-                        switch(req.mode) {
-                            case false :
-                                $('body').removeClass("invertFilter");
-                                break;
-                            case true :
-                                $('body').addClass("invertFilter");
-                                break;
-                        }
-                        break;
+                    // case 'invert':
+                    //     switch(req.mode) {
+                    //         case false :
+                    //             $('body').removeClass("invertFilter");
+                    //             break;
+                    //         case true :
+                    //             $('body').addClass("invertFilter");
+                    //             break;
+                    //     }
+                    //     break;
                 }
             });
 

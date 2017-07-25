@@ -3,7 +3,7 @@
     text-shadow: rgba(0,0,0,.01) 0 0 1px;
 }
 
-.InvertVision, 
+/*.InvertVision, 
 .InvertVision img, 
 .InvertVision video
 {
@@ -13,21 +13,21 @@
 	-ms-filter: invert(100%);
 	filter: invert(100%);
 	background-color: white;
-}
+}*/
 
-.normalFilter {
+/*.normalFilter {
 	-webkit-filter: url(#normalMatrix);
 	   -moz-filter: url(#normalMatrix);
 	    -ms-filter: url(#normalMatrix);
 	     -o-filter: url(#normalMatrix);
 	        filter: url(#normalMatrix); /* Firefox 3.5+ */
-}
+}*/
 
 body {
 	background-color: white;
 }
 
-.blackFilter, 
+/*.blackFilter, 
 .blackFilter img, 
 .blackFilter video {
 	-webkit-filter: url(#invertMatrix);
@@ -35,7 +35,7 @@ body {
 	    -ms-filter: url(#invertMatrix);
 	     -o-filter: url(#invertMatrix);
 	        filter: url(#invertMatrix); /* Firefox 3.5+ */
-}
+}*/
 /*.sepiaFilter {
 	-webkit-filter: url(#sepiaMatrix);
 	   -moz-filter: url(#sepiaMatrix);
@@ -43,13 +43,13 @@ body {
 	     -o-filter: url(#sepiaMatrix);
 	        filter: url(#sepiaMatrix); /* Firefox 3.5+ */
 }*/
-.pinkFilter {
+/*.pinkFilter {
 	-webkit-filter: url(#pinkMatrix);
 	   -moz-filter: url(#pinkMatrix);
 	    -ms-filter: url(#pinkMatrix);
 	     -o-filter: url(#pinkMatrix);
 	        filter: url(#pinkMatrix); /* Firefox 3.5+ */
-}
+}*/
 
 .pointerEventsNone {
 	pointer-events: none;
