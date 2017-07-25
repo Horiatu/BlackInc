@@ -93,6 +93,20 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
     $scope.init = function() {
         // alert('init');
         var defer = $q.defer();
+        
+        chrome.contextMenus.create({
+            id: 'BlackIncMenuItem',
+            title: 'BlackInc Little',
+            contexts: [chrome.contextMenus.ContextType.ALL],
+            onclick: function(info, tab) {
+                console.log('click info:', info, tab);
+                $scope.tabService.sendMessage($scope.tabId, {type:'getRightClick'},
+                function(msg) {
+                    console.log('getRightClick', msg);
+                });
+            },
+        });
+
         tabService.initTab([
             {
                 allFrames: false,
@@ -111,26 +125,8 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                 $scope.blackInkStorage.findAll(defaults).then(
                     function blackInkStorageSuccess(data) {
                         // console.log('findAll:', data);
-                        chrome.contextMenus.removeAll(function() {
-                            var context = chrome.contextMenus.ContextType;
-                            chrome.contextMenus.create({
-                                id: 'BlackIncMenuItem',
-                                title: 'BlackInc Little',
-                                contexts: [
-                                    context.PAGE, 
-                                    context.LINK, 
-                                    context.SELECTION, 
-                                    context.IMAGE
-                                    ],
-                                onclick: function(info, tab) {
-                                    console.log('click info:', info, tab);
-                                    $scope.tabService.sendMessage($scope.tabId, {type:'getRightClick'},
-                                    function(msg) {
-                                        console.log('getRightClick', msg);
-                                    });
-                                },
-                            });
-                        });
+                        // chrome.contextMenus.removeAll(function() {
+                        // });
 
                         $scope.blackInkStorage.Data = data;
                         data.forEachProp(function(k, v) {

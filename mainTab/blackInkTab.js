@@ -85,29 +85,19 @@ if(!BlackInkLoaded)
                 //right click
                 if(event.button == 2) { 
                     BlackInkModule.rightClickEvn = event;
-                    console.log(BlackInkModule.rightClickEvn);
+                    // console.log(BlackInkModule.rightClickEvn);
 
-                    // var el;
-                    // var x = event.clientX;
-                    // var y = event.clientY;
+                    var x = event.clientX;
+                    var y = event.clientY;
 
-                    // do {
-                    //     el = document.elementFromPoint(x, y);
-                    //     BlackInkModule.elementsFromPoint.push(el);
-                    //     el.classList.add('pointerEventsNone');
-                    // } while (el.tagName !== 'HTML');
+                    BlackInkModule.elementsFromPoint = document.elementsFromPoint(x, y);
 
-                    // // clean up
-                    // for(var i  = 0; i < stack.length; i += 1) {
-                    //     BlackInkModule.elementsFromPoint[i].classList.remove('pointerEventsNone');
-                    // }
-
-                    // console.log('elementsFromPoint', BlackInkModule.elementsFromPoint);
+                    console.log('elementsFromPoint', BlackInkModule.elementsFromPoint);
                 }
             });
 
             BlackInkModule.toggleBlackInk();
-            
+
             BlackInkLoaded = true;
         },
 
