@@ -65,7 +65,7 @@ if(!BlackInkLoaded)
                                         break;
                                     case 'Enter' :
                                         $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
-                                        
+                                        $(BlackInkModule.elementsFromPoint[index]).addClass('blackInkHide');
                                         BlackInkModule.inSelectElementsMode = false;
                                         $(window).unbind('keydown', arrowKeys);
                                         e.stopPropagation();
@@ -80,6 +80,7 @@ if(!BlackInkLoaded)
                                         break;
                                     case 'Delete' :
                                         $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
+                                        $('.blackInkHide').removeClass('blackInkHide');
                                         BlackInkModule.inSelectElementsMode = false;
                                         $(window).unbind('keydown', arrowKeys);
                                         e.stopPropagation();
