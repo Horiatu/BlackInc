@@ -106,6 +106,8 @@ if(!BlackInkLoaded)
                 }
             });
 
+            BlackInkModule.toggleBlackInk();
+            
             BlackInkLoaded = true;
         },
 
