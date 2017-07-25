@@ -38,7 +38,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
     });
 
     chrome.browserAction.onClicked.addListener(function(tab) { 
-        // alert('icon clicked: '+tab.id);
+        // alert('icon clicked: ', tab);
         var tabExists = $scope.initTabs.some(function(item) {
             return item.tabId === tab.id;
         });
@@ -48,8 +48,11 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
 
             $scope.init().then(
                 function(r){
-                    $scope.initTabs.push({tabId: tab.id});
-                    // console.log('initTabs: ', $scope.initTabs);                
+                    $scope.initTabs.push({
+                        tabId: tab.id, 
+                        // tab: tab
+                    });
+                    // console.log('initTabs: ', $scope.initTabs);
 
                     $scope.toggle();
                 },
@@ -105,6 +108,27 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                 $scope.blackInkStorage.findAll(defaults).then(
                     function blackInkStorageSuccess(data) {
                         // console.log('findAll:', data);
+                        chrome.contextMenus.removeAll(function() {
+                            var context = chrome.contextMenus.ContextType;
+                            chrome.contextMenus.create({
+                                id: 'BlackIncMenuItem',
+                                title: 'BlackInc Little',
+                                contexts: [
+                                    context.PAGE, 
+                                    context.LINK, 
+                                    context.SELECTION, 
+                                    context.IMAGE
+                                    ],
+                                onclick: function(info, tab) {
+                                    console.log('click info:', info, tab);
+                                    $scope.tabService.sendMessage($scope.tabId, {type:'getRightClick'},
+                                    function(msg) {
+                                        console.log('getRightClick', msg);
+                                    });
+                                },
+                            });
+                        });
+
                         $scope.blackInkStorage.Data = data;
                         data.forEachProp(function(k, v) {
                             $scope[k] = v;

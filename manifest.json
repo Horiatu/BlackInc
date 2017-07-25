@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Black Ink",
   "short_name": "BlackInk",
-  "version": "1.0.5.3",
+  "version": "1.0.5.4",
 
   "description": "Enhance text contrast for bad web pages.",
   "icons": { 
@@ -26,7 +26,8 @@
     "tabs", "activeTab", 
     "<all_urls>", "debugger", "storage", 
     "contentSettings", "clipboardRead", "clipboardWrite",
-    "geolocation"
+    "geolocation",
+    "contextMenus"
   ],
 
   "web_accessible_resources": [

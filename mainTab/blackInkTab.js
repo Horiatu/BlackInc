@@ -6,11 +6,14 @@ catch (e) {
     BlackInkLoaded = false;
 }
 
+
 if(!BlackInkLoaded)
 {
     BlackInkModule = { 
         manualCss: '', 
         cssId: 'BlackInkColor',
+        rightClickEvn: null,
+        elementsFromPoint: [],
         defaults: {
             inkColor: null,
             textWeight: null,
@@ -29,6 +32,13 @@ if(!BlackInkLoaded)
                         sendResponse({
                             defaults:BlackInkModule.defaults || {},
                             hasManualCss: $('#'+BlackInkModule.cssId).length > 0, 
+                        });
+                        break;
+                    case 'getRightClick':
+                        sendResponse({
+                            x: BlackInkModule.rightClickEvn.clientX,
+                            y: BlackInkModule.rightClickEvn.clientY,
+                            toElement: BlackInkModule.rightClickEvn.toElement.innerHTML,
                         });
                         break;
                     case 'css':
@@ -65,10 +75,36 @@ if(!BlackInkLoaded)
                     chrome.extension.getURL('/mainTab/blackInk.css') + '" />');
             }
 
-            BlackInkModule.addFilters();
+            // BlackInkModule.addFilters();
 
             $(window).bind('keyup', BlackInkModule.blackInkToggles);
         
+            // https://stackoverflow.com/questions/7703697/how-to-retrieve-the-element-where-a-contextmenu-has-been-executed
+            $(window).bind('mousedown', function(event){
+                //right click
+                if(event.button == 2) { 
+                    BlackInkModule.rightClickEvn = event;
+                    console.log(BlackInkModule.rightClickEvn);
+
+                    // var el;
+                    // var x = event.clientX;
+                    // var y = event.clientY;
+
+                    // do {
+                    //     el = document.elementFromPoint(x, y);
+                    //     BlackInkModule.elementsFromPoint.push(el);
+                    //     el.classList.add('pointerEventsNone');
+                    // } while (el.tagName !== 'HTML');
+
+                    // // clean up
+                    // for(var i  = 0; i < stack.length; i += 1) {
+                    //     BlackInkModule.elementsFromPoint[i].classList.remove('pointerEventsNone');
+                    // }
+
+                    // console.log('elementsFromPoint', BlackInkModule.elementsFromPoint);
+                }
+            });
+
             BlackInkLoaded = true;
         },
 
@@ -80,10 +116,6 @@ if(!BlackInkLoaded)
                 else 
                     $('#'+BlackInkModule.cssId).remove();
             }
-        },
-
-        toggleBlackInkNightMode: function() {
-            $('html').toggleClass(BlackInkModule.NightModeClass);
         },
 
         blackInkToggles: function(e) {
