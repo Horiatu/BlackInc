@@ -36,11 +36,51 @@ if(!BlackInkLoaded)
                         });
                         break;
                     case 'getRightClick':
-                        sendResponse({
-                            x: BlackInkModule.rightClickEvn.clientX,
-                            y: BlackInkModule.rightClickEvn.clientY,
-                            toElement: BlackInkModule.rightClickEvn.toElement.innerHTML,
-                        });
+                        var f = function(total) {
+                            console.log('getRightClick', total);
+                            if(total===0) return;
+
+                            var index = 0;
+                            $(BlackInkModule.elementsFromPoint[index]).addClass('AccessAuditMarker');
+                            
+                            var arrowKeys = function(e) {
+                                console.log('arrowKeys', e);
+                                // if(e.ctrlKey && e.shiftKey) {
+                                switch (e.key) {
+                                    case 'ArrowUp' :
+                                        $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
+                                        index = (index+total-1) % total;
+                                        $(BlackInkModule.elementsFromPoint[index]).addClass('AccessAuditMarker');
+                                        e.stopPropagation();
+                                        e.preventDefault();
+                                        break;
+                                    case 'ArrowDown' :
+                                        $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
+                                        index = (index+1) % total;
+                                        $(BlackInkModule.elementsFromPoint[index]).addClass('AccessAuditMarker');
+                                        e.stopPropagation();
+                                        e.preventDefault();
+                                        break;
+                                    case 'Enter' :
+                                        $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
+                                        
+                                        $(window).unbind('keydown', arrowKeys);
+                                        e.stopPropagation();
+                                        e.preventDefault();
+                                        break;
+                                    case 'Escape' :
+                                        $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
+                                        $(window).unbind('keydown', arrowKeys);
+                                        e.stopPropagation();
+                                        e.preventDefault();
+                                        break;
+                                }
+                                // }
+                            };
+
+                            $(window).bind('keydown', arrowKeys);
+
+                        }(BlackInkModule.elementsFromPoint.length);
                         break;
                     case 'css':
                         BlackInkModule.cssId = req.cssId || "BlackInkColor";
@@ -78,7 +118,7 @@ if(!BlackInkLoaded)
 
             BlackInkModule.addFilters();
 
-            $(window).bind('keyup', BlackInkModule.blackInkToggles);
+            // $(window).bind('keyup', BlackInkModule.blackInkToggles);
         
             // https://stackoverflow.com/questions/7703697/how-to-retrieve-the-element-where-a-contextmenu-has-been-executed
             $(window).bind('mousedown', function(event){
@@ -92,7 +132,7 @@ if(!BlackInkLoaded)
 
                     BlackInkModule.elementsFromPoint = document.elementsFromPoint(x, y);
 
-                    console.log('elementsFromPoint', BlackInkModule.elementsFromPoint);
+                    // sconsole.log('elementsFromPoint', BlackInkModule.elementsFromPoint);
                 }
             });
 
@@ -111,18 +151,18 @@ if(!BlackInkLoaded)
             }
         },
 
-        blackInkToggles: function(e) {
-            // console.log(e);
-            if(e.ctrlKey && e.shiftKey) {
-                switch (e.key) {
-                    case 'F1' :
-                        BlackInkModule.toggleBlackInk();
-                        e.stopPropagation();
-                        e.preventDefault();
-                        break;
-                }
-            }
-        },
+        // blackInkToggles: function(e) {
+        //     // console.log(e);
+        //     if(e.ctrlKey && e.shiftKey) {
+        //         switch (e.key) {
+        //             case 'F1' :
+        //                 BlackInkModule.toggleBlackInk();
+        //                 e.stopPropagation();
+        //                 e.preventDefault();
+        //                 break;
+        //         }
+        //     }
+        // },
 
         injectCss: function(id, css) {
             var element = document.getElementById(id);

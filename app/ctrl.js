@@ -93,17 +93,18 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
     $scope.init = function() {
         // alert('init');
         var defer = $q.defer();
-        
+
+        // var maskElements = function(total) {
+        //     // console.log('getRightClick', total);
+        // };
+
         chrome.contextMenus.create({
             id: 'BlackIncMenuItem',
             title: 'BlackInc Little',
             contexts: [chrome.contextMenus.ContextType.ALL],
             onclick: function(info, tab) {
-                console.log('click info:', info, tab);
-                $scope.tabService.sendMessage($scope.tabId, {type:'getRightClick'},
-                function(msg) {
-                    console.log('getRightClick', msg);
-                });
+                // console.log('click info:', info, tab);
+                $scope.tabService.sendMessage($scope.tabId, {type:'getRightClick'});//, maskElements);
             },
         });
 
