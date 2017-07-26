@@ -170,6 +170,10 @@ if(!BlackInkLoaded)
             }
         },
 
+        toggleBlackInkNightMode: function() {
+            $('html').toggleClass('blackFilter');
+        },
+
         blackInkToggles: function(e) {
             // console.log(e);
             
@@ -177,6 +181,13 @@ if(!BlackInkLoaded)
                 case 'F1' :
                     if(e.ctrlKey && e.shiftKey) {
                         BlackInkModule.toggleBlackInk();
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }
+                    break;
+                case 'F2' :
+                    if(e.ctrlKey && e.shiftKey) {
+                        BlackInkModule.toggleBlackInkNightMode();
                         e.stopPropagation();
                         e.preventDefault();
                     }
@@ -252,7 +263,7 @@ if(!BlackInkLoaded)
                     "Press <MyKey>Delete</MyKey> to unhide all previously hiden elements</p>"+
                     "<h2>Other Commands</h2>"+
                     "<p><myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F1</myKey> toggle black ink<br/>"+
-                    "<p><myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F2</myKey> toggle reverse colors<br/>"+
+                    "<myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F2</myKey> toggle reverse colors<br/>"+
                     "</p>"+
                     "</div>";
                     s = s.replace(/[\s+|\n+]+/g, ' ').replace(/\>\s+\</g, '><');

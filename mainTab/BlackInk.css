@@ -105,16 +105,20 @@ myKey {
 }*/
 
 
+.blackFilter {
+	background-color: white;
+}
 
-/*.blackFilter, 
+.blackFilter, 
 .blackFilter img, 
-.blackFilter video {
+.blackFilter video,
+.blackFilter .blackInkHelp {
 	-webkit-filter: url(#invertMatrix);
 	   -moz-filter: url(#invertMatrix);
 	    -ms-filter: url(#invertMatrix);
 	     -o-filter: url(#invertMatrix);
 	        filter: url(#invertMatrix); 
-}*/
+}
 /*.sepiaFilter {
 	-webkit-filter: url(#sepiaMatrix);
 	   -moz-filter: url(#sepiaMatrix);
