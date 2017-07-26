@@ -133,7 +133,7 @@ if(!BlackInkLoaded)
                     chrome.extension.getURL('/mainTab/blackInk.css') + '" />');
             }
 
-            BlackInkModule.addFilters();
+            BlackInkModule.addFiltersAndHelp();
 
             $(window).bind('keyup', BlackInkModule.blackInkToggles);
         
@@ -216,7 +216,7 @@ if(!BlackInkLoaded)
             }
         },
 
-        addFilters: function() {
+        addFiltersAndHelp: function() {
             if(!document.getElementById("svgFilters")) {
                 var s = 
                     "<svg id='svgFilters' xmlns='http://www.w3.org/2000/svg' style='display:none'>\n"+
@@ -243,12 +243,17 @@ if(!BlackInkLoaded)
                     " id='blackInkHelp'"+
                     " style='display:none;'"+
                     ">"+
+
                     "<h1>BlackInk Help</h1>"+
                     "<h2>Hide Elements</h2>"+
                     "<p>Press <MyKey>Escape</MyKey> to cancel this mode<br/>"+
                     "Press <MyKey>Arror-Up</MyKey> or <MyKey>Arrow-Down</MyKey> to move parent or child element<br/>"+
                     "Press <MyKey>Enter</MyKey> or <MyKey>Space Bar</MyKey> to hide the selected element<br/>"+
                     "Press <MyKey>Delete</MyKey> to unhide all previously hiden elements</p>"+
+                    "<h2>Other Commands</h2>"+
+                    "<p><myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F1</myKey> toggle black ink<br/>"+
+                    "<p><myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F2</myKey> toggle reverse colors<br/>"+
+                    "</p>"+
                     "</div>";
                     s = s.replace(/[\s+|\n+]+/g, ' ').replace(/\>\s+\</g, '><');
                 // alert(s);
