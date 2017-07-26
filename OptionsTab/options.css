@@ -23,7 +23,7 @@
 h2 {
     font-family: "Poiret One";
     font-weight: 600;
-    font-size: 21px;
+    font-size: 18px;
 }
 
 .col-md-6 {
@@ -116,9 +116,9 @@ myKey {
     border-radius: 3px;
     padding: 0 4px;
     background: #dbdbdb;
-    /* color: white; */
-    /* font-weight: bold; */
-    font-size: 10px;
+    color:black;
+    font-weight: bold;
+    font-size: 12px;
     font-family: arial;
     margin: 0 1px;
     filter: drop-shadow(1px 1px 2px rgba(127,127,127,0.9));
@@ -139,5 +139,9 @@ myKey {
     -webkit-filter: drop-shadow(0px 0px 4px aliceblue);
     padding: 3px 3px 0px 3px;
     border-style: solid;
+}
+
+hide {
+  color:transparent !important;
 }
 
