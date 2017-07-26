@@ -94,14 +94,16 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
         // alert('init');
         var defer = $q.defer();
 
-        chrome.contextMenus.create({
-            id: 'BlackIncMenuItem',
-            title: 'BlackInc Little',
-            contexts: [chrome.contextMenus.ContextType.ALL],
-            onclick: function(info, tab) {
-                // console.log('click info:', info, tab);
-                $scope.tabService.sendMessage($scope.tabId, {type:'getRightClick'});
-            },
+        chrome.contextMenus.removeAll(function() {
+            chrome.contextMenus.create({
+                id: 'BlackIncMenuItem',
+                title: 'BlackInc Little',
+                contexts: [chrome.contextMenus.ContextType.ALL],
+                onclick: function(info, tab) {
+                    // console.log('click info:', info, tab);
+                    $scope.tabService.sendMessage($scope.tabId, {type:'getRightClick'});
+                },
+            });
         });
 
         tabService.initTab([
@@ -110,6 +112,11 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                 file: true,
                 content: "/lib/jquery/jquery-2.1.4.min.js"
             }, 
+            // {
+            //     allFrames: false,
+            //     file: true,
+            //     content: "/lib/jquery/jquery-ui.min.js"
+            // }, 
             {
                 allFrames: false,
                 file: true,

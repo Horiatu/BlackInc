@@ -238,7 +238,11 @@ if(!BlackInkLoaded)
                     "       0     0     0     0.95 0'/>\n"+
                     "    </filter>\n"+
                     "</svg>\n"+
-                    "<div class='blackInkHelp' id='blackInkHelp' style='bottom:40px; display:none;'>"+
+                    "<div"+
+                    " class='blackInkHelp helpTop'"+
+                    " id='blackInkHelp'"+
+                    " style='display:none;'"+
+                    ">"+
                     "<h1>BlackInk Help</h1>"+
                     "<h2>Hide Elements</h2>"+
                     "<p>Press <MyKey>Escape</MyKey> to cancel this mode<br/>"+
@@ -250,6 +254,10 @@ if(!BlackInkLoaded)
                 // alert(s);
 
                 $("body").append(s);
+
+                document.getElementById("blackInkHelp").addEventListener("mouseenter", function( event ) {
+                    $(event.target).toggleClass('helpTop').toggleClass('helpBottom');
+                });
             }
         },
 
