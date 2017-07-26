@@ -48,7 +48,6 @@ if(!BlackInkLoaded)
                             
                             var arrowKeys = function(e) {
                                 // console.log('arrowKeys', e);
-                                // if(e.ctrlKey && e.shiftKey) {
                                 switch (e.key) {
                                     case 'ArrowDown' :
                                         $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
@@ -65,6 +64,7 @@ if(!BlackInkLoaded)
                                         e.preventDefault();
                                         break;
                                     case 'Enter' :
+                                    case ' ' :
                                         $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
                                         $(BlackInkModule.elementsFromPoint[index]).addClass('blackInkHide');
                                         BlackInkModule.inSelectElementsMode = false;
@@ -184,6 +184,7 @@ if(!BlackInkLoaded)
                 case 'ArrowUp' :
                 case 'ArrowDown' :
                 case 'Enter' :
+                case ' ' :
                 case 'Escape' :
                 case 'Delete' :
                     if(BlackInkModule.inSelectElementsMode)
@@ -238,7 +239,12 @@ if(!BlackInkLoaded)
                     "    </filter>\n"+
                     "</svg>\n"+
                     "<div class='blackInkHelp' id='blackInkHelp' style='bottom:40px; display:none;'>"+
-                    "<p>BlackInk Help</p>"+
+                    "<h1>BlackInk Help</h1>"+
+                    "<h2>Hide Elements</h2>"+
+                    "<p>Press <MyKey>Escape</MyKey> to cancel this mode<br/>"+
+                    "Press <MyKey>Arror-Up</MyKey> or <MyKey>Arrow-Down</MyKey> to move parent or child element<br/>"+
+                    "Press <MyKey>Enter</MyKey> or <MyKey>Space Bar</MyKey> to hide the selected element<br/>"+
+                    "Press <MyKey>Delete</MyKey> to unhide all previously hiden elements</p>"+
                     "</div>";
                     s = s.replace(/[\s+|\n+]+/g, ' ').replace(/\>\s+\</g, '><');
                 // alert(s);

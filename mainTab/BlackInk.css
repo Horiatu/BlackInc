@@ -27,18 +27,34 @@ body {
 }
 
 .blackInkHelp {
-	position: absolute;
+	position: fixed;
     left: 30%;
-    /*bottom: 40px;*/
-    width: 40%;
+    /*width: 40%;*/
     z-index: 10000;
     background: rgba(130, 170, 204, 0.95);
-    color: white !important;
     padding: 5px 15px;
     border-radius: 5px;
     box-shadow: navy 0px 0px 10px 0px;
 }
 
+.blackInkHelp h1, .blackInkHelp h2, .blackInkHelp p {
+	color: white !important;
+}
+
+myKey {
+    display: inline;
+    /*text-transform: lowercase;*/
+    border: #a1a1a1 1px solid;
+    border-radius: 3px;
+    padding: 0 4px;
+    background: rgba(104, 124, 150, 0.85);
+    color: white !important; 
+    font-weight: bold;
+    font-size: 12px; 
+    font-family: arial;
+    /* margin: 0 1px; */
+    /* filter: drop-shadow(1px 1px 2px rgba(127,127,127,0.9)); */
+}
 /*.InvertVision, 
 .InvertVision img, 
 .InvertVision video
