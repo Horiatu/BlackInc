@@ -44,19 +44,20 @@ if(!BlackInkLoaded)
 
                             var index = 0;
                             $(BlackInkModule.elementsFromPoint[index]).addClass('AccessAuditMarker');
+                            $('.blackInkHelp').css('display', 'inherit');
                             
                             var arrowKeys = function(e) {
                                 // console.log('arrowKeys', e);
                                 // if(e.ctrlKey && e.shiftKey) {
                                 switch (e.key) {
-                                    case 'ArrowUp' :
+                                    case 'ArrowDown' :
                                         $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
                                         index = (index+total-1) % total;
                                         $(BlackInkModule.elementsFromPoint[index]).addClass('AccessAuditMarker');
                                         e.stopPropagation();
                                         e.preventDefault();
                                         break;
-                                    case 'ArrowDown' :
+                                    case 'ArrowUp' :
                                         $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
                                         index = (index+1) % total;
                                         $(BlackInkModule.elementsFromPoint[index]).addClass('AccessAuditMarker');
@@ -67,6 +68,7 @@ if(!BlackInkLoaded)
                                         $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
                                         $(BlackInkModule.elementsFromPoint[index]).addClass('blackInkHide');
                                         BlackInkModule.inSelectElementsMode = false;
+                                        $('.blackInkHelp').css('display', 'none');
                                         $(window).unbind('keydown', arrowKeys);
                                         e.stopPropagation();
                                         e.preventDefault();
@@ -74,6 +76,7 @@ if(!BlackInkLoaded)
                                     case 'Escape' :
                                         $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
                                         BlackInkModule.inSelectElementsMode = false;
+                                        $('.blackInkHelp').css('display', 'none');
                                         $(window).unbind('keydown', arrowKeys);
                                         e.stopPropagation();
                                         e.preventDefault();
@@ -82,6 +85,7 @@ if(!BlackInkLoaded)
                                         $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
                                         $('.blackInkHide').removeClass('blackInkHide');
                                         BlackInkModule.inSelectElementsMode = false;
+                                        $('.blackInkHelp').css('display', 'none');
                                         $(window).unbind('keydown', arrowKeys);
                                         e.stopPropagation();
                                         e.preventDefault();
@@ -232,7 +236,12 @@ if(!BlackInkLoaded)
                     "       0.393 0.769 0.189 0    0 "+
                     "       0     0     0     0.95 0'/>\n"+
                     "    </filter>\n"+
-                    "</svg>";
+                    "</svg>\n"+
+                    "<div class='blackInkHelp' id='blackInkHelp' style='bottom:40px; display:none;'>"+
+                    "<p>BlackInk Help</p>"+
+                    "</div>";
+                    s = s.replace(/[\s+|\n+]+/g, ' ').replace(/\>\s+\</g, '><');
+                // alert(s);
 
                 $("body").append(s);
             }

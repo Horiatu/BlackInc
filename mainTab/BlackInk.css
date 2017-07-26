@@ -26,6 +26,19 @@ body {
 	display:none !important;
 }
 
+.blackInkHelp {
+	position: absolute;
+    left: 30%;
+    /*bottom: 40px;*/
+    width: 40%;
+    z-index: 10000;
+    background: rgba(130, 170, 204, 0.95);
+    color: white !important;
+    padding: 5px 15px;
+    border-radius: 5px;
+    box-shadow: navy 0px 0px 10px 0px;
+}
+
 /*.InvertVision, 
 .InvertVision img, 
 .InvertVision video
