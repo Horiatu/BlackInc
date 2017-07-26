@@ -44,7 +44,7 @@ if(!BlackInkLoaded)
 
                             var index = 0;
                             $(BlackInkModule.elementsFromPoint[index]).addClass('AccessAuditMarker');
-                            $('.blackInkHelp').css('display', 'inherit');
+                            $('.blackInkHelp').css('display', 'inherit').focus();
                             
                             var arrowKeys = function(e) {
                                 // console.log('arrowKeys', e);
@@ -249,30 +249,38 @@ if(!BlackInkLoaded)
                     "       0     0     0     0.95 0'/>\n"+
                     "    </filter>\n"+
                     "</svg>\n"+
+
                     "<div"+
                     " class='blackInkHelp helpTop'"+
                     " id='blackInkHelp'"+
                     " style='display:none;'"+
+                    " tabindex='0'"+
+                    " role='dialog'"+
                     ">"+
 
-                    "<h1>BlackInk Help</h1>"+
-                    "<h2>Hide Elements</h2>"+
-                    "<p>Press <MyKey>Escape</MyKey> to cancel this mode<br/>"+
-                    "Press <MyKey>Arror-Up</MyKey> or <MyKey>Arrow-Down</MyKey> to move parent or child element<br/>"+
-                    "Press <MyKey>Enter</MyKey> or <MyKey>Space Bar</MyKey> to hide the selected element<br/>"+
-                    "Press <MyKey>Delete</MyKey> to unhide all previously hiden elements</p>"+
-                    "<h2>Other Commands</h2>"+
-                    "<p><myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F1</myKey> toggle black ink<br/>"+
-                    "<myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F2</myKey> toggle reverse colors<br/>"+
+                    "<img id='blackInkLogo' alt=''><h1>BlackInk Help<hide>.</hide></h1>"+
+                    
+                    "<h2>Hide Elements<hide>.</hide></h2>"+
+                    "<p>Press <MyKey>Escape</MyKey> to cancel this mode<hide>.</hide><br/>"+
+                    "Press <MyKey>Arrow-Up</MyKey> or <MyKey>Arrow-Down</MyKey> to move parent or child element.<br/>"+
+                    "Press <MyKey>Enter</MyKey> or <MyKey>Space Bar</MyKey> to hide the selected element.<br/>"+
+                    "Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.</p>"+
+                    
+                    "<h2>Other Commands<hide>.</hide></h2>"+
+                    "<p><myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F1</myKey> toggle black ink.<br/>"+
+                    "<myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F2</myKey> toggle invert colors.<br/>"+
                     "</p>"+
+
                     "</div>";
                     s = s.replace(/[\s+|\n+]+/g, ' ').replace(/\>\s+\</g, '><');
                 // alert(s);
 
                 $("body").append(s);
 
+                 $('#blackInkLogo').attr('src', chrome.extension.getURL("/images/logos/32.png"));
+
                 document.getElementById("blackInkHelp").addEventListener("mouseenter", function( event ) {
-                    $(event.target).toggleClass('helpTop').toggleClass('helpBottom');
+                    $(event.target).toggleClass('helpTop').toggleClass('helpBottom').focus();
                 });
             }
         },

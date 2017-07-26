@@ -28,8 +28,7 @@ body {
 
 .blackInkHelp {
 	position: fixed;
-    left: 30%;
-    /*width: 40%;*/
+    left: 10%;
     z-index: 10000;
     background: rgba(130, 170, 204, 0.95);
     padding: 5px 15px;
@@ -45,6 +44,7 @@ body {
 	font-size: 18px !important;
 	font-weight: normal !important;
 	color: black !important;
+	margin: 8px 0 0 0;
 }
 
 .blackInkHelp h2 {
@@ -52,13 +52,20 @@ body {
 	font-weight: normal !important;
 	border-bottom: white 1px solid;
 	margin-bottom: 8px;
-	color: white !important;
+	margin-top: 4px;
+	color: black !important;
 }
 
 .blackInkHelp p {
 	font-size: 12px !important;
 	font-weight: normal !important;
 	color: white !important;
+	margin: 0 0 8px 0;
+	line-height: 18px;
+}
+
+hide {
+	color:transparent !important;
 }
 
 myKey {
@@ -84,26 +91,9 @@ myKey {
 	bottom: 24px;
 }
 
-/*.InvertVision, 
-.InvertVision img, 
-.InvertVision video
-{
-	-webkit-filter: invert(100%);
-	-moz-filter: invert(100%);
-	-o-filter: invert(100%);
-	-ms-filter: invert(100%);
-	filter: invert(100%);
-	background-color: white;
-}*/
-
-/*.normalFilter {
-	-webkit-filter: url(#normalMatrix);
-	   -moz-filter: url(#normalMatrix);
-	    -ms-filter: url(#normalMatrix);
-	     -o-filter: url(#normalMatrix);
-	        filter: url(#normalMatrix); 
-}*/
-
+#blackInkLogo {
+	float: right;
+}
 
 .blackFilter {
 	background-color: white;
@@ -119,18 +109,3 @@ myKey {
 	     -o-filter: url(#invertMatrix);
 	        filter: url(#invertMatrix); 
 }
-/*.sepiaFilter {
-	-webkit-filter: url(#sepiaMatrix);
-	   -moz-filter: url(#sepiaMatrix);
-	    -ms-filter: url(#sepiaMatrix);
-	     -o-filter: url(#sepiaMatrix);
-	        filter: url(#sepiaMatrix); 
-}*/
-/*.pinkFilter {
-	-webkit-filter: url(#pinkMatrix);
-	   -moz-filter: url(#pinkMatrix);
-	    -ms-filter: url(#pinkMatrix);
-	     -o-filter: url(#pinkMatrix);
-	        filter: url(#pinkMatrix); 
-}*/
-
