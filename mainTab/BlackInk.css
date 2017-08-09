@@ -3,13 +3,17 @@
     text-shadow: rgba(0,0,0,.01) 0 0 1px;
 }
 
-a, article a, article a ~ * {
+/*a, article a, article a ~ * {
 	text-decoration: underline !important;
-}
+}*/
 
 body {
 	background-color: white;
 }
+
+/*p, span {
+	font-size: 110% !important;
+}*/
 
 .AccessAuditMarker {
 /*	
