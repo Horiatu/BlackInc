@@ -10,6 +10,10 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl',
         TextWeight: 'bold',
         ShowHelp: 'inherit',
 
+        SpecialKeyCtrl: true,
+        SpecialKeyShift: true,
+        SpecialKeyAlt: false,
+
         applyCss: false,
 
         helpTooltip: 'hide help',
@@ -42,6 +46,16 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl',
                 }
             });
 
+            $scope.$watch('SpecialKeyCtrl', function(checked) {
+                blackInkStorage.add({'SpecialKeyCtrl': checked});
+            });
+            $scope.$watch('SpecialKeyShift', function(checked) {
+                blackInkStorage.add({'SpecialKeyShift': checked});
+            });
+            $scope.$watch('SpecialKeyAlt', function(checked) {
+                blackInkStorage.add({'SpecialKeyAlt': checked});
+            });
+
             $scope.$watch('applyCss', function(value) {
                 blackInkStorage.add({'applyCss': value});
             });
@@ -52,13 +66,13 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl',
                 $scope.applyCss = msgData.applyCss;
             });
         },
+
         function blackInkStorageError(err) {
             console.log('blackInkStorage.error:', err);
             console.error('blackInkStorage:', err);
             $scope.errorMessage = err;
         }
     );
-
 
     $scope.removeAll = function() {
         blackInkStorage.removeAll();

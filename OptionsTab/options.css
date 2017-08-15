@@ -145,3 +145,6 @@ hide {
   color:transparent !important;
 }
 
+#ActivationKeyTbl tr td {
+  padding-right: 24px;
+}

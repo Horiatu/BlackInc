@@ -74,6 +74,20 @@
                                 </table>
                         </div>
                     </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <h2>BlackInk Activation Key(s)</h2>
+                        <div id='options' class='roundBorder'>
+                            <p>Choose a special-key combination to activate BlackInk features from keyboard:</p>
+                            <table role=presentation id='ActivationKeyTbl'>
+                            <tr>
+                                <td><input type='checkbox' ng-model="SpecialKeyCtrl"><myKey>Ctrl</myKey></td>
+                                <td><input type='checkbox' ng-model="SpecialKeyShift"><myKey>Shift</myKey></td>
+                                <td><input type='checkbox' ng-model="SpecialKeyAlt"><myKey>Alt</myKey></td>
+                            </tr>
+                        </table>
+                        </div>
+                    </div>
                 </form>
             </div>
 
@@ -89,8 +103,11 @@
                     Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.</p>
                     
                     <h2>Other Commands<hide>.</hide></h2>
-                    <p><myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F1</myKey> toggle black ink.<br/>
-                    <myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F2</myKey> toggle invert colors.<br/>
+                    <p>
+                    <myKey ng-if="SpecialKeyCtrl">Ctrl</myKey><myKey ng-if="SpecialKeyShift">Shift</myKey><myKey ng-if="SpecialKeyAlt">Alt</myKey>
+                    <myKey>F1</myKey> toggle black ink.<br/>
+                    <myKey ng-if="SpecialKeyCtrl">Ctrl</myKey><myKey ng-if="SpecialKeyShift">Shift</myKey><myKey ng-if="SpecialKeyAlt">Alt</myKey>
+                    <myKey>F2</myKey> toggle invert colors.<br/>
                     </p>
                 </div>
                 <div 

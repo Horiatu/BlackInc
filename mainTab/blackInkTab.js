@@ -212,11 +212,12 @@ if(!BlackInkLoaded)
             if(element) {
                 element.parentNode.removeChild(element);
             }
-            if ($("head").length === 0) {
-                $("body").before(css);
-            } else {
-                $("head").append(css);
-            }
+            this._injectCss(css);
+            // if ($("head").length === 0) {
+            //     $("body").before(css);
+            // } else {
+            //     $("head").append(css);
+            // }
         },
 
         _injectCss: function(css) {
