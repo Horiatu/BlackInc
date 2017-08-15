@@ -10,9 +10,9 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl',
         TextWeight: 'bold',
         ShowHelp: 'inherit',
 
-        SpecialKeyCtrl: true,
-        SpecialKeyShift: true,
-        SpecialKeyAlt: false,
+        keyCtrl: true,
+        keyShift: true,
+        keyAlt: false,
 
         applyCss: false,
 
@@ -24,7 +24,7 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl',
     $scope.blackInkStorage.findAll(defaults)
     .then(
         function blackInkStorageSuccess(data) {
-            console.log('findAll:', data);
+            // console.log('findAll:', data);
             $scope.blackInkStorage.Data = data;
             data.forEachProp(function(k, v) {
                 // console.log('--'+k+':',v ? v.toString() : v);
@@ -46,14 +46,14 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl',
                 }
             });
 
-            $scope.$watch('SpecialKeyCtrl', function(checked) {
-                blackInkStorage.add({'SpecialKeyCtrl': checked});
+            $scope.$watch('keyCtrl', function(checked) {
+                blackInkStorage.add({'keyCtrl': checked});
             });
-            $scope.$watch('SpecialKeyShift', function(checked) {
-                blackInkStorage.add({'SpecialKeyShift': checked});
+            $scope.$watch('keyShift', function(checked) {
+                blackInkStorage.add({'keyShift': checked});
             });
-            $scope.$watch('SpecialKeyAlt', function(checked) {
-                blackInkStorage.add({'SpecialKeyAlt': checked});
+            $scope.$watch('keyAlt', function(checked) {
+                blackInkStorage.add({'keyAlt': checked});
             });
 
             $scope.$watch('applyCss', function(value) {

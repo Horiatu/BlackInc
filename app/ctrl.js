@@ -11,6 +11,10 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
         TextWeight: 'bold',
         ShowHelp: 'inherit',
 
+        keyCtrl: true,
+        keyShift: true,
+        keyAlt: false,
+
         helpTooltip: 'hide help',
     };
 
@@ -78,11 +82,14 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                 $scope.apply(applyCss);
             }
             else {
-                // console.log('setDefaults');
+                // alert('toggle '+$scope.keyCtrl+' '+$scope.keyShift+' '+$scope.keyAlt);
                 $scope.tabService.sendMessage($scope.tabId, {
                     type:'setDefaults',
                     inkColor: $scope.InkColor,
                     textWeight: $scope.TextWeight,
+                    keyCtrl: $scope.keyCtrl,
+                    keyShift: $scope.keyShift,
+                    keyAlt: $scope.keyAlt,
                 }, function() {
                     $scope.apply(false);
                 });
@@ -121,7 +128,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                 allFrames: false,
                 file: true,
                 content: "/mainTab/blackInkTab.js"
-            }
+           }
         ]).then(
             function(tabId) {
                 $scope.tabId = tabId;
@@ -133,6 +140,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                             $scope[k] = v;
                         });
 
+                        // console.log('blackInkStorage.findAll', data, $scope);
                         var getDefaultsDefer = $q.defer();
                         
                         $scope.tabService.sendMessage($scope.tabId, {type:'getDefaults'},
@@ -145,10 +153,14 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                                     });
                                 }
                                 else {
+                                    // alert('initTab '+$scope.keyCtrl+' '+$scope.keyShift+' '+$scope.keyAlt);
                                     $scope.tabService.sendMessage($scope.tabId, {
                                         type:'setDefaults',
                                         inkColor: $scope.InkColor,
                                         textWeight: $scope.TextWeight,
+                                        keyCtrl: $scope.keyCtrl,
+                                        keyShift: $scope.keyShift,
+                                        keyAlt: $scope.keyAlt,
                                     }, function(){
                                         getDefaultsDefer.resolve({
                                             applyCss: false
@@ -185,6 +197,9 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
             cssId: 'BlackInkColor',
             inkColor: $scope.InkColor,
             textWeight: $scope.TextWeight,
+            keyCtrl: $scope.keyCtrl,
+            keyShift: $scope.keyShift,
+            keyAlt: $scope.keyAlt,
             cssContent:
                 !applyCss ? 
                     '* {'+

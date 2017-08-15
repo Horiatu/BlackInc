@@ -19,6 +19,9 @@ if(!BlackInkLoaded)
             inkColor: null,
             textWeight: null,
             auto: false,
+            keyCtrl:true,
+            keyShift:true,
+            keyAlt:false
             },
 
         init: function() {
@@ -28,7 +31,10 @@ if(!BlackInkLoaded)
                         // console.log('BlackInkModule', BlackInkModule);
                         BlackInkModule.defaults.inkColor = req.inkColor;
                         BlackInkModule.defaults.textWeight = req.textWeight;
-                        // console.log('setDefaults: ',BlackInkModule.defaults);
+                        BlackInkModule.defaults.keyCtrl = req.keyCtrl;
+                        BlackInkModule.defaults.keyShift = req.keyShift;
+                        BlackInkModule.defaults.keyAlt = req.keyAlt;
+                        // console.log('setDefaults: ', req, BlackInkModule.defaults);
                         break;
                     case 'getDefaults':
                         sendResponse({
@@ -174,19 +180,26 @@ if(!BlackInkLoaded)
             $('html').toggleClass('blackFilter');
         },
 
+        isActivationKey: function(e) {
+            // console.log('isActivationKey', BlackInkModule.defaults, e);
+            return !(!BlackInkModule.defaults.keyCtrl ^ !e.ctrlKey) && 
+                !(!BlackInkModule.defaults.keyShift ^ !e.shiftKey) && 
+                !(!BlackInkModule.defaults.keyAlt ^ !e.altKey);
+        },
+
         blackInkToggles: function(e) {
             // console.log(e);
             
             switch (e.key) {
                 case 'F1' :
-                    if(e.ctrlKey && e.shiftKey) {
+                    if(BlackInkModule.isActivationKey(e)) {
                         BlackInkModule.toggleBlackInk();
                         e.stopPropagation();
                         e.preventDefault();
                     }
                     break;
                 case 'F2' :
-                    if(e.ctrlKey && e.shiftKey) {
+                    if(BlackInkModule.isActivationKey(e)) {
                         BlackInkModule.toggleBlackInkNightMode();
                         e.stopPropagation();
                         e.preventDefault();
