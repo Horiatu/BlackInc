@@ -148,3 +148,22 @@ hide {
 #ActivationKeyTbl tr td {
   padding-right: 24px;
 }
+
+.linkStyle0 {
+}
+.linkStyle1 {
+    text-decoration: underline;
+}
+.linkStyle2 {
+    text-decoration: none;
+    background-color: #cfcfcf;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+.linkStyle3 {
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    padding-left: 4px;
+    padding-right: 4px;
+}

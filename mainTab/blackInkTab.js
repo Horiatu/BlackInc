@@ -180,6 +180,13 @@ if(!BlackInkLoaded)
             $('html').toggleClass('blackFilter');
         },
 
+        underlineMode: 0,
+
+        rotateUnderline:function() {
+            this.underlineMode = ++this.underlineMode % 4;
+            // alert('underlineMode '+this.underlineMode);
+        },
+
         isActivationKey: function(e) {
             // console.log('isActivationKey', BlackInkModule.defaults, e);
             return !(!BlackInkModule.defaults.keyCtrl ^ !e.ctrlKey) && 
@@ -201,6 +208,13 @@ if(!BlackInkLoaded)
                 case 'F2' :
                     if(BlackInkModule.isActivationKey(e)) {
                         BlackInkModule.toggleBlackInkNightMode();
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }
+                    break;
+                case 'F3':
+                    if(BlackInkModule.isActivationKey(e)) {
+                        BlackInkModule.rotateUnderline();
                         e.stopPropagation();
                         e.preventDefault();
                     }
