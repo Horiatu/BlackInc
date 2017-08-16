@@ -55,8 +55,10 @@ kbd{
 }
 
 label {
+  font-weight: normal;
   margin-right:4px;
   margin-top: 1px;
+  margin-bottom: 1px;
 }
 
 td {
@@ -146,7 +148,7 @@ hide {
 }
 
 #ActivationKeyTbl tr td {
-  padding-right: 24px;
+  padding-right: 12px;
 }
 
 .linkStyle0 {
