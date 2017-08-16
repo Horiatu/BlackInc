@@ -18,6 +18,7 @@ if(!BlackInkLoaded)
         defaults: {
             inkColor: null,
             textWeight: null,
+            linkStyle:1,
             auto: false,
             keyCtrl:true,
             keyShift:true,
@@ -31,9 +32,11 @@ if(!BlackInkLoaded)
                         // console.log('BlackInkModule', BlackInkModule);
                         BlackInkModule.defaults.inkColor = req.inkColor;
                         BlackInkModule.defaults.textWeight = req.textWeight;
+                        BlackInkModule.defaults.linkStyle = req.linkStyle;
                         BlackInkModule.defaults.keyCtrl = req.keyCtrl;
                         BlackInkModule.defaults.keyShift = req.keyShift;
                         BlackInkModule.defaults.keyAlt = req.keyAlt;
+                        BlackInkModule.rotateUnderline(BlackInkModule.defaults.linkStyle);
                         // console.log('setDefaults: ', req, BlackInkModule.defaults);
                         break;
                     case 'getDefaults':
@@ -182,8 +185,12 @@ if(!BlackInkLoaded)
 
         underlineMode: 0,
 
-        rotateUnderline:function() {
-            this.underlineMode = ++this.underlineMode % 4;
+        rotateUnderline:function(linkStyle) {
+            if(linkStyle) {
+                this.underlineMode = Number(linkStyle);
+            } else {
+                this.underlineMode = ++this.underlineMode % 4;
+            }
             // alert('underlineMode '+this.underlineMode);
             var underlineCss = '<style id="'+BlackInkModule.cssId+'_Links">a, article a, article a ~ * { ';
             switch (this.underlineMode) {
