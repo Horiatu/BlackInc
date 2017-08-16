@@ -185,6 +185,29 @@ if(!BlackInkLoaded)
         rotateUnderline:function() {
             this.underlineMode = ++this.underlineMode % 4;
             // alert('underlineMode '+this.underlineMode);
+            var underlineCss = '<style id="'+BlackInkModule.cssId+'_Links">a, article a, article a ~ * { ';
+            switch (this.underlineMode) {
+                case 0 :
+                    break;
+                case 1 :
+                    underlineCss += 'text-decoration: underline !important; ';
+                    break;
+                case 2 :
+                    underlineCss += 'text-decoration: none !important; ';
+                    underlineCss += 'background-color: #cfcfcf !important; ';
+                    underlineCss += 'padding-left: 4px !important; ';
+                    underlineCss += 'padding-right: 4px !important; ';
+                    break;
+                case 3 :
+                    underlineCss += 'text-decoration: none !important; ';
+                    underlineCss += 'background-color: '+BlackInkModule.defaults.inkColor+' !important; ';
+                    underlineCss += 'color: white !important; ';
+                    underlineCss += 'padding-left: 4px !important; ';
+                    underlineCss += 'padding-right: 4px !important; ';
+                    break;
+            }
+            underlineCss += '}</style>';
+            BlackInkModule.injectCss(BlackInkModule.cssId+'_Links', underlineCss);
         },
 
         isActivationKey: function(e) {
