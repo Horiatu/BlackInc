@@ -183,17 +183,17 @@ if(!BlackInkLoaded)
             $('html').toggleClass('blackFilter');
         },
 
-        underlineMode: 0,
+        linkStyleMode: 0,
 
         rotateUnderline:function(linkStyle) {
             if(linkStyle) {
-                this.underlineMode = Number(linkStyle);
+                this.linkStyleMode = Number(linkStyle);
             } else {
-                this.underlineMode = ++this.underlineMode % 4;
+                this.linkStyleMode = ++this.linkStyleMode % 4;
             }
-            // alert('underlineMode '+this.underlineMode);
+            // alert('linkStyleMode '+this.linkStyleMode);
             var underlineCss = '<style id="'+BlackInkModule.cssId+'_Links">a, article a, article a ~ * { ';
-            switch (this.underlineMode) {
+            switch (this.linkStyleMode) {
                 case 0 :
                     break;
                 case 1 :
