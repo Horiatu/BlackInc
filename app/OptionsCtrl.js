@@ -8,6 +8,7 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl',
     var defaults = {
         InkColor: 'black',
         TextWeight: 'bold',
+        linkStyle: 1,
         ShowHelp: 'inherit',
 
         keyCtrl: true,
@@ -43,6 +44,12 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl',
             $scope.$watch('TextWeight', function(value) {
                 if(value !== null && value !== undefined) {
                     blackInkStorage.add({'TextWeight': value});
+                }
+            });
+
+            $scope.$watch('linkStyle', function(value) {
+                if(value !== null && value !== undefined) {
+                    blackInkStorage.add({'linkStyle': value});
                 }
             });
 

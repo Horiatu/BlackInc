@@ -9,6 +9,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
     var defaults = {
         InkColor: 'black',
         TextWeight: 'bold',
+        linkStyle: '1',
         ShowHelp: 'inherit',
 
         keyCtrl: true,
@@ -87,6 +88,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                     type:'setDefaults',
                     inkColor: $scope.InkColor,
                     textWeight: $scope.TextWeight,
+                    linkStyle: $scope.linkStyle,
                     keyCtrl: $scope.keyCtrl,
                     keyShift: $scope.keyShift,
                     keyAlt: $scope.keyAlt,
@@ -158,6 +160,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                                         type:'setDefaults',
                                         inkColor: $scope.InkColor,
                                         textWeight: $scope.TextWeight,
+                                        linkStyle: $scope.linkStyle,
                                         keyCtrl: $scope.keyCtrl,
                                         keyShift: $scope.keyShift,
                                         keyAlt: $scope.keyAlt,
@@ -197,6 +200,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
             cssId: 'BlackInkColor',
             inkColor: $scope.InkColor,
             textWeight: $scope.TextWeight,
+            linkStyle: $scope.linkStyle,
             keyCtrl: $scope.keyCtrl,
             keyShift: $scope.keyShift,
             keyAlt: $scope.keyAlt,

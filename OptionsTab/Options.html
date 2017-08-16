@@ -115,13 +115,13 @@
                             <div class="row">
                                 <div class="col-sm-5 col-md-5">
                                     <myKey ng-if="keyCtrl">Ctrl</myKey><myKey ng-if="keyShift">Shift</myKey><myKey ng-if="keyAlt">Alt</myKey>
-                                    <myKey>F3</myKey> <span class='linkStyle2'>rotate Link visual styles.</span>
+                                    <myKey>F3</myKey> <span class='linkStyle{{linkStyle}}'>rotate Link visual styles.</span>
                                 </div>
                                 <div class="col-sm-7 col-md-7">
-                                    <input type='radio' name='linkStyle'><span class='linkStyle0'>None</span>
-                                    <input type='radio' name='linkStyle'><span class='linkStyle1'>Underlined</span>
-                                    <input type='radio' name='linkStyle'><span class='linkStyle2'>Gray backround</span>
-                                    <input type='radio' name='linkStyle'><span class='linkStyle3'>Reverse</span>
+                                    <input type='radio' name='linkStyle' value='0' ng-model='linkStyle'><span class='linkStyle0'>None</span>
+                                    <input type='radio' name='linkStyle' value='1' ng-model='linkStyle'><span class='linkStyle1'>Underlined</span>
+                                    <input type='radio' name='linkStyle' value='2' ng-model='linkStyle'><span class='linkStyle2'>Gray backround</span>
+                                    <input type='radio' name='linkStyle' value='3' ng-model='linkStyle'><span class='linkStyle3'>Reverse</span>
                                 </div>
                             </div>
                         </div>
