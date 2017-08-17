@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "BlackInk Little",
   "short_name": "BlackInk",
-  "version": "2.0.1.2",
+  "version": "2.0.1.3",
 
   "description": "Enhance text contrast for bad web pages.",
   "icons": { 

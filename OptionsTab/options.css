@@ -13,26 +13,33 @@
     margin-bottom: 0px;
 }
 
-.jumbotron h2, .jumbotron .h2, legend {
+.jumbotron h3, .jumbotron h2, 
+legend {
   font-family: "Poiret One";
-  --color: gray;
-  font-weight: 600;
+  color: black;
+  font-weight: bold;
   --border-bottom: 1px solid gray;
 }
 
+legend {
+    border-bottom: 1px solid gray; 
+    margin-top: 20px; 
+    font-size: 24px;
+}
+
 h2 {
-    font-family: "Poiret One";
-    font-weight: 600;
     font-size: 18px;
+}
+
+h3 {
+    font-family: "Poiret One";
+    color: black;
+    font-weight: bold;
+    font-size: 24px;
 }
 
 .col-md-6 {
   padding-left: 30px;
-}
-
-legend {
-  border-bottom: 1px solid gray; 
-  margin-top: 20px; 
 }
 
 input[type=radio], input[type=checkbox] {
@@ -168,4 +175,22 @@ hide {
     color: white;
     padding-left: 4px;
     padding-right: 4px;
+}
+
+.collapse {
+    display: inline;
+}
+
+.collapse img {
+    width:18px;
+    height:18px;
+    margin-top:-8px;
+}
+
+.collapse img.down {
+    -webkit-transform: rotate(-30deg);
+}
+
+.collapse input {
+    display: none;
 }

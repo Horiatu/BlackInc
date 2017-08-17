@@ -121,7 +121,8 @@ if(!BlackInkLoaded)
                             BlackInkModule.injectCss(BlackInkModule.cssId, BlackInkModule.manualCss);
                         }
                         else {
-                            $('#'+BlackInkModule.cssId).remove();
+                            BlackInkModule._removeCss(BlackInkModule.cssId);
+                            BlackInkModule._removeCss(BlackInkModule.cssId+'_Links');
                         }
                         break;
                     // case 'invert':
@@ -192,7 +193,8 @@ if(!BlackInkLoaded)
                 this.linkStyleMode = ++this.linkStyleMode % 4;
             }
             // alert('linkStyleMode '+this.linkStyleMode);
-            var underlineCss = '<style id="'+BlackInkModule.cssId+'_Links">a, article a, article a ~ * { ';
+            var underlineCss = '<style id="'+BlackInkModule.cssId+'_Links">'+
+            'a, a *, article a, article a ~ * { ';
             switch (this.linkStyleMode) {
                 case 0 :
                     break;
@@ -265,10 +267,11 @@ if(!BlackInkLoaded)
         },
 
         injectCss: function(id, css) {
-            var element = document.getElementById(id);
-            if(element) {
-                element.parentNode.removeChild(element);
-            }
+            this._removeCss(id);
+            // var element = document.getElementById(id);
+            // if(element) {
+            //     element.parentNode.removeChild(element);
+            // }
             this._injectCss(css);
             // if ($("head").length === 0) {
             //     $("body").before(css);
@@ -277,6 +280,12 @@ if(!BlackInkLoaded)
             // }
         },
 
+        _removeCss: function(id) {
+            var element = document.getElementById(id);
+            if(element) {
+                element.parentNode.removeChild(element);
+            }
+        },
         _injectCss: function(css) {
             if ($("head").length === 0) {
                 $("body").before(css);

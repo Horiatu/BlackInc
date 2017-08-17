@@ -9,6 +9,7 @@
         <link type="text/css" rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
         <link type="text/css" rel="stylesheet" href="/OptionsTab/options.css">
         <link type="text/css" rel="stylesheet" href="/css/switch.css">
+
     </head>
 
     <body ng-controller='BlackInkOptionsCtrl'>
@@ -45,7 +46,6 @@
                                     <img src="\images\contextMenu.png" width="200px">
                                 </td>
                                 <td>
-                                    <!-- <h2>Hide Elements<hide>.</hide></h2> -->
                                     <p>Press <MyKey>Escape</MyKey> to cancel this mode<hide>.</hide><br/>
                                     Press <MyKey>Arrow-Up</MyKey> or <MyKey>Arrow-Down</MyKey> to move to parent or child element.<br/>
                                     Press <MyKey>Enter</MyKey> or <MyKey>Space Bar</MyKey> to hide the selected element.<br/>
@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="col-sm-6 col-md-6">
-                        <h2>Text Options</h2>
+                        <h3>Text Options</h3>
                         <div id='options' class='roundBorder' ng-hide="errorMessage!=''">
                             <table role='presentation'>
                                 <tr>
@@ -89,7 +89,7 @@
                             </table>
                         </div>
 
-                        <h2>BlackInk Activation Key(s) and Page Shortcuts</h2>
+                        <h3>BlackInk Activation Key(s) and Page Shortcuts</h3>
                         <div id='options' class='roundBorder'>
                             <p>Choose a special-key combination to activate BlackInk features from keyboard:</p>
                             <p><table role='presentation' id='ActivationKeyTbl'>
@@ -120,6 +120,32 @@
                         </div>
                     </div>
                 </form>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <h3><label>
+                    <div class='collapse'>
+                        <img src="\images\triangle.png" ng-if="!expand"/>
+                        <img src="\images\triangle.png" ng-if="expand"class="down"/>
+                        <input type=checkbox ng-model="expand">
+                    </div>
+                    <span style="font-weight: bold;">Change History</span></label></h3>
+                    <div ng-if="expand" class="roundBorder">
+                        <h4>Version 2.0.1.2</h4>
+                        <ul>
+                            <li>Dinamicaly change link styles.</li>
+                            <li>Configure Link style in options.</li>
+                        </ul>
+                        <h4>Version 2.0.1.3</h4>
+                        <ul>
+                            <li>Reverse Link Style bug fix.</li>
+                            <li>Completely revert initial styles when clicking second time the BlackInk button.</li>
+                            <li>This section in option page.</li>
+                        </ul>
+                        <div scroll-if="expand"></div>
+                    </div>
+                </div>
             </div>
 
             <div class="row">

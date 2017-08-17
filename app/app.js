@@ -9,6 +9,16 @@
 		        replace: true,
 		        template: '-All that Html here-'
 		    };
-		});
+		})
+
+		.directive('scrollIf', function () {
+  			return function (scope, element, attributes) {
+    			setTimeout(function () {
+      			if (scope.$eval(attributes.scrollIf)) {
+        		window.scrollTo(0, element[0].offsetTop - 100);
+	      	}
+    	});
+    };
+});
 		
 })(); 
