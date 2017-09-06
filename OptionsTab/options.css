@@ -213,3 +213,9 @@ hide {
 .navbar-brand {
     padding: 0;
 }
+
+.titleCheckbox {
+    font-weight:bold;
+    padding-left:4px;
+    padding-right:4px;
+}

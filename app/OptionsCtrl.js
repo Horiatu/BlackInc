@@ -1,5 +1,4 @@
-var optionCtrl = angular.module('blackInkApp');
-optionCtrl.controller('BlackInkOptionsCtrl', 
+angular.module('blackInkApp').controller('BlackInkOptionsCtrl', 
     function($scope, $q, $http, blackInkStorage) {
 
     $scope.blackInkStorage = blackInkStorage;

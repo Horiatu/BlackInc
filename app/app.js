@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-	angular
-		.module("blackInkApp", ['ngAria'])
+	angular.module("blackInkApp", ['ngAria'])
+	
 		.directive('myKey', function() {
 		    return {
 		        restrict: 'EA',

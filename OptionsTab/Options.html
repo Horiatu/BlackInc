@@ -145,14 +145,14 @@
 
             <div class="row">
                 <div class="col-sm-6 col-md-6">
-                    <section id="history" tabindex=0>
+                    <section>
                         <h3><label>
                         <div class='collapse'>
                             <img src="\images\triangle.png" ng-if="!expand"/>
-                            <img src="\images\triangle.png" ng-if="expand"class="down"/>
+                            <img src="\images\triangle.png" ng-if="expand" class="down"/>
                             <input type=checkbox ng-model="expand">
                         </div>
-                        <span style="font-weight: bold;">Change History</span></label></h3>
+                        <span class="titleCheckbox" tabindex=0 id="history" ng-keyup="($event.keyCode === 13 || $event.keyCode === 32) && (expand = !expand)">Change History</span></label></h3>
                         <div ng-if="expand" class="roundBorder">
                             <h4>Version 2.0.1.2</h4>
                             <ul>
@@ -164,6 +164,10 @@
                                 <li>Reverse Link Style bug fix.</li>
                                 <li>Completely revert initial styles when clicking second time the BlackInk button.</li>
                                 <li>This section in option page.</li>
+                            </ul>
+                            <h4>Version 2.0.1.4</h4>
+                            <ul>
+                                <li>Enhanced option page.</li>
                             </ul>
                             <div scroll-if="expand"></div>
                         </div>

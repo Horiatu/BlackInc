@@ -1,3 +1,4 @@
+// alert();
 try {
     if(!BlackInkLoaded)
         BlackInkLoaded = false;
@@ -9,6 +10,7 @@ catch (e) {
 
 if(!BlackInkLoaded)
 {
+    // alert("!BlackInkLoaded");
     BlackInkModule = { 
         manualCss: '', 
         cssId: 'BlackInkColor',
