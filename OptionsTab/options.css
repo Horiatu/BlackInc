@@ -194,3 +194,22 @@ hide {
 .collapse input {
     display: none;
 }
+
+.projectName {
+    font-family: "Poiret One";
+    text-shadow: 2px 2px 2px grey;
+    font-size: 46px;
+    margin: 0px;
+    color: black;
+}
+
+@media (min-width: 768px) {
+    .projectName, .navbar-brand {
+        margin: 0px !important;
+    }
+}
+
+
+.navbar-brand {
+    padding: 0;
+}

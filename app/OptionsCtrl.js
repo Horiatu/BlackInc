@@ -1,4 +1,5 @@
-angular.module('blackInkApp').controller('BlackInkOptionsCtrl', 
+var optionCtrl = angular.module('blackInkApp');
+optionCtrl.controller('BlackInkOptionsCtrl', 
     function($scope, $q, $http, blackInkStorage) {
 
     $scope.blackInkStorage = blackInkStorage;
@@ -65,6 +66,13 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl',
 
             $scope.$watch('applyCss', function(value) {
                 blackInkStorage.add({'applyCss': value});
+            });
+
+            $scope.$watch('errorMessage', function(value) {
+                if(value) {
+                    alert('Error: '+value);
+                    console.log("errorMessage", value);
+                }
             });
 
             var getDefaultsDefer = $q.defer();
