@@ -3,6 +3,7 @@
 .jumbotron {
     margin-bottom:0;
     padding: 30px;
+    background-color: #bcd9f1;
 }
 
 .min.jumbotron {
@@ -259,9 +260,18 @@ hide {
     padding-bottom: 4px;
 }
 .nav>li>a {
-    padding: 1px 1px 1px 15px;
+    padding: 1px 8px;
 }
 
 .min .nav>li>a {
     margin-top:8px;
+}
+
+:focus {
+    background-color: #bcd9f1; 
+    outline: none;
+}
+
+section {
+    padding:4px;
 }

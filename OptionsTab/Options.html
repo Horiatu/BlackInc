@@ -49,7 +49,7 @@
             <div class="row">
                 <form id='form'>
                         <div class="col-sm-6 col-md-6">
-                        <section id="directions" tabindex=0>
+                        <section id="directions" tabindex=0 scrollIf>
                             <legend>Directions</legend>
                             <p>Select your options here for text color and weight, then click the extension button to change the main dominant text on the page.<br/>
                             </p>
@@ -78,7 +78,7 @@
                     </div>
 
                     <div class="col-sm-6 col-md-6">
-                        <section id='options' tabindex=0>
+                        <section id='options' tabindex=0 scrollIf>
                             <h3>Text Options</h3>
                             <div class='roundBorder' ng-hide="errorMessage!=''">
                             <table role='presentation'>
@@ -110,7 +110,7 @@
                             </div>
                         </section>
 
-                        <section id='activation' tabindex=0>
+                        <section id='activation' tabindex=0 scrollIf>
                             <h3>BlackInk Activation Key(s) and Page Shortcuts</h3>
                             <div class='roundBorder'>
                                 <p>Choose a special-key combination to activate BlackInk features from keyboard:</p>
@@ -127,7 +127,7 @@
                                     <myKey ng-if="keyCtrl">Ctrl</myKey><myKey ng-if="keyShift">Shift</myKey><myKey ng-if="keyAlt">Alt</myKey><myKey>F2</myKey> toggle invert colors<br/>
                                 </div>
 
-                                <div class="">
+                                <div>
                                     <div class="col-sm-5 col-md-5">
                                         <myKey ng-if="keyCtrl">Ctrl</myKey><myKey ng-if="keyShift">Shift</myKey><myKey ng-if="keyAlt">Alt</myKey><myKey>F3</myKey> <span class='linkStyle{{linkStyle}}'>link&nbsp;style</span>
                                     </div>
@@ -149,14 +149,14 @@
 
             <div class="row">
                 <div class="col-sm-6 col-md-6">
-                    <section>
+                    <section scrollIf tabindex=0 id="history" ng-keyup="($event.keyCode === 13 || $event.keyCode === 32) && (expand = !expand)">
                         <h3><label>
                         <div class='collapse'>
                             <img src="\images\triangle.png" ng-if="!expand"/>
                             <img src="\images\triangle.png" ng-if="expand" class="down"/>
                             <input type=checkbox ng-model="expand">
                         </div>
-                        <span class="titleCheckbox" tabindex=0 id="history" ng-keyup="($event.keyCode === 13 || $event.keyCode === 32) && (expand = !expand)">Change History</span></label></h3>
+                        <span class="titleCheckbox">Change History</span></label></h3>
                         <div ng-if="expand" class="roundBorder">
                             <h4>Version 2.0.1.2</h4>
                             <ul>
