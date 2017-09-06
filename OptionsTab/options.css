@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Poiret+One|Roboto+Condensed');
 
 .jumbotron {
-  margin-bottom:0;
-  padding: 30px 20px;
+    margin-bottom:0;
+    padding: 30px;
+}
+
+.min.jumbotron {
+    padding: 0px 30px;
 }
 
 .jumbotron h1, .jumbotron .h1 {
@@ -203,6 +207,12 @@ hide {
     color: black;
 }
 
+.projectName img {
+    width:46px;
+    height:46px; 
+    margin-bottom: 8px;
+}
+
 @media (min-width: 768px) {
     .projectName, .navbar-brand {
         margin: 0px !important;
@@ -218,4 +228,40 @@ hide {
     font-weight:bold;
     padding-left:4px;
     padding-right:4px;
+}
+
+/*.min {
+    background-color: pink;
+}*/
+
+.min .projectName {
+    height: 40px;
+}
+
+.min .projectName img {
+    width:25px;
+    height:25px; 
+    margin-bottom: -8px;
+}
+
+.min .projectName span {
+    font-size: 24px;
+}
+
+@media (min-width: 768px) {
+    .navbar-nav>li>a {
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+}
+.navbar-nav>li>a {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.nav>li>a {
+    padding: 1px 1px 1px 15px;
+}
+
+.min .nav>li>a {
+    margin-top:8px;
 }
