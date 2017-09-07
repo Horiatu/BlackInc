@@ -289,6 +289,11 @@ hide {
     transition: margin-top ease-in-out .25s;
 }
 
+#headerHint.min {
+    display:none;
+    transition: margin-top ease-in-out .25s;
+}
+
 .nav>li>a {
     transition: margin-top ease-in-out .25s;
 }
@@ -300,6 +305,7 @@ hide {
 
 section {
     padding:4px;
+    padding-top: 20px;
 }
 
 .navbar-collapse.ng-hide {
@@ -313,4 +319,12 @@ section {
     margin-bottom: 0;
     border: 1px solid transparent;
     border-radius: 0; 
+}
+
+#burgerMenu {
+    opacity:0.35;
+}
+
+#burgerMenu:hover {
+    opacity:1;
 }

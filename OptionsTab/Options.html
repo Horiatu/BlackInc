@@ -13,9 +13,9 @@
 
     </head>
 
-    <body ng-controller='BlackInkOptionsCtrl' style="padding-top: 70px;">
+    <body ng-controller='BlackInkOptionsCtrl' style="padding-top: 50px;">
         <div class="navbar navbar-fixed-top" role="navigation" resized>
-            <div class="container-fluid jumbotron" scroll ng-class="{min:boolChangeClass}">
+            <div class="container-fluid jumbotron" scroll ng-class="{min:boolChangeClass || showBurgerMenu}">
                 <div class="navbar-header">
                     <button class="navbar-toggle" id="burgerMenu" ng-click="showBurgerMenu = !showBurgerMenu" ng-init="showBurgerMenu=false">
                         <img src='/images/burger.24.png'>
@@ -25,33 +25,27 @@
                         <span>BlackInk Little</span>
                     </a>
                 </div>
-                <div class="navbar-collapse" ng-show="!(isNavMenuVisible) || showBurgerMenu">
+                <div class="navbar-collapse" ng-show="!isNavMenuVisible || showBurgerMenu">
                     <ul class="nav navbar-nav" style="float:right;">
-                        <li><a href="#directions" ng-click="expand = showBurgerMenu = false" scroll-if="directions">Directions</a></li>
-                        <li><a href="#options" ng-click="expand = showBurgerMenu = false" scroll-if="options">Options</a></li>
-                        <li><a href="#activation" ng-click="expand = showBurgerMenu = false" scroll-if="activation">Activation&nbsp;&amp;&nbsp;Shortcuts</a></li>
-                        <li><a href="#history" ng-click="expand = !(showBurgerMenu = false)" scroll-if="history">History</a></li>
+                        <li><a href="#directions" ng-click="expand = showBurgerMenu = !(boolChangeClass = true)">Directions</a></li>
+                        <li><a href="#options" ng-click="expand = showBurgerMenu = !(boolChangeClass = true)">Options</a></li>
+                        <li><a href="#activation" ng-click="expand = showBurgerMenu = !(boolChangeClass = true)">Activation&nbsp;&amp;&nbsp;Shortcuts</a></li>
+                        <li><a href="#history" ng-click="expand = !(showBurgerMenu = !(boolChangeClass = true))">History</a></li>
                     </ul>
                 </div>
-            <resized/>
-            <!-- {{isNavMenuVisible}} {{width}} -->
+
+                <div id="headerHint" ng-class="{min:(boolChangeClass || isNavMenuVisible)}">
+                    <h2>Aren't you tired of low-contrast pages using gray ink for text?!</h2>
+                    <h2 style="display:inline; color:green;">Installed or updated version {{version}}</h2>
+                    <div style='display:inline; float: right;'>
+                        <input type="image" class='toolbarBtn' id='Share' alt='Share' title='Share on Facebook' src='/images/fShare.png' ng-click='fShare()' />
+                        <input type="image" class='toolbarBtn' id='Refresh' alt='Refresh' title='Clear Settings' src='/images/Refresh.png' ng-click='refresh()' />
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="container-fluid">
-            <div class="row row-offcanvas row-offcanvas-right jumbotron">
-                <!-- <div class="coll-xs-12"> -->
-                    <!-- <div class="jumbotron" role='banner'> -->
-                        
-                        <h2>Aren't you tired of low-contrast pages using gray ink for text?!</h2>
-                        <h2 style="display:inline; color:green;">Installed or updated version {{version}}</h2>
-                        <div style='display:inline; float: right;'>
-                            <input type="image" class='toolbarBtn' id='Share' alt='Share' title='Share on Facebook' src='/images/fShare.png' ng-click='fShare()' />
-                            <input type="image" class='toolbarBtn' id='Refresh' alt='Refresh' title='Clear Settings' src='/images/Refresh.png' ng-click='refresh()' />
-                        </div>
-                   <!--  </div> -->
-                <!-- </div> -->
-            </div>
 
+        <div class="container-fluid">
             <div class="row">
                 <form id='form'>
                         <div class="col-sm-6 col-md-6">

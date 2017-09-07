@@ -7,12 +7,10 @@ OptionsCtrl.directive('resized', ['$window', function ($window) {
      };
 
      function link(scope, element, attrs){
-        // scope.width = $window.innerWidth;
+        scope.isNavMenuVisible = $window.getComputedStyle(document.getElementById('burgerMenu'), null).display != 'none';
 
         angular.element($window).bind('resize', function(){
-            // scope.width = $window.innerWidth;
-            scope.isNavMenuVisible = $window.getComputedStyle(document.getElementById('burgerMenu'), null)['display'] != 'none';
-
+            scope.isNavMenuVisible = $window.getComputedStyle(document.getElementById('burgerMenu'), null).display != 'none';
             scope.$digest(); // manuall $digest required as resize event is outside of angular
         });
     }
