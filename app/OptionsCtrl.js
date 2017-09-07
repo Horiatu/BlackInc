@@ -1,9 +1,30 @@
-angular.module('blackInkApp').controller('BlackInkOptionsCtrl', 
+var OptionsCtrl = angular.module('blackInkApp');
+OptionsCtrl.directive('resized', ['$window', function ($window) {
+
+     return {
+        link: link,
+        restrict: 'EA'
+     };
+
+     function link(scope, element, attrs){
+        // scope.width = $window.innerWidth;
+
+        angular.element($window).bind('resize', function(){
+            // scope.width = $window.innerWidth;
+            scope.isNavMenuVisible = $window.getComputedStyle(document.getElementById('burgerMenu'), null)['display'] != 'none';
+
+            scope.$digest(); // manuall $digest required as resize event is outside of angular
+        });
+    }
+}]);
+
+OptionsCtrl.controller('BlackInkOptionsCtrl', 
     function($scope, $q, $http, blackInkStorage) {
 
     $scope.blackInkStorage = blackInkStorage;
     $scope.errorMessage = '';
     $scope.tabId = 0;
+    $scope.isNavMenuVisible = false;
 
     var defaults = {
         InkColor: 'black',
@@ -32,8 +53,8 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl',
                 $scope[k] = v;
             });
 
-            $scope.Sunrise = $scope.blackInkStorage.Data.Sunrise;
-            $scope.Sunset = $scope.blackInkStorage.Data.Sunset;
+            // $scope.Sunrise = $scope.blackInkStorage.Data.Sunrise;
+            // $scope.Sunset = $scope.blackInkStorage.Data.Sunset;
 
             $scope.$watch('InkColor', function(value) {
                 if(value && value !== undefined) {
