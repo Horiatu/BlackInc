@@ -27,10 +27,10 @@
                 </div>
                 <div class="navbar-collapse" ng-show="!(isNavMenuVisible) || showBurgerMenu">
                     <ul class="nav navbar-nav" style="float:right;">
-                        <li><a href="#directions" ng-click="expand = showBurgerMenu = false">Directions</a></li>
-                        <li><a href="#options" ng-click="expand = showBurgerMenu = false">Options</a></li>
-                        <li><a href="#activation" ng-click="expand = showBurgerMenu = false">Activation&nbsp;&amp;&nbsp;Shortcuts</a></li>
-                        <li><a href="#history" ng-click="expand = !(showBurgerMenu = false)">History</a></li>
+                        <li><a href="#directions" ng-click="expand = showBurgerMenu = false" scroll-if="directions">Directions</a></li>
+                        <li><a href="#options" ng-click="expand = showBurgerMenu = false" scroll-if="options">Options</a></li>
+                        <li><a href="#activation" ng-click="expand = showBurgerMenu = false" scroll-if="activation">Activation&nbsp;&amp;&nbsp;Shortcuts</a></li>
+                        <li><a href="#history" ng-click="expand = !(showBurgerMenu = false)" scroll-if="history">History</a></li>
                     </ul>
                 </div>
             <resized/>
@@ -55,7 +55,7 @@
             <div class="row">
                 <form id='form'>
                         <div class="col-sm-6 col-md-6">
-                        <section id="directions" tabindex=0 scrollIf>
+                        <section id="directions" tabindex=0>
                             <legend>Directions</legend>
                             <p>Select your options here for text color and weight, then click the extension button to change the main dominant text on the page.<br/>
                             </p>
@@ -84,7 +84,7 @@
                     </div>
 
                     <div class="col-sm-6 col-md-6">
-                        <section id='options' tabindex=0 scrollIf>
+                        <section id='options' tabindex=0>
                             <h3>Text Options</h3>
                             <div class='roundBorder' ng-hide="errorMessage!=''">
                             <table role='presentation'>
@@ -116,7 +116,7 @@
                             </div>
                         </section>
 
-                        <section id='activation' tabindex=0 scrollIf>
+                        <section id='activation' tabindex=0>
                             <h3>BlackInk Activation Key(s) and Page Shortcuts</h3>
                             <div class='roundBorder'>
                                 <p>Choose a special-key combination to activate BlackInk features from keyboard:</p>
@@ -155,7 +155,7 @@
 
             <div class="row">
                 <div class="col-sm-6 col-md-6">
-                    <section scrollIf tabindex=0 id="history" ng-keyup="($event.keyCode === 13 || $event.keyCode === 32) && (expand = !expand)">
+                    <section tabindex=0 id="history" ng-keyup="($event.keyCode === 13 || $event.keyCode === 32) && (expand = !expand)">
                         <h3><label>
                         <div class='collapse'>
                             <img src="\images\triangle.png" ng-if="!expand"/>
@@ -179,7 +179,7 @@
                             <ul>
                                 <li>Enhanced option page.</li>
                             </ul>
-                            <div scroll-if="expand"></div>
+                            
                         </div>
                     </section>
                 </div>
