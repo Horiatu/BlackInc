@@ -46,13 +46,10 @@ OptionsCtrl.controller('BlackInkOptionsCtrl',
         function blackInkStorageSuccess(data) {
             // console.log('findAll:', data);
             $scope.blackInkStorage.Data = data;
-            data.forEachProp(function(k, v) {
+            forEachProp(data, function(k, v) {
                 // console.log('--'+k+':',v ? v.toString() : v);
                 $scope[k] = v;
             });
-
-            // $scope.Sunrise = $scope.blackInkStorage.Data.Sunrise;
-            // $scope.Sunset = $scope.blackInkStorage.Data.Sunset;
 
             $scope.$watch('InkColor', function(value) {
                 if(value && value !== undefined) {

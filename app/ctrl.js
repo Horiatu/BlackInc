@@ -138,7 +138,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                 $scope.blackInkStorage.findAll(defaults).then(
                     function blackInkStorageSuccess(data) {
                         $scope.blackInkStorage.Data = data;
-                        data.forEachProp(function(k, v) {
+                        forEachProp(data, function(k, v) {
                             $scope[k] = v;
                         });
 
