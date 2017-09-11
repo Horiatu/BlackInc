@@ -3,7 +3,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
         var thisVersion = chrome.runtime.getManifest().version;
         if(details.reason == "install" || thisVersion === details.previousVersion)
         {
-            console.log("BlackInc version ", thisVersion);
+            console.log("BlackInc installed version ", thisVersion);
         }
         else if(details.reason == "update")
         {
