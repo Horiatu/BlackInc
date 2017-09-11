@@ -8,7 +8,7 @@ angular.module('blackInkApp').service('blackInkStorage', function ($q) {
         var data = Object.assign({}, defaults);
         chrome.storage.sync.get('blackInk', function(keys) {
             //console.log('keys', keys);
-            forEachProp(keys, function(value, name) {
+            forEachProp(keys, function(name, value) {
                 forEachProp(value, function(k, v) {
                     data[k] = v;
                 });

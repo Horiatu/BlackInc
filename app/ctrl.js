@@ -119,7 +119,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
             {
                 allFrames: false,
                 file: true,
-                content: "/lib/jquery/jquery-2.1.4.min.js"
+                content: "/lib/jquery/jquery.min.js"
             }, 
             // {
             //     allFrames: false,

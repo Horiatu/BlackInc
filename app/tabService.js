@@ -1,4 +1,5 @@
 angular.module('blackInkApp').service('tabService', function ($q) {
+    debugger;
     var _this = this;
 
     this.getSelectedTab = function() {
@@ -79,7 +80,7 @@ angular.module('blackInkApp').service('tabService', function ($q) {
 
     this.initTab = function(scripts) {
         dfr = $q.defer();
-        _this.getSelectedTab().then(
+        this.getSelectedTab().then(
             function(tab) {
                 _this.validateTab(tab).then(
                     function(tabId) {
@@ -90,6 +91,7 @@ angular.module('blackInkApp').service('tabService', function ($q) {
                     function(err) {
                         if (err) {
                             dfr.reject(err);
+                            console.err('TabService::initTab', err);
                         } 
                     }
                 );
