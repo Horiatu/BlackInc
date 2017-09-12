@@ -1,13 +1,19 @@
+var manifest = chrome.runtime.getManifest();
+var thisVersion = manifest.version;
+this.versionMsg = manifest.name + " version <b>" + thisVersion + "</b>";
+
 chrome.runtime.onInstalled.addListener(function(details) {
-    chrome.runtime.openOptionsPage(function() {
-        var thisVersion = chrome.runtime.getManifest().version;
+    // console.log(chrome.runtime.getManifest());
+    chrome.runtime.openOptionsPage(function(x) {
+        this.versionMsg = "Version";
         if(details.reason == "install" || thisVersion === details.previousVersion)
         {
-            console.log("BlackInc installed version ", thisVersion);
+            this.versionMsg = "Installed new version";
         }
         else if(details.reason == "update")
         {
-            console.log("BlackInc version updated from " + details.previousVersion + " to " + thisVersion); 
+            this.versionMsg = "Version updated from " + details.previousVersion + " to";
         }
+        console.log(manifest.name + ": " + (this.versionMsg = this.versionMsg + " " + thisVersion));
     });
 });
