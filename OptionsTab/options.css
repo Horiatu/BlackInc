@@ -7,10 +7,10 @@
     /*transition: padding ease-in-out .25s;*/
 }
 
-.min.jumbotron {
+/*.min.jumbotron {
     padding: 0px 30px;
     transition: padding ease-in-out .25s;
-}
+}*/
 
 .jumbotron h1, .jumbotron .h1 {
     font-family: "Poiret One";
@@ -241,7 +241,7 @@ hide {
     background-color: pink;
 }*/
 
-.min .projectName {
+/*.min .projectName {
     height: 40px;
     transition: height ease-in-out .25s;
 }
@@ -253,7 +253,7 @@ hide {
     transition: width ease-in-out .25s;
     transition: height ease-in-out .25s;
     transition: margin-bottom ease-in-out .25s;
-}
+}*/
 
 .projectName img {
     transition: width ease-in-out .25s;
@@ -265,10 +265,10 @@ hide {
     transition: font-size ease-in-out .25s;
 }
 
-.min .projectName span {
+/*.min .projectName span {
     font-size: 24px;
     transition: font-size ease-in-out .25s;
-}
+}*/
 
 @media (min-width: 768px) {
     .navbar-nav>li>a {
@@ -284,15 +284,15 @@ hide {
     padding: 1px 8px;
 }
 
-.min .nav>li>a {
+/*.min .nav>li>a {
     margin-top:8px;
     transition: margin-top ease-in-out .25s;
-}
+}*/
 
-#headerHint.min {
+/*#headerHint.min {
     display:none;
     transition: margin-top ease-in-out .25s;
-}
+}*/
 
 .nav>li>a {
     transition: margin-top ease-in-out .25s;

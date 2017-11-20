@@ -24,18 +24,18 @@ OptionsCtrl.directive('myKey', function() {
     };
 });
 
-OptionsCtrl.directive('scroll', function ($window) {
-    return function(scope, element, attrs) {
-        angular.element($window).bind("scroll", function() {
-            if (this.pageYOffset >= 10) {
-                scope.boolChangeClass = true;
-            } else {
-                scope.boolChangeClass = false;
-            }
-            scope.$apply();
-        });
-    };
-});
+// OptionsCtrl.directive('scroll', function ($window) {
+//     return function(scope, element, attrs) {
+//         angular.element($window).bind("scroll", function() {
+//             if (this.pageYOffset >= 10) {
+//                 scope.boolChangeClass = true;
+//             } else {
+//                 scope.boolChangeClass = false;
+//             }
+//             scope.$apply();
+//         });
+//     };
+// });
 
 OptionsCtrl.controller('BlackInkOptionsCtrl', 
     function($scope, $q, $http, blackInkStorage) {
