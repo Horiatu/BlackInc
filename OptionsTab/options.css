@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Poiret+One|Roboto+Condensed');
 
 .jumbotron {
-    margin-bottom:0;
-    padding: 30px;
+    /* margin-bottom:0; */
+    /* padding: 30px; */
     background-color: #bcd9f1;
-    /*transition: padding ease-in-out .25s;*/
+    /* transition: padding ease-in-out .25s; */
 }
 
 /*.min.jumbotron {
@@ -228,7 +228,7 @@ hide {
 
 
 .navbar-brand {
-    padding: 0;
+    /* padding: 0; */
 }
 
 .titleCheckbox {
@@ -309,16 +309,16 @@ section {
 }
 
 .navbar-collapse.ng-hide {
-    display: none !important;
+    /* display: none !important; */
 }
 
 .navbar-toggle {
-    margin-right: 0; 
-    padding: 0; 
+    /* margin-right: 0; */
+    padding: 0;
     margin-top: 5px;
     margin-bottom: 0;
     border: 1px solid transparent;
-    border-radius: 0; 
+    border-radius: 0;
 }
 
 #burgerMenu {

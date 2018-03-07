@@ -21,13 +21,16 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
 
     //$scope.blackInkStorage.removeAll();
 
-    chrome.tabs.onSelectionChanged.addListener(function(tabId) {
-        $scope.tabId = tabId;
-        // console.log('onSelectionChanged: ', tabId);
+    chrome.tabs.onActivated.addListener(function(activeInfo) {
+        $scope.tabId = activeInfo.tabId;
+        $scope.windowId = activeInfo.windowId;
+        // console.log('onActivated: ', $scope.tabId, $scope.windowId);
     });
 
-    chrome.tabs.onUpdated.addListener(function(tabId) {
+    chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
         // console.log('initTabs: ', $scope.initTabs);
+        // $scope.url = tab.url;
+        // console.log('tab.url: ', $scope.url);
         $scope.initTabs.filterRemove(function(item) {
             return item.tabId === tabId;
         });

@@ -5,50 +5,62 @@
 
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <meta name="description" content="Options Page gor BlackInc Little Chrome extension">
+        <meta name="description" content="Options Page for BlackInc Little Chrome extension">
         <meta name="author" content="Horia Tudosie">
-        <link type="text/css" rel="stylesheet"  href="/lib/bootstrap/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
         <link type="text/css" rel="stylesheet" href="/OptionsTab/options.css">
         <link type="text/css" rel="stylesheet" href="/css/switch.css">
+
+        <style>
+            .btn-primary-transparent {
+                background-color: transparent;
+                border-color: transparent;
+                -webkit-appearance: none !important;
+            }
+        </style>
 
     </head>
 
     <body ng-controller='BlackInkOptionsCtrl' resized>
-        <div id="top" class="navbar" role="navigation">
-            <div class="container-fluid jumbotron" scroll ng-class="{min:boolChangeClass || showBurgerMenu}">
-                <div class="navbar-header">
-                    <button class="navbar-toggle" id="burgerMenu" ng-click="showBurgerMenu = !showBurgerMenu" ng-init="showBurgerMenu=false">
-                        <img src='/images/burger.24.png'>
-                    </button>
-                    <a class="projectName navbar-brand" href="#">
-                        <img src='/images/logos/128.png' class='shadow' style="display: inline-block;"/>
+        <div class="container-fluid form">
+            <header class="brandBanner row bg-info justify-content-between">
+                <div class="pl-3 pull-left">
+                    <a class="projectName left" href="#">
+                        <img src='/images/logos/128.png' alt="logo"/>
                         <span>BlackInk Little</span>
                     </a>
                 </div>
-                <div class="navbar-collapse" ng-show="!isNavMenuVisible || showBurgerMenu">
-                    <ul class="nav navbar-nav" style="float:right;">
-                        <li><a href="#directions" ng-click="expand = showBurgerMenu = !(boolChangeClass = true)">Directions</a></li>
-                        <li><a href="#options" ng-click="expand = showBurgerMenu = !(boolChangeClass = true)">Options</a></li>
-                        <li><a href="#activation" ng-click="expand = showBurgerMenu = !(boolChangeClass = true)">Activation&nbsp;&amp;&nbsp;Shortcuts</a></li>
-                        <li><a href="#history" ng-click="expand = !(showBurgerMenu = !(boolChangeClass = true))">History</a></li>
-                    </ul>
-                </div>
 
-                <div id="headerHint" ng-class="{min:(boolChangeClass || isNavMenuVisible)}">
-                    <h2>Aren't you tired of low-contrast pages using gray ink for text?!</h2>
-                    <h2 style="display:inline; color:green;">Installed or updated version {{version}}</h2>
-                    <div style='display:inline; float: right;'>
-                        <input type="image" class='toolbarBtn' id='Share' alt='Share' title='Share on Facebook' src='/images/fShare.png' ng-click='fShare()' />
-                        <input type="image" class='toolbarBtn' id='Refresh' alt='Refresh' title='Clear Settings' src='/images/Refresh.png' ng-click='refresh()' />
+                <div class="btn-group dropleft">
+                    <a href="#" type="button" class="d-md-none btn btn-primary-transparent" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src='/images/burger.24.png' alt='menu'>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#directions">Directions</a>
+                        <a class="dropdown-item" href="#options">Options</a>
+                        <a class="dropdown-item" href="#activation">Activation&nbsp;Shortcuts</a>
+                        <a class="dropdown-item" href="#history">History</a>
                     </div>
                 </div>
+
+           </header>
+
+            <div class="row bg-info">
+                <div class="pull-left">
+                    <h2>Aren't you tired of low-contrast pages using gray ink for text?!</h2>
+                    <h2 class="text-white">Installed or updated version {{version}}</h2>
+                </div>
+                <div class="pull-right">
+                    <input type="image" class='toolbarBtn' id='Share' alt='Share' title='Share on Facebook' src='/images/fShare.png' ng-click='fShare()' />
+                    <input type="image" class='toolbarBtn' id='Refresh' alt='Refresh' title='Clear Settings' src='/images/Refresh.png' ng-click='refresh()' />
+                </div>
             </div>
-        </div>
-        <!-- <div style="display:block; width:100%; position:fixed;"></div> -->
-        <div class="container-fluid">
+
             <div class="row">
-                <form id='form'>
-                        <div class="col-sm-6 col-md-6">
+                <!-- <form id='form'> -->
+                    <div class="col-sm-6 col-md-6">
                         <section id="directions" tabindex=0>
                             <legend>Directions</legend>
                             <p>Select your options here for text color and weight, then click the extension button to change the main dominant text on the page.<br/>
@@ -145,9 +157,7 @@
                         </section>
                     </div>
                 </form>
-            </div>
 
-            <div class="row">
                 <div class="col-sm-6 col-md-6">
                     <section tabindex=0 id="history" ng-keyup="($event.keyCode === 13 || $event.keyCode === 32) && (expand = !expand)">
                         <h3><label>
@@ -190,8 +200,6 @@
             </div> 
         </div>
 
-        <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
-        <script type="text/javascript" src="/lib/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/app/utils.js"></script>
         <script type="text/javascript" src="/lib/angular/angular.min.js"></script>
         <script type="text/javascript" src="/lib/angular-aria/angular-aria.min.js"></script>
@@ -200,5 +208,9 @@
         <script type="text/javascript" src="/app/tabService.js"></script>
         <script type="text/javascript" src="/app/OptionsCtrl.js"></script>
 
+        <script src="../lib/jquery/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+
+        <script src="../lib/bootstrap/js/popper.min.js" crossorigin="anonymous"></script>
+        <script src="../lib/bootstrap/js/bootstrap.min.js" crossorigin="anonymous"></script>
     </body>
 </html>
