@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="btn-group dropleft">
-                    <a href="#" type="button" class="d-md-none btn btn-primary-transparent" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a href="#" type="button" class="btn btn-primary-transparent" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src='/images/burger.24.png' alt='menu'>
                     </a>
                     <div class="dropdown-menu">
@@ -44,122 +44,121 @@
                         <a class="dropdown-item" href="#history">History</a>
                     </div>
                 </div>
-
-           </header>
+            </header>
 
             <div class="row bg-info">
-                <div class="pull-left">
-                    <h2>Aren't you tired of low-contrast pages using gray ink for text?!</h2>
-                    <h2 class="text-white">Installed or updated version {{version}}</h2>
-                </div>
-                <div class="pull-right">
-                    <input type="image" class='toolbarBtn' id='Share' alt='Share' title='Share on Facebook' src='/images/fShare.png' ng-click='fShare()' />
-                    <input type="image" class='toolbarBtn' id='Refresh' alt='Refresh' title='Clear Settings' src='/images/Refresh.png' ng-click='refresh()' />
+                <div class="col-12">
+                    <div class="pull-left">
+                        <h2>Aren't you tired of low-contrast pages using gray ink for text?!</h2>
+                        <h2 class="text-white">Installed or updated version {{version}}</h2>
+                    </div>
+                    <div class="pull-right">
+                        <input type="image" class='toolbarBtn' id='Share' alt='Share' title='Share on Facebook' src='/images/fShare.png' ng-click='fShare()' />
+                        <input type="image" class='toolbarBtn' id='Refresh' alt='Refresh' title='Clear Settings' src='/images/Refresh.png' ng-click='refresh()' />
+                    </div>
                 </div>
             </div>
 
             <div class="row">
                 <!-- <form id='form'> -->
-                    <div class="col-sm-6 col-md-6">
-                        <section id="directions" tabindex=0>
-                            <legend>Directions</legend>
-                            <p>Select your options here for text color and weight, then click the extension button to change the main dominant text on the page.<br/>
-                            </p>
-                            <br/>
-                            <p>A shortcut menu-entry in the host-page popup-menu lets you select an element and remove it from the page. You may want this for removing advertisings or controls that block the main content, or to prepare the page for printing.</p>
-                            <p>
-                            Locate the element you want to hide. With the mouse over, Right-Click. From the context menu, click 'BlackInk Little' menu entry:
-                            </p>
-                            <p><table role="presentation">
+                    <section id="directions" class="col-md-6 col-sm-12" tabindex=0>
+                        <legend>Directions</legend>
+                        <p>Select your options here for text color and weight, then click the extension button to change the main dominant text on the page.<br/>
+                        </p>
+                        <br/>
+                        <p>A shortcut menu-entry in the host-page popup-menu lets you select an element and remove it from the page. You may want this for removing advertisings or controls that block the main content, or to prepare the page for printing.</p>
+                        <p>
+                        Locate the element you want to hide. With the mouse over, Right-Click. From the context menu, click 'BlackInk Little' menu entry:
+                        </p>
+                        <p><table role="presentation">
+                            <tr>
+                                <td style='padding-right:24px;'>
+                                    <img src="\images\contextMenu.png" width="200px">
+                                </td>
+                                <td>
+                                    <p>Press <MyKey>Escape</MyKey> to cancel this mode<hide>.</hide><br/>
+                                    Press <MyKey>Arrow-Up</MyKey> or <MyKey>Arrow-Down</MyKey> to move to parent or child element.<br/>
+                                    Press <MyKey>Enter</MyKey> or <MyKey>Space Bar</MyKey> to hide the selected element.<br/>
+                                    Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.</p>
+                                </td>
+                            </tr>
+                        </table></p>
+                        <p>The <b>BlackInk Help</b> will show. To move the help out of the way, move the mouse pointer over it.</p>
+                        <!-- <br/>
+                        <p>Once activated, you may toggle the enhanced mode, reverse collors or rotate links visual style using shortcut keys.</p> -->
+                    </section>
+
+                <div class="col-md-6 col-sm-12">
+                    <section id='options' tabindex=0>
+                        <h3>Text Options</h3>
+                        <div class='roundBorder' ng-hide="errorMessage!=''">
+                        <table role='presentation'>
+                            <tr>
+                                <td style="color:{{InkColor}};font-weight:{{TextWeight}};padding-right:12px;">Color</td>
+                                <td>
+                                    <label><input type="radio" name="color" ng-model="InkColor" value="black"/>Black</label>
+                                </td>
+                                <td>
+                                    <label><input type="radio" name="color" ng-model="InkColor" value="navy"/>Blue</label>
+                                </td>
+                                <td>
+                                    <label><input type="radio" name="color" ng-model="InkColor" value="#b60000"/>Red</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color:{{InkColor}};font-weight:{{TextWeight}};padding-right:12px;">Weight</td>
+                                <td>
+                                    <label><input type="radio" name="weight" ng-model="TextWeight" value=""/>Default</label>
+                                </td>
+                                <td>
+                                    <label><input type="radio" name="weight" ng-model="TextWeight" value="normal"/>Normal</label>
+                                </td>
+                                <td>
+                                    <label><input type="radio" name="weight" ng-model="TextWeight" value="bold"/>Bold</label>
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                    </section>
+
+                    <section id='activation' class="pt-3" tabindex=0>
+                        <h3>BlackInk Activation Key(s) and Page Shortcuts</h3>
+                        <div class='roundBorder'>
+                            <p>Choose a special-key combination to activate BlackInk features from keyboard:</p>
+                            <p><table role='presentation' id='ActivationKeyTbl'>
                                 <tr>
-                                    <td style='padding-right:24px;'>
-                                        <img src="\images\contextMenu.png" width="200px">
-                                    </td>
-                                    <td>
-                                        <p>Press <MyKey>Escape</MyKey> to cancel this mode<hide>.</hide><br/>
-                                        Press <MyKey>Arrow-Up</MyKey> or <MyKey>Arrow-Down</MyKey> to move to parent or child element.<br/>
-                                        Press <MyKey>Enter</MyKey> or <MyKey>Space Bar</MyKey> to hide the selected element.<br/>
-                                        Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.</p>
-                                    </td>
+                                    <td><input type='checkbox' ng-model="keyCtrl"><myKey>Ctrl</myKey></td>
+                                    <td><input type='checkbox' ng-model="keyShift"><myKey>Shift</myKey></td>
+                                    <td><input type='checkbox' ng-model="keyAlt"><myKey>Alt</myKey></td>
                                 </tr>
                             </table></p>
-                            <p>The <b>BlackInk Help</b> will show. To move the help out of the way, move the mouse pointer over it.</p>
-                            <!-- <br/>
-                            <p>Once activated, you may toggle the enhanced mode, reverse collors or rotate links visual style using shortcut keys.</p> -->
-                        </section>
-                    </div>
 
-                    <div class="col-sm-6 col-md-6">
-                        <section id='options' tabindex=0>
-                            <h3>Text Options</h3>
-                            <div class='roundBorder' ng-hide="errorMessage!=''">
-                            <table role='presentation'>
-                                <tr>
-                                    <td style="color:{{InkColor}};font-weight:{{TextWeight}};padding-right:12px;">Color</td>
-                                    <td>
-                                        <label><input type="radio" name="color" ng-model="InkColor" value="black"/>Black</label>
-                                    </td>
-                                    <td>
-                                        <label><input type="radio" name="color" ng-model="InkColor" value="navy"/>Blue</label>
-                                    </td>
-                                    <td>
-                                        <label><input type="radio" name="color" ng-model="InkColor" value="#b60000"/>Red</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="color:{{InkColor}};font-weight:{{TextWeight}};padding-right:12px;">Weight</td>
-                                    <td>
-                                        <label><input type="radio" name="weight" ng-model="TextWeight" value=""/>Default</label>
-                                    </td>
-                                    <td>
-                                        <label><input type="radio" name="weight" ng-model="TextWeight" value="normal"/>Normal</label>
-                                    </td>
-                                    <td>
-                                        <label><input type="radio" name="weight" ng-model="TextWeight" value="bold"/>Bold</label>
-                                    </td>
-                                </tr>
-                            </table>
+                            <div class="col-sm-12 col-md-12">
+                                <myKey ng-if="keyCtrl">Ctrl</myKey><myKey ng-if="keyShift">Shift</myKey><myKey ng-if="keyAlt">Alt</myKey><myKey>F1</myKey> toggle black ink<br/>
+
+                                <myKey ng-if="keyCtrl">Ctrl</myKey><myKey ng-if="keyShift">Shift</myKey><myKey ng-if="keyAlt">Alt</myKey><myKey>F2</myKey> toggle invert colors<br/>
                             </div>
-                        </section>
 
-                        <section id='activation' tabindex=0>
-                            <h3>BlackInk Activation Key(s) and Page Shortcuts</h3>
-                            <div class='roundBorder'>
-                                <p>Choose a special-key combination to activate BlackInk features from keyboard:</p>
-                                <p><table role='presentation' id='ActivationKeyTbl'>
-                                    <tr>
-                                        <td><input type='checkbox' ng-model="keyCtrl"><myKey>Ctrl</myKey></td>
-                                        <td><input type='checkbox' ng-model="keyShift"><myKey>Shift</myKey></td>
-                                        <td><input type='checkbox' ng-model="keyAlt"><myKey>Alt</myKey></td>
-                                    </tr>
-                                </table></p>
-                                <div class="col-sm-12 col-md-12">
-                                    <myKey ng-if="keyCtrl">Ctrl</myKey><myKey ng-if="keyShift">Shift</myKey><myKey ng-if="keyAlt">Alt</myKey><myKey>F1</myKey> toggle black ink<br/>
-
-                                    <myKey ng-if="keyCtrl">Ctrl</myKey><myKey ng-if="keyShift">Shift</myKey><myKey ng-if="keyAlt">Alt</myKey><myKey>F2</myKey> toggle invert colors<br/>
+                            <div>
+                                <div class="col-sm-5 col-md-5">
+                                    <myKey ng-if="keyCtrl">Ctrl</myKey><myKey ng-if="keyShift">Shift</myKey><myKey ng-if="keyAlt">Alt</myKey><myKey>F3</myKey> <span class='linkStyle{{linkStyle}}'>link&nbsp;style</span>
                                 </div>
 
-                                <div>
-                                    <div class="col-sm-5 col-md-5">
-                                        <myKey ng-if="keyCtrl">Ctrl</myKey><myKey ng-if="keyShift">Shift</myKey><myKey ng-if="keyAlt">Alt</myKey><myKey>F3</myKey> <span class='linkStyle{{linkStyle}}'>link&nbsp;style</span>
-                                    </div>
-                                    <div class="col-sm-7 col-md-7">
-                                        <label><input type='radio' name='linkStyle' value='0' ng-model='linkStyle'><span class='linkStyle0'>none</span></label>
-                                        <label><input type='radio' name='linkStyle' value='1' ng-model='linkStyle'><span class='linkStyle1'>underlined</span></label>
-                                        <label><input type='radio' name='linkStyle' value='2' ng-model='linkStyle'><span class='linkStyle2'>gray</span></label>
-                                        <label><input type='radio' name='linkStyle' value='3' ng-model='linkStyle'><span class='linkStyle3'>reverse</span></label>
-                                    </div>
+                                <div class="col-sm-7 col-md-7">
+                                    <label><input type='radio' name='linkStyle' value='0' ng-model='linkStyle'><span class='linkStyle0'>none</span></label>
+                                    <label><input type='radio' name='linkStyle' value='1' ng-model='linkStyle'><span class='linkStyle1'>underlined</span></label>
+                                    <label><input type='radio' name='linkStyle' value='2' ng-model='linkStyle'><span class='linkStyle2'>gray</span></label>
+                                    <label><input type='radio' name='linkStyle' value='3' ng-model='linkStyle'><span class='linkStyle3'>reverse</span></label>
                                 </div>
-                                <p>Shortcuts work after activation.</p>
-                                <p>To activate, click 'BlackInk Little' button in the header of the browser:</p>
-                                <img src="\images\Activation.png" width="150px">
                             </div>
-                        </section>
-                    </div>
-                </form>
+                            <p>Shortcuts work after activation.</p>
+                            <p>To activate, click 'BlackInk Little' button in the header of the browser:</p>
+                            <img src="\images\Activation.png" width="150px">
+                        </div>
+                    </section>
+                </div>
 
-                <div class="col-sm-6 col-md-6">
-                    <section tabindex=0 id="history" ng-keyup="($event.keyCode === 13 || $event.keyCode === 32) && (expand = !expand)">
+                    <section id="history" class="col-md-6 col-sm-12" tabindex=0 ng-keyup="($event.keyCode === 13 || $event.keyCode === 32) && (expand = !expand)">
                         <h3><label>
                         <div class='collapse'>
                             <img src="\images\triangle.png" ng-if="!expand"/>
@@ -186,7 +185,7 @@
                             
                         </div>
                     </section>
-                </div>
+                <!-- </form> -->
             </div>
 
             <div class="row">
