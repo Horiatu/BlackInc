@@ -29,8 +29,8 @@ legend {
 }
 
 legend {
-    border-bottom: 1px solid gray; 
-    margin-top: 20px; 
+    border-bottom: 1px solid gray;
+    /* margin-top: 20px; */
     font-size: 24px;
 }
 

@@ -26,7 +26,7 @@
     <body ng-controller='BlackInkOptionsCtrl' resized>
         <div class="container-fluid form">
             <header class="brandBanner row bg-info justify-content-between">
-                <div class="pl-3 pull-left">
+                <div class="ml-3 pull-left">
                     <a class="projectName" href="#">
                         <img src='/images/logos/128.png' alt="logo"/>
                         <span class="display-4">BlackInk Little</span>
@@ -34,23 +34,34 @@
                 </div>
 
                 <div class="btn-group dropleft">
-                    <a href="#" type="button" class="btn btn-primary-transparent" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <label for="burgerBtn" class="d-none d-md-inline-block d-lg-none mt-2">M E N U :</label>
+                    <a id="burgerBtn" href="#" type="button" class="btn btn-primary-transparent d-lg-none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src='/images/burger.24.png' alt='menu'>
                     </a>
-                    <div class="dropdown-menu z-depth-4">
-                        <a class="dropdown-item" href="#directions">Directions</a>
-                        <a class="dropdown-item" href="#options">Options</a>
-                        <a class="dropdown-item" href="#activation">Activation&nbsp;Shortcuts</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#directions" ng-click="expand = !(boolChangeClass = true)">Directions</a>
+                        <a class="dropdown-item" href="#options" ng-click="expand = !(boolChangeClass = true)">Options</a>
+                        <a class="dropdown-item" href="#activation" ng-click="expand = !(boolChangeClass = true)">Activation&nbsp;Shortcuts</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#history">History</a>
+                        <a class="dropdown-item" href="#history" ng-click="expand = (boolChangeClass = true)">History</a>
                     </div>
+                    <div class="d-none d-md-none d-lg-inline-block pull-right mt-3 mr-3">
+                        <a class="text-light" href="#directions" ng-click="expand = !(boolChangeClass = true)">Directions</a>
+                        <span class="text-light ml-2 mr-2">|</span>
+                        <a class="text-light" href="#options" ng-click="expand = !(boolChangeClass = true)">Options</a>
+                        <span class="text-light ml-2 mr-2">|</span>
+                        <a class="text-light" href="#activation" ng-click="expand = !(boolChangeClass = true)">Activation&nbsp;Shortcuts</a>
+                        <span class="text-light ml-2 mr-2">|</span>
+                        <a class="text-light" href="#history" ng-click="expand = (boolChangeClass = true)">History</a>
+                    </div>
+
                 </div>
             </header>
 
             <div class="row bg-info">
                 <div class="col-12">
                     <div class="float-left">
-                        <h2>Aren't you tired of low-contrast pages using gray ink for text?!</h2>
+                        <h2 class="text-white">Aren't you tired of low-contrast pages using gray ink for text?!</h2>
                         <h2 class="text-warning">Installed or updated version {{version}}</h2>
                     </div>
                     <div class="float-right">
@@ -62,7 +73,7 @@
 
             <div class="row">
                 <!-- <form id='form'> -->
-                <section id="directions" class="col-lg-4 col-md-6 col-sm-12 pt-3" tabindex=0>
+                <section id="directions" class="col-lg-4 col-md-6 col-sm-12 mt-3" tabindex=0>
                     <legend>Directions</legend>
                     <p class="lead">Select your options here for text color and weight, then click the extension button to change the main dominant text on the page.<br/>
                     </p>
@@ -73,7 +84,7 @@
                     </p>
 
                     <figure>
-                        <img src="\images\contextMenu.png" class="figure-img rounded float-left pr-3" style="max-width:50%;">
+                        <img src="\images\contextMenu.png" class="figure-img rounded float-left mr-3" style="max-width:45%;">
                         <figcaption class="figure-caption text-left text-dark">Context Menu Popup.</figcaption>
                         
                         <p class="lead">
@@ -90,10 +101,10 @@
                 </section>
 
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <section id='options' class="pt-3" tabindex=0>
+                    <section id='options' class="mt-3" tabindex=0>
                         <h3>Text Options</h3>
-                        <div class='roundBorder' ng-hide="errorMessage!=''">
-                        <table role='presentation'>
+                        <div class="roundBorder" ng-hide="errorMessage!=''">
+                        <table role="presentation">
                             <tr>
                                 <td style="color:{{InkColor}};font-weight:{{TextWeight}};padding-right:12px;">Color</td>
                                 <td>
@@ -122,11 +133,11 @@
                         </div>
                     </section>
 
-                    <section id='activation' class="pt-3" tabindex=0>
+                    <section id='activation' class="mt-3" tabindex=0>
                         <h3>BlackInk Activation Key(s) and Page Shortcuts</h3>
                         <div class='roundBorder'>
                             <p class="lead">Choose a special-key combination to activate BlackInk features from keyboard:</p>
-                            <p class="lead"><table role='presentation' id='ActivationKeyTbl'>
+                            <p class="lead"><table role="presentation" id="ActivationKeyTbl">
                                 <tr>
                                     <td><input type='checkbox' ng-model="keyCtrl"><myKey>Ctrl</myKey></td>
                                     <td><input type='checkbox' ng-model="keyShift"><myKey>Shift</myKey></td>
@@ -134,18 +145,18 @@
                                 </tr>
                             </table></p>
 
-                            <div class="pt-1">
+                            <div class="mt-1">
                                 <myKey ng-if="keyCtrl">Ctrl</myKey><myKey ng-if="keyShift">Shift</myKey><myKey ng-if="keyAlt">Alt</myKey><myKey>F1</myKey> toggle black ink<br/>
 
                                 <myKey ng-if="keyCtrl">Ctrl</myKey><myKey ng-if="keyShift">Shift</myKey><myKey ng-if="keyAlt">Alt</myKey><myKey>F2</myKey> toggle invert colors<br/>
                             </div>
 
                             <div>
-                                <div class="pt-1">
+                                <div class="mt-1">
                                     <myKey ng-if="keyCtrl">Ctrl</myKey><myKey ng-if="keyShift">Shift</myKey><myKey ng-if="keyAlt">Alt</myKey><myKey>F3</myKey> <span class='linkStyle{{linkStyle}}'>link&nbsp;style</span>
                                 </div>
 
-                                <div class="pt-2">
+                                <div class="mt-2">
                                     <label><input type='radio' name='linkStyle' value='0' ng-model='linkStyle'><span class='linkStyle0'>none</span></label>
                                     <label><input type='radio' name='linkStyle' value='1' ng-model='linkStyle'><span class='linkStyle1'>underlined</span></label>
                                     <label><input type='radio' name='linkStyle' value='2' ng-model='linkStyle'><span class='linkStyle2'>gray</span></label>
@@ -153,8 +164,8 @@
                                 </div>
                             </div>
                             
-                            <figure class="pt-2">
-                                <img src="\images\Activation.png" class="figure-img rounded float-left pr-3 pt-1" style="width:40%; max-width:250px;">
+                            <figure class="mt-2">
+                                <img src="\images\Activation.png" class="figure-img rounded float-left mr-3 mt-1" style="width:40%; max-width:250px;">
                                 <p class="lead">Shortcuts work after activation.<br/>
                                 To activate, click <strong>BlackInk Little</strong> button in the header of the browser.</p>
                             </figure>
@@ -163,7 +174,7 @@
                 </div>
 
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <section id="history" class="pt-3" tabindex=0 ng-keyup="($event.keyCode === 13 || $event.keyCode === 32) && (expand = !expand)">
+                    <section id="history" class="mt-3" tabindex=0 ng-keyup="($event.keyCode === 13 || $event.keyCode === 32) && (expand = !expand)">
                         <h3><label>
                         <div class='collapse'>
                             <img src="\images\triangle.png" ng-if="!expand"/>
@@ -190,10 +201,7 @@
                             <h4>Version 2.0.1.5</h4>
                             <ul>
                                 <li>Enhanced option page.</li>
-                            </ul>
-                            <h4>Version 2.0.1.6</h4>
-                            <ul>
-                                <li>Enhanced option page.</li>
+                                <li>Last jQuery and Bootstrap libraries.</li>
                             </ul>
                         </div>
                     </section>
