@@ -203,8 +203,8 @@ hide {
 }
 
 .projectName {
-    font-family: "Poiret One";
-    text-shadow: 2px 2px 2px grey;
+    /* font-family: "Poiret One"; */
+    text-shadow: 2px 2px 2px #f8f9fa;
     font-size: 46px;
     margin: 0px;
     color: black;
@@ -222,7 +222,7 @@ hide {
 
 @media (min-width: 768px) {
     .projectName, .navbar-brand {
-        margin: 0px !important;
+        /* margin: 0px !important; */
     }
 }
 
