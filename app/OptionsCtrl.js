@@ -50,7 +50,7 @@ OptionsCtrl.directive('myKey', function() {
 //     };
 // });
 
-OptionsCtrl.controller('BlackInkOptionsCtrl', 
+OptionsCtrl.controller('BlackInkOptionsCtrl',
     function($scope, $q, $http, blackInkStorage) {
 
     $scope.blackInkStorage = blackInkStorage;
@@ -67,6 +67,10 @@ OptionsCtrl.controller('BlackInkOptionsCtrl',
         keyCtrl: true,
         keyShift: true,
         keyAlt: false,
+
+        QTopics: true,
+        QStories: true,
+        QPromo: true,
 
         applyCss: false,
 
@@ -113,6 +117,16 @@ OptionsCtrl.controller('BlackInkOptionsCtrl',
                 blackInkStorage.add({'keyAlt': checked});
             });
 
+            $scope.$watch('QTopics', function(checked) {
+                blackInkStorage.add({'QTopics': checked});
+            });
+            $scope.$watch('QStories', function(checked) {
+                blackInkStorage.add({'QStories': checked});
+            });
+            $scope.$watch('QPromo', function(checked) {
+                blackInkStorage.add({'QPromo': checked});
+            });
+
             $scope.$watch('applyCss', function(value) {
                 blackInkStorage.add({'applyCss': value});
             });
@@ -125,7 +139,7 @@ OptionsCtrl.controller('BlackInkOptionsCtrl',
             });
 
             var getDefaultsDefer = $q.defer();
-            
+
             getDefaultsDefer.promise.then(function(msgData) {
                 $scope.applyCss = msgData.applyCss;
             });

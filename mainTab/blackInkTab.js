@@ -11,8 +11,8 @@ catch (e) {
 if(!BlackInkLoaded)
 {
     // alert("!BlackInkLoaded");
-    BlackInkModule = { 
-        manualCss: '', 
+    BlackInkModule = {
+        manualCss: '',
         cssId: 'BlackInkColor',
         rightClickEvn: null,
         elementsFromPoint: [],
@@ -24,7 +24,10 @@ if(!BlackInkLoaded)
             auto: false,
             keyCtrl:true,
             keyShift:true,
-            keyAlt:false
+            keyAlt:false,
+            QTopics: true,
+            QStories:true,
+            QPromo:true,
             },
 
         init: function() {
@@ -38,13 +41,16 @@ if(!BlackInkLoaded)
                         BlackInkModule.defaults.keyCtrl = req.keyCtrl;
                         BlackInkModule.defaults.keyShift = req.keyShift;
                         BlackInkModule.defaults.keyAlt = req.keyAlt;
+                        BlackInkModule.defaults.QTopics = req.QTopics;
+                        BlackInkModule.defaults.QStories = req.QStories;
+                        BlackInkModule.defaults.QPromo = req.QPromo;
                         BlackInkModule.rotateUnderline(BlackInkModule.defaults.linkStyle);
                         // console.log('setDefaults: ', req, BlackInkModule.defaults);
                         break;
                     case 'getDefaults':
                         sendResponse({
                             defaults:BlackInkModule.defaults || {},
-                            hasManualCss: $('#'+BlackInkModule.cssId).length > 0, 
+                            hasManualCss: $('#'+BlackInkModule.cssId).length > 0,
                         });
                         break;
                     case 'getRightClick':
@@ -56,7 +62,7 @@ if(!BlackInkLoaded)
                             var index = 0;
                             $(BlackInkModule.elementsFromPoint[index]).addClass('AccessAuditMarker');
                             $('.blackInkHelp').css('display', 'inherit').focus();
-                            
+
                             var arrowKeys = function(e) {
                                 // console.log('arrowKeys', e);
                                 switch (e.key) {
@@ -118,6 +124,9 @@ if(!BlackInkLoaded)
                             BlackInkModule.defaults.textWeight = req.textWeight;
 
                             BlackInkModule.manualCss = '<style id="'+BlackInkModule.cssId+'">' +
+                                (req.QTopics ? '.SuggestedTopicsBundle * {color: gray !important;}' : '') +
+                                (req.QStories ? '.HyperLinkFeedStory * {color: gray !important;}' : '') +
+                                (req.QPromo ? '.Bundle.AdBundle * {color: gray !important;}' : '') +
                                 req.cssContent +
                                 '</style>';
                             BlackInkModule.injectCss(BlackInkModule.cssId, BlackInkModule.manualCss);
@@ -141,19 +150,19 @@ if(!BlackInkLoaded)
             });
 
             if(!document.getElementById("blackInkCss")) {
-                BlackInkModule._injectCss('<link id="blackInkCss" rel="stylesheet" type="text/css" href="' + 
+                BlackInkModule._injectCss('<link id="blackInkCss" rel="stylesheet" type="text/css" href="' +
                     chrome.extension.getURL('/mainTab/blackInk.css') + '" />');
             }
 
             BlackInkModule.addFiltersAndHelp();
 
             $(window).bind('keyup', BlackInkModule.blackInkToggles);
-        
+
             // https://stackoverflow.com/questions/7703697/how-to-retrieve-the-element-where-a-contextmenu-has-been-executed
             $(window).bind('mousedown', function(event){
                 if(!BlackInkModule.inSelectElementsMode) {
                     //right click
-                    if(event.button == 2) { 
+                    if(event.button == 2) {
                         BlackInkModule.rightClickEvn = event;
                         // console.log(BlackInkModule.rightClickEvn);
 
@@ -177,7 +186,7 @@ if(!BlackInkLoaded)
             {
                 if($('#'+BlackInkModule.cssId).length === 0)
                     BlackInkModule.injectCss(BlackInkModule.cssId, BlackInkModule.manualCss);
-                else 
+                else
                     $('#'+BlackInkModule.cssId).remove();
             }
         },
@@ -223,14 +232,14 @@ if(!BlackInkLoaded)
 
         isActivationKey: function(e) {
             // console.log('isActivationKey', BlackInkModule.defaults, e);
-            return !(!BlackInkModule.defaults.keyCtrl ^ !e.ctrlKey) && 
-                !(!BlackInkModule.defaults.keyShift ^ !e.shiftKey) && 
+            return !(!BlackInkModule.defaults.keyCtrl ^ !e.ctrlKey) &&
+                !(!BlackInkModule.defaults.keyShift ^ !e.shiftKey) &&
                 !(!BlackInkModule.defaults.keyAlt ^ !e.altKey);
         },
 
         blackInkToggles: function(e) {
             // console.log(e);
-            
+
             switch (e.key) {
                 case 'F1' :
                     if(BlackInkModule.isActivationKey(e)) {
@@ -264,7 +273,7 @@ if(!BlackInkLoaded)
                         e.stopPropagation();
                         e.preventDefault();
                     }
-                    break;                
+                    break;
             }
         },
 
@@ -298,7 +307,7 @@ if(!BlackInkLoaded)
 
         addFiltersAndHelp: function() {
             if(!document.getElementById("svgFilters")) {
-                var s = 
+                var s =
                     "<svg id='svgFilters' xmlns='http://www.w3.org/2000/svg' style='display:none'>\n"+
                     "    <filter id='invertMatrix'>\n"+
                     "        <feColorMatrix type='matrix' values='-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1 0 0 0 1 0'/>\n"+
@@ -328,13 +337,13 @@ if(!BlackInkLoaded)
                     ">"+
 
                     "<img id='blackInkLogo' alt=''><h1>BlackInk Help<hide>.</hide></h1>"+
-                    
+
                     "<h2>Hide Elements<hide>.</hide></h2>"+
                     "<p>Press <MyKey>Escape</MyKey> to cancel this mode<hide>.</hide><br/>"+
                     "Press <MyKey>Arrow-Up</MyKey> or <MyKey>Arrow-Down</MyKey> to move parent or child element.<br/>"+
                     "Press <MyKey>Enter</MyKey> or <MyKey>Space Bar</MyKey> to hide the selected element.<br/>"+
                     "Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.</p>"+
-                    
+
                     "<h2>Other Commands<hide>.</hide></h2>"+
                     "<p><myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F1</myKey> toggle black ink.<br/>"+
                     "<myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F2</myKey> toggle invert colors.<br/>"+

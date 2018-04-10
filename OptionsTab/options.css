@@ -20,7 +20,7 @@
     margin-bottom: 0px;
 }
 
-.jumbotron h3, .jumbotron h2, 
+.jumbotron h3, .jumbotron h2,
 legend {
   font-family: "Poiret One";
   color: black;
@@ -52,7 +52,7 @@ h3 {
 input[type=radio], input[type=checkbox] {
   width: 18px;
   height: 18px;
-  margin: 2px; 
+  margin: 2px;
   vertical-align: top;
 }
 
@@ -61,10 +61,10 @@ kbd{
 }
 
 #testPageTry {
-  white-space: nowrap; 
-  margin: 4px; 
-  height: 20px; 
-  font-size: 10px; 
+  white-space: nowrap;
+  margin: 4px;
+  height: 20px;
+  font-size: 10px;
   margin-left: -40px;
 }
 
@@ -101,18 +101,18 @@ td {
 ::-webkit-scrollbar-track {
     width: 10px;
     background-color: rgba(255,255,255,0.5);
-    --webkit-box-shadow: inset 0 0 8px rgba(255,255,255,0.1); 
+    --webkit-box-shadow: inset 0 0 8px rgba(255,255,255,0.1);
     border-radius: 0px;
 }
- 
+
 ::-webkit-scrollbar-thumb {
     width: 10px;
     border-radius: 5px;
-    -webkit-box-shadow: inset 0 0 8px rgba(0,0,0,0.2); 
+    -webkit-box-shadow: inset 0 0 8px rgba(0,0,0,0.2);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    -webkit-box-shadow: inset 0 0 8px rgba(82, 134, 250, 1); 
+    -webkit-box-shadow: inset 0 0 8px rgba(82, 134, 250, 1);
 }
 
 ::-webkit-scrollbar-track:hover {
@@ -122,7 +122,7 @@ td {
 #APItext {
     border: none !important;
     background: transparent;
-    min-width:100%; max-width:100%; 
+    min-width:100%; max-width:100%;
     outline: none !important;
 }
 
@@ -213,7 +213,7 @@ hide {
 
 .projectName img {
     width:46px;
-    height:46px; 
+    height:46px;
     margin-bottom: 8px;
     transition: width ease-in-out .25s;
     transition: height ease-in-out .25s;
@@ -248,7 +248,7 @@ hide {
 
 .min .projectName img {
     width:25px;
-    height:25px; 
+    height:25px;
     margin-bottom: -8px;
     transition: width ease-in-out .25s;
     transition: height ease-in-out .25s;
@@ -299,7 +299,7 @@ hide {
 }
 
 :focus {
-    background-color: #bcd9f1; 
+    background-color: #bcd9f1;
     outline: none;
 }
 
@@ -322,9 +322,16 @@ section {
 }
 
 #burgerMenu {
-    opacity:0.35;
+    opacity:0.75;
+    border-color: #17a2b8!important;
+    border-width: 2px;
+    color: #17a2b8!important;
 }
+
+div#burgerMenu {}
 
 #burgerMenu:hover {
     opacity:1;
 }
+
+.dropdown-item {color: inherit;}

@@ -16,6 +16,10 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
         keyShift: true,
         keyAlt: false,
 
+        QTopics:true,
+        QStories:true,
+        QPromo:true,
+
         helpTooltip: 'hide help',
     };
 
@@ -45,7 +49,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
         // console.log('onRemoved: ', tabId, $scope.initTabs);
     });
 
-    chrome.browserAction.onClicked.addListener(function(tab) { 
+    chrome.browserAction.onClicked.addListener(function(tab) {
         // alert('icon clicked: ', tab);
         var tabExists = $scope.initTabs.some(function(item) {
             return item.tabId === tab.id;
@@ -57,7 +61,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
             $scope.init().then(
                 function(r){
                     $scope.initTabs.push({
-                        tabId: tab.id, 
+                        tabId: tab.id,
                         // tab: tab
                     });
                     // console.log('initTabs: ', $scope.initTabs);
@@ -95,6 +99,9 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                     keyCtrl: $scope.keyCtrl,
                     keyShift: $scope.keyShift,
                     keyAlt: $scope.keyAlt,
+                    QTopics: $scope.QTopics,
+                    QStories: $scope.QStories,
+                    QPromo: $scope.QPromo,
                 }, function() {
                     $scope.apply(false);
                 });
@@ -123,12 +130,12 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
                 allFrames: false,
                 file: true,
                 content: "/lib/jquery/jquery.min.js"
-            }, 
+            },
             // {
             //     allFrames: false,
             //     file: true,
             //     content: "/lib/jquery/jquery-ui.min.js"
-            // }, 
+            // },
             {
                 allFrames: false,
                 file: true,
@@ -147,7 +154,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
 
                         // console.log('blackInkStorage.findAll', data, $scope);
                         var getDefaultsDefer = $q.defer();
-                        
+
                         $scope.tabService.sendMessage($scope.tabId, {type:'getDefaults'},
                             function(msg) {
                                 // console.log('getDefaults: ',msg);
@@ -207,8 +214,11 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
             keyCtrl: $scope.keyCtrl,
             keyShift: $scope.keyShift,
             keyAlt: $scope.keyAlt,
+            QTopics: $scope.QTopics,
+            QStories: $scope.QStories,
+            QPromo: $scope.QPromo,
             cssContent:
-                !applyCss ? 
+                !applyCss ?
                     '* {'+
                         'color:'+$scope.InkColor+' !important; '+
                         (($scope.TextWeight !== '') ? 'font-weight:'+$scope.TextWeight+' !important; ' : '') +
