@@ -220,15 +220,9 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
             cssContent:
                 !applyCss ?
                     '* {'+
-                        'color:'+$scope.InkColor+' !important; '+
-                        (($scope.TextWeight !== '') ? 'font-weight:'+$scope.TextWeight+' !important; ' : '') +
-                    '} ' // +
-                    // 'a, article a, article a ~ * {' +
-                    // '    text-decoration: underline !important;'+
-                    // '} '+
-                    // 'p {'+
-                    // '    font-size: 120% !important;'+
-                    // '} '
+                        (($scope.InkColor !== 'none') ? ('color:'+$scope.InkColor+' !important; '):'')+
+                        (($scope.TextWeight !== '') ? ('font-weight:'+$scope.TextWeight+' !important; ') : '') +
+                    '} ' 
                     : ''
         });
         $scope.badge('On', applyCss ? 'gray' : $scope.InkColor);

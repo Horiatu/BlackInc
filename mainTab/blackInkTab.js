@@ -220,7 +220,8 @@ if(!BlackInkLoaded)
                     break;
                 case 3 :
                     underlineCss += 'text-decoration: none !important; ';
-                    underlineCss += 'background-color: '+BlackInkModule.defaults.inkColor+' !important; ';
+                    if(!BlackInkModule.defaults.inkColor || BlackInkModule.defaults.inkColor === 'none')
+                        underlineCss += 'background-color: '+BlackInkModule.defaults.inkColor+' !important; ';
                     underlineCss += 'color: white !important; ';
                     underlineCss += 'padding-left: 4px !important; ';
                     underlineCss += 'padding-right: 4px !important; ';
