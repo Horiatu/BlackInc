@@ -1,94 +1,127 @@
+/* .SuggestedTopicsBundle *,
+.HyperLinkFeedStory *,
+.Bundle.AdBundle * {
+	color: gray !important;
+} */
+
 * {
 	-webkit-font-smoothing: antialiased;
     text-shadow: rgba(0,0,0,.01) 0 0 1px;
 }
 
-.InvertVision, 
-.InvertVision img, 
-.InvertVision video
-{
-	-webkit-filter: invert(100%);
-	-moz-filter: invert(100%);
-	-o-filter: invert(100%);
-	-ms-filter: invert(100%);
-	filter: invert(100%);
-	background-color: white;
-}
-
-.normalFilter {
-	-webkit-filter: url(#normalMatrix);
-	   -moz-filter: url(#normalMatrix);
-	    -ms-filter: url(#normalMatrix);
-	     -o-filter: url(#normalMatrix);
-	        filter: url(#normalMatrix); /* Firefox 3.5+ */
-}
+/*a, article a, article a ~ * {
+	text-decoration: underline !important;
+}*/
 
 body {
 	background-color: white;
 }
 
-.blackFilter, 
-.blackFilter img, 
-.blackFilter video {
+/*p, span {
+	font-size: 110% !important;
+}*/
+
+.AccessAuditMarker {
+/*
+	background:pink;
+	-webkit-filter: url('#pinkish') drop-shadow(0px 0px 2px red) drop-shadow(0px 0px 4px red);
+*/
+	background:lightblue;
+	-webkit-filter: url('#blueish');
+	box-shadow: blue 0px 0px 10px 0px;
+}
+
+.AccessAuditHighlight {
+	---webkit-filter: drop-shadow(0px 0px 2px red) drop-shadow(0px 0px 4px red);
+	box-shadow: red 0px 0px 10px 0px;
+}
+
+.blackInkHide {
+	display:none !important;
+}
+
+.blackInkHelp {
+	position: fixed;
+    left: 10%;
+    z-index: 10000;
+    background: rgba(130, 170, 204, 0.95);
+    padding: 5px 15px;
+    border-radius: 5px;
+    box-shadow: navy 0px 0px 10px 0px;
+}
+
+.blackInkHelp h1, .blackInkHelp h2, .blackInkHelp p {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.blackInkHelp h1 {
+	font-size: 18px !important;
+	font-weight: normal !important;
+	color: black !important;
+	margin: 8px 0 0 0;
+}
+
+.blackInkHelp h2 {
+	font-size: 14px !important;
+	font-weight: normal !important;
+	border-bottom: white 1px solid;
+	margin-bottom: 8px;
+	margin-top: 4px;
+	color: black !important;
+}
+
+.blackInkHelp p {
+	font-size: 12px !important;
+	font-weight: normal !important;
+	color: white !important;
+	margin: 0 0 8px 0;
+	line-height: 18px;
+}
+
+hide {
+	color:transparent !important;
+}
+
+myKey {
+    display: inline;
+    /*text-transform: lowercase;*/
+    border: #a1a1a1 1px solid;
+    border-radius: 3px;
+    padding: 0 4px;
+    background: white;
+    color: black !important;
+    font-weight: bold;
+    font-size: 12px;
+    font-family: arial;
+    margin: 0 1px;
+    filter: drop-shadow(1px 1px 2px rgba(127,127,127,0.9));
+}
+
+.helpTop {
+	top: 24px;
+}
+
+.helpBottom {
+	bottom: 24px;
+}
+
+#blackInkLogo {
+	float: right;
+}
+
+.blackFilter {
+	background-color: white;
+}
+
+.blackFilter,
+.blackFilter img,
+.blackFilter video,
+.blackFilter .blackInkHelp {
 	-webkit-filter: url(#invertMatrix);
 	   -moz-filter: url(#invertMatrix);
 	    -ms-filter: url(#invertMatrix);
 	     -o-filter: url(#invertMatrix);
-	        filter: url(#invertMatrix); /* Firefox 3.5+ */
-}
-/*.sepiaFilter {
-	-webkit-filter: url(#sepiaMatrix);
-	   -moz-filter: url(#sepiaMatrix);
-	    -ms-filter: url(#sepiaMatrix);
-	     -o-filter: url(#sepiaMatrix);
-	        filter: url(#sepiaMatrix); /* Firefox 3.5+ */
-}*/
-.pinkFilter {
-	-webkit-filter: url(#pinkMatrix);
-	   -moz-filter: url(#pinkMatrix);
-	    -ms-filter: url(#pinkMatrix);
-	     -o-filter: url(#pinkMatrix);
-	        filter: url(#pinkMatrix); /* Firefox 3.5+ */
+	        filter: url(#invertMatrix);
 }
 
-/*#PickerLdr {
-	position: absolute;
-	top: 0; left: 0;
-	width: 100%;
-	height: 100%; 
-}
-#PickerOvr {
-	width: 100%;
-	height: 100%; 
-	position: relative; 
-	-webkit-box-shadow: inset 0px 0px 15px 0px rgba(255,0,0,1);
-    -moz-box-shadow: inset 0px 0px 15px 0px rgba(255,0,0,1);
-	box-shadow: inset 0px 0px 15px 0px rgba(255,0,0,1);
-	z-index: 100000;
-}
-#PickerOvrHelp {
-	position: absolute;
-	top: 20px;
-	background-color: white;
-	color:black;
-	border: 2px gray solid;
-	border-radius: 4px;
-	padding: 6px 12px;
-	font-size: 14px;
-	line-height: normal;
-    margin: 0;
-    font-weight: normal;
-    cursor: default;
-}
-#PickerOvrHelp.Left {
-	left:10%;
-}
-#PickerOvrHelp.Right {
-	right:10%;
-}
-#PickerOvrHelp h1 {
-	font-size: 18px;
-	font-weight: bold;
-	margin:0;
-	line-height: normal;
-}*/
+

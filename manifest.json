@@ -1,14 +1,14 @@
 {
   "manifest_version": 2,
-  "name": "Black Ink",
+  "name": "BlackInk Little",
   "short_name": "BlackInk",
-  "version": "1.0.5.3",
+  "version": "2.0.1.8",
 
   "description": "Enhance text contrast for bad web pages.",
-  "icons": { 
-    "16": "/images/logos/16.png", 
-    "48":  "/images/logos/48.png", 
-    "128": "/images/logos/128.png" 
+  "icons": {
+    "16": "/images/logos/16.png",
+    "48":  "/images/logos/48.png",
+    "128": "/images/logos/128.png"
   },
 
   "browser_action": {
@@ -23,10 +23,10 @@
   "options_page": "/OptionsTab/options.html",
 
   "permissions": [
-    "tabs", "activeTab", 
-    "<all_urls>", "debugger", "storage", 
-    "contentSettings", "clipboardRead", "clipboardWrite",
-    "geolocation"
+    "tabs", "activeTab",
+    "<all_urls>", "debugger", "storage",
+    "contentSettings",
+    "contextMenus"
   ],
 
   "web_accessible_resources": [
@@ -37,6 +37,6 @@
     "/mainTab/*.css",
     "/mainTab/*.js",
     "/mainTab/*.html"
-  ]
-
+  ],
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }

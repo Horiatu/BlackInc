@@ -1,7 +1,6 @@
-angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $http, blackInkStorage, locationService, sunriseService, tabService) {
+angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $http, blackInkStorage, tabService) {
 
     $scope.blackInkStorage = blackInkStorage;
-    $scope.locationService = locationService;
     $scope.tabService = tabService;
     $scope.errorMessage = '';
     $scope.tabId = 0;
@@ -10,27 +9,32 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
     var defaults = {
         InkColor: 'black',
         TextWeight: 'bold',
+        linkStyle: '1',
         ShowHelp: 'inherit',
-        NightMode: 'pink',
-        AutoNightMode: false,
-        Latitude:  43.7303873,
-        Longitude:  -79.32944619999999,
-        // ShowLocation:  false,
-        Sunrise:  null,
-        Sunset:  null,
+
+        keyCtrl: true,
+        keyShift: true,
+        keyAlt: false,
+
+        QTopics:true,
+        QStories:true,
+        QPromo:true,
 
         helpTooltip: 'hide help',
     };
 
     //$scope.blackInkStorage.removeAll();
 
-    chrome.tabs.onSelectionChanged.addListener(function(tabId) {
-        $scope.tabId = tabId;
-        // console.log('onSelectionChanged: ', tabId);
+    chrome.tabs.onActivated.addListener(function(activeInfo) {
+        $scope.tabId = activeInfo.tabId;
+        $scope.windowId = activeInfo.windowId;
+        // console.log('onActivated: ', $scope.tabId, $scope.windowId);
     });
 
-    chrome.tabs.onUpdated.addListener(function(tabId) {
+    chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
         // console.log('initTabs: ', $scope.initTabs);
+        // $scope.url = tab.url;
+        // console.log('tab.url: ', $scope.url);
         $scope.initTabs.filterRemove(function(item) {
             return item.tabId === tabId;
         });
@@ -45,8 +49,8 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
         // console.log('onRemoved: ', tabId, $scope.initTabs);
     });
 
-    chrome.browserAction.onClicked.addListener(function(tab) { 
-        // alert('icon clicked: '+tab.id);
+    chrome.browserAction.onClicked.addListener(function(tab) {
+        // alert('icon clicked: ', tab);
         var tabExists = $scope.initTabs.some(function(item) {
             return item.tabId === tab.id;
         });
@@ -56,14 +60,18 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
 
             $scope.init().then(
                 function(r){
-                    $scope.initTabs.push({tabId: tab.id});
-                    // console.log('initTabs: ', $scope.initTabs);                
+                    $scope.initTabs.push({
+                        tabId: tab.id,
+                        // tab: tab
+                    });
+                    // console.log('initTabs: ', $scope.initTabs);
 
                     $scope.toggle();
                 },
                 function(err) {
-                    $scope.badge('X', [0, 153, 51, 1]);
-                    alert(err);
+                    // $scope.badge('X', 'red');
+                    chrome.browserAction.disable(tab.id);
+                    // alert(err);
                 }
             );
         } else {
@@ -72,21 +80,30 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
     });
 
     $scope.toggle = function() {
+        // alert('toggle');
         $scope.tabService.sendMessage($scope.tabId, {type:'getDefaults'},
         function(msg) {
             // console.log('getDefaults: ',msg);
 
             if(msg) {
-                var nightOn = msg.hasNightMode;
                 var applyCss = msg.hasManualCss;
-                $scope.apply(applyCss, nightOn);
+                $scope.apply(applyCss);
             }
             else {
-                console.log('setDefaults');
+                // alert('toggle '+$scope.keyCtrl+' '+$scope.keyShift+' '+$scope.keyAlt);
                 $scope.tabService.sendMessage($scope.tabId, {
                     type:'setDefaults',
                     inkColor: $scope.InkColor,
                     textWeight: $scope.TextWeight,
+                    linkStyle: $scope.linkStyle,
+                    keyCtrl: $scope.keyCtrl,
+                    keyShift: $scope.keyShift,
+                    keyAlt: $scope.keyAlt,
+                    QTopics: $scope.QTopics,
+                    QStories: $scope.QStories,
+                    QPromo: $scope.QPromo,
+                }, function() {
+                    $scope.apply(false);
                 });
             }
         });
@@ -95,152 +112,88 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
     $scope.init = function() {
         // alert('init');
         var defer = $q.defer();
+
+        chrome.contextMenus.removeAll(function() {
+            chrome.contextMenus.create({
+                id: 'BlackIncMenuItem',
+                title: 'BlackInc Little',
+                contexts: [chrome.contextMenus.ContextType.ALL],
+                onclick: function(info, tab) {
+                    // console.log('click info:', info, tab);
+                    $scope.tabService.sendMessage($scope.tabId, {type:'getRightClick'});
+                },
+            });
+        });
+
         tabService.initTab([
             {
                 allFrames: false,
                 file: true,
-                content: "/lib/jquery/jquery-2.1.4.min.js"
-            }, 
+                content: "/lib/jquery/jquery.min.js"
+            },
             // {
             //     allFrames: false,
             //     file: true,
             //     content: "/lib/jquery/jquery-ui.min.js"
-            // }, 
+            // },
             {
                 allFrames: false,
                 file: true,
                 content: "/mainTab/blackInkTab.js"
-            }
+           }
         ]).then(
             function(tabId) {
                 $scope.tabId = tabId;
                 // alert("tabId: "+ tabId);
                 $scope.blackInkStorage.findAll(defaults).then(
                     function blackInkStorageSuccess(data) {
-                        // console.log('findAll:', data);
                         $scope.blackInkStorage.Data = data;
-                        data.forEachProp(function(k, v) {
-                            //console.log('--'+k+':',v ? v.toString() : v);
+                        forEachProp(data, function(k, v) {
                             $scope[k] = v;
                         });
 
-                        $scope.Sunrise = $scope.blackInkStorage.Data.Sunrise;
-                        $scope.Sunset = $scope.blackInkStorage.Data.Sunset;
-
-                        var completted = $q.defer();
-                        
-                        locationService.getLocation().then(
-                            function locationSuccess(position) {
-                                blackInkStorage.add({
-                                    Latitude: Math.round(position.latitude*10000)/10000,
-                                    Longitude: Math.round(position.longitude*10000)/10000
-                                }).then(
-                                    function success(override){
-                                        // console.log('isToday', override, $scope.Sunrise);
-                                        if(override || !$scope.Sunrise || !$scope.Sunrise.isToday()) 
-                                        {
-                                            sunriseService.getSunrise($scope.Latitude, $scope.Longitude, override).then(
-                                                function mySuccess(response) {
-                                                    //console.log('mySuccess:', response);
-                                                    blackInkStorage.add({
-                                                        Sunrise: response.Sunrise,
-                                                        Sunset: response.Sunset
-                                                    }).then(function() {
-                                                        $scope.Sunrise = response.Sunrise;
-                                                        $scope.Sunset = response.Sunset;
-                                                    });
-                                                    completted.resolve();
-                                                },
-                                                function myError(msg) {
-                                                    console.log('getLocation.getSunrise.error:', msg);
-                                                    // console.error('getLocation.getSunrise.error:', msg);
-                                                    alert('getLocation.getSunrise.error: '+ msg);
-                                                    completted.reject(msg);
-                                                });
-                                        }
-                                        else {
-                                            completted.resolve();
-                                        }
-                                    },
-                                    function addError(msg) {
-                                        console.log('getLocation.add.error:', msg);
-                                        // console.error('getLocation.add.error:', msg);
-                                        alert('getLocation.add.error: '+ msg);
-                                        completted.reject(msg);
-                                    }
-                                );
-                            },
-                            function locationError(msg) {
-                                console.log('getLocation.error:', msg);
-                                // console.error('getLocation.error:', msg);
-                                alert('getLocation.error: '+ msg);
-                                completted.reject(msg);
-                            }
-
-                        );
-
+                        // console.log('blackInkStorage.findAll', data, $scope);
                         var getDefaultsDefer = $q.defer();
-                        
-                        completted.promise.then(
-                            function completedSuccess() {
-                                // console.log('completed');
 
-                                $scope.isNightTime = sunriseService.isNightTime($scope.Sunrise, $scope.Sunset);
+                        $scope.tabService.sendMessage($scope.tabId, {type:'getDefaults'},
+                            function(msg) {
+                                // console.log('getDefaults: ',msg);
 
-                                $scope.tabService.sendMessage($scope.tabId, {type:'getDefaults'},
-                                    function(msg) {
-                                        // console.log('getDefaults: ',msg);
-
-                                        if(msg) {
-                                            getDefaultsDefer.resolve({
-                                                nightOn: msg.hasNightMode,
-                                                applyCss: msg.hasManualCss
-                                            });
-                                        }
-                                        else {
-                                            console.log('setDefaults');
-                                            $scope.tabService.sendMessage($scope.tabId, {
-                                                type:'setDefaults',
-                                                inkColor: $scope.InkColor,
-                                                textWeight: $scope.TextWeight,
-                                            });
-                                        }
-                                    }
-                                );
-                            },
-                            function completedError(msg) {
-                                console.log('completed Error:',msg);
-                                alert('completed Error: '+ msg);
+                                if(msg) {
+                                    getDefaultsDefer.resolve({
+                                        applyCss: msg.hasManualCss
+                                    });
+                                }
+                                else {
+                                    // alert('initTab '+$scope.keyCtrl+' '+$scope.keyShift+' '+$scope.keyAlt);
+                                    $scope.tabService.sendMessage($scope.tabId, {
+                                        type:'setDefaults',
+                                        inkColor: $scope.InkColor,
+                                        textWeight: $scope.TextWeight,
+                                        linkStyle: $scope.linkStyle,
+                                        keyCtrl: $scope.keyCtrl,
+                                        keyShift: $scope.keyShift,
+                                        keyAlt: $scope.keyAlt,
+                                    }, function(){
+                                        getDefaultsDefer.resolve({
+                                            applyCss: false
+                                        });
+                                    });
+                                }
                             }
                         );
 
                         getDefaultsDefer.promise.then(function(msgData) {
-
-                            // chrome.tabs.onSelectionChanged.addListener(function(tabId) {
-                            //     $scope.tabId = tabId;
-                            // });
-
-                            $scope.nightOn = msgData.nightOn;
                             $scope.applyCss = msgData.applyCss;
                             defer.resolve();
                         });
                     },
                     function blackInkStorageError(err) {
-                        // console.log('blackInkStorage.error:', err);
-                        // console.error('blackInkStorage:', err);
-                        // $scope.errorMessage = err;
-                        // // $scope.badge('X', [0, 153, 51, 1]);
-                        // alert(err);
                         defer.reject(err);
                     }
                 );
             },
             function initTabError(err){
-                // console.log('initTab.error:', err);
-                // console.error('initTab:', err);
-                // $scope.errorMessage = err;
-                // // $scope.badge('X', [0, 153, 51, 1]);
-                // alert(err);
                 defer.reject(err);
             }
         );
@@ -251,21 +204,28 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
         blackInkStorage.removeAll();
     };
 
-    $scope.apply = function(applyCss, nightOn) {
+    $scope.apply = function(applyCss) {
         $scope.tabService.sendMessage($scope.tabId, {
             type: "css",
             cssId: 'BlackInkColor',
             inkColor: $scope.InkColor,
             textWeight: $scope.TextWeight,
+            linkStyle: $scope.linkStyle,
+            keyCtrl: $scope.keyCtrl,
+            keyShift: $scope.keyShift,
+            keyAlt: $scope.keyAlt,
+            QTopics: $scope.QTopics,
+            QStories: $scope.QStories,
+            QPromo: $scope.QPromo,
             cssContent:
-                !applyCss ? 
+                !applyCss ?
                     '* {'+
-                        'color:'+$scope.InkColor+' !important; '+
-                        (($scope.TextWeight !== '') ? 'font-weight:'+$scope.TextWeight+' !important; ' : '') +
-                      '}'
+                        (($scope.InkColor !== 'none') ? ('color:'+$scope.InkColor+' !important; '):'')+
+                        (($scope.TextWeight !== '') ? ('font-weight:'+$scope.TextWeight+' !important; ') : '') +
+                    '} ' 
                     : ''
         });
-        $scope.badge('On', [0, 153, 51, 1]);
+        $scope.badge('On', applyCss ? 'gray' : $scope.InkColor);
     };
 
     $scope.badge = function(text, color) {
@@ -278,27 +238,6 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
             text: text,
             tabId: $scope.tabId
         });
-    };
-
-    $scope.nightMode = function(e) {
-        // console.log('nightOn', $scope.nightOn);
-        $scope.tabService.sendMessage($scope.tabId, {
-            type: "nightMode",
-            mode: $scope.nightOn,
-            cls: $scope.NightMode
-        });
-        $scope.badge('On', [0, 153, 51, 1]);
-    };
-
-    // $scope.pickElements = function() {
-    //     window.close();
-    //     $scope.tabService.sendMessage($scope.tabId, {
-    //         type: "pick",
-    //     });
-    // };
-
-    $scope.fShare = function() {
-        window.open("https://www.facebook.com/sharer?u=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fblack-ink%2Fjhpghaenkakfmpfkhokmglbhhooonbeg%3Fhl%3Den%26gl%3DCA", "_blank");
     };
 
     // alert('loaded');

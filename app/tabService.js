@@ -14,26 +14,23 @@ angular.module('blackInkApp').service('tabService', function ($q) {
     this.validateTab = function(tab) {
         var dfr = $q.defer();
         var url = tab.url;
-        var stop = function() {
-            chrome.browserAction.setBadgeBackgroundColor({
-                color: [255, 0, 0, 255],
+        var reject = function(err) {
+            err = "BlackInc Little - Warning!\n"+err;
+            dfr.reject(err);
+            console.error('validateTab:', err);
+            chrome.browserAction.setTitle({
+                title: err,
                 tabId: tab.id
             });
-            chrome.browserAction.setBadgeText({
-                text: "!",
-                tabId: tab.id
-            });
+            chrome.browserAction.disable(tab.id);
         };
-
-        // chrome.browserAction.setBadgeText({text: ""});
         if (url.indexOf("chrome://") === 0 || url.indexOf("chrome-extension://") === 0) {
-            stop();
-            dfr.reject("Warning: Does not work on internal browser pages.");
+            reject("Does not work on internal browser pages.");
         } else if (url.indexOf("https://chrome.google.com/extensions/") === 0 || 
             url.indexOf("https://chrome.google.com/webstore/") === 0) {
-            stop();
-            dfr.reject("Warning: BlackInk does not work on the Chrome Pages.");
+            reject("Does not work on the Chrome Pages.");
         } else {
+            chrome.browserAction.enable(tab.id);
             dfr.resolve(tab.id);
         }
 
@@ -82,7 +79,7 @@ angular.module('blackInkApp').service('tabService', function ($q) {
 
     this.initTab = function(scripts) {
         dfr = $q.defer();
-        _this.getSelectedTab().then(
+        this.getSelectedTab().then(
             function(tab) {
                 _this.validateTab(tab).then(
                     function(tabId) {
@@ -92,9 +89,8 @@ angular.module('blackInkApp').service('tabService', function ($q) {
                     },
                     function(err) {
                         if (err) {
-                            console.log('getSelectedTab.error:', err);
-                            console.error('getSelectedTab:', err);
                             dfr.reject(err);
+                            console.err('TabService::initTab', err);
                         } 
                     }
                 );

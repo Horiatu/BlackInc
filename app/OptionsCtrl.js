@@ -1,46 +1,93 @@
-angular.module('blackInkApp').controller('BlackInkOptionsCtrl', function($scope, $q, $http, blackInkStorage, locationService, sunriseService) {//, tabService
+// var _gaq = _gaq || [];
+// _gaq.push(['_setAccount', 'UA-109917224-3']);
+// _gaq.push(['_trackPageview']);
+
+// (function() {
+//     var ga = document.createElement('script');
+//     ga.type = 'text/javascript';
+//     ga.async = true;
+//     ga.src = 'https://ssl.google-analytics.com/ga.js';
+//     var s = document.getElementsByTagName('script')[0];
+//     s.parentNode.insertBefore(ga, s);
+// })();
+
+var OptionsCtrl = angular.module('blackInkApp');
+OptionsCtrl.directive('resized', ['$window', function ($window) {
+
+     return {
+        link: link,
+        restrict: 'EA'
+     };
+
+     function link(scope, element, attrs){
+        scope.isNavMenuVisible = $window.getComputedStyle(document.getElementById('burgerMenu'), null).display != 'none';
+
+        angular.element($window).bind('resize', function(){
+            scope.isNavMenuVisible = $window.getComputedStyle(document.getElementById('burgerMenu'), null).display != 'none';
+            scope.$digest(); // manuall $digest required as resize event is outside of angular
+        });
+    }
+}]);
+
+OptionsCtrl.directive('myKey', function() {
+    return {
+        restrict: 'EA',
+        replace: true,
+        template: '-All that Html here-'
+    };
+});
+
+// OptionsCtrl.directive('scroll', function ($window) {
+//     return function(scope, element, attrs) {
+//         angular.element($window).bind("scroll", function() {
+//             if (this.pageYOffset >= 10) {
+//                 scope.boolChangeClass = true;
+//             } else {
+//                 scope.boolChangeClass = false;
+//             }
+//             scope.$apply();
+//         });
+//     };
+// });
+
+OptionsCtrl.controller('BlackInkOptionsCtrl',
+    function($scope, $q, $http, blackInkStorage) {
 
     $scope.blackInkStorage = blackInkStorage;
-    $scope.locationService = locationService;
-    // $scope.tabService = tabService;
     $scope.errorMessage = '';
     $scope.tabId = 0;
+    $scope.isNavMenuVisible = false;
 
     var defaults = {
         InkColor: 'black',
         TextWeight: 'bold',
+        linkStyle: 1,
         ShowHelp: 'inherit',
 
-        applyCss: true,
-        nightOn: true,
-        nightAuto: false,
+        keyCtrl: true,
+        keyShift: true,
+        keyAlt: false,
 
-        NightMode: 'pink',
-        Latitude:  43.7303873,
-        Longitude:  -79.32944619999999,
-        Sunrise:  null,
-        Sunset:  null,
+        QTopics: true,
+        QStories: true,
+        QPromo: true,
+
+        applyCss: false,
 
         helpTooltip: 'hide help',
     };
 
     $scope.version = chrome.runtime.getManifest().version;
 
-    //$scope.blackInkStorage.removeAll();
-
     $scope.blackInkStorage.findAll(defaults)
     .then(
         function blackInkStorageSuccess(data) {
-            console.log('findAll:', data);
+            // console.log('findAll:', data);
             $scope.blackInkStorage.Data = data;
-            data.forEachProp(function(k, v) {
-                console.log('--'+k+':',v ? v.toString() : v);
+            forEachProp(data, function(k, v) {
+                // console.log('--'+k+':',v ? v.toString() : v);
                 $scope[k] = v;
             });
-
-            //$scope.nightOn = $scope.blackInkStorage.Data.NightOn;
-            $scope.Sunrise = $scope.blackInkStorage.Data.Sunrise;
-            $scope.Sunset = $scope.blackInkStorage.Data.Sunset;
 
             $scope.$watch('InkColor', function(value) {
                 if(value && value !== undefined) {
@@ -54,98 +101,56 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl', function($scope,
                 }
             });
 
-            $scope.$watch('NightMode', function(value) {
-                if(value && value !== undefined) {
-                    blackInkStorage.add({'NightMode': value});
+            $scope.$watch('linkStyle', function(value) {
+                if(value !== null && value !== undefined) {
+                    blackInkStorage.add({'linkStyle': value});
                 }
+            });
+
+            $scope.$watch('keyCtrl', function(checked) {
+                blackInkStorage.add({'keyCtrl': checked});
+            });
+            $scope.$watch('keyShift', function(checked) {
+                blackInkStorage.add({'keyShift': checked});
+            });
+            $scope.$watch('keyAlt', function(checked) {
+                blackInkStorage.add({'keyAlt': checked});
+            });
+
+            $scope.$watch('QTopics', function(checked) {
+                blackInkStorage.add({'QTopics': checked});
+            });
+            $scope.$watch('QStories', function(checked) {
+                blackInkStorage.add({'QStories': checked});
+            });
+            $scope.$watch('QPromo', function(checked) {
+                blackInkStorage.add({'QPromo': checked});
             });
 
             $scope.$watch('applyCss', function(value) {
                 blackInkStorage.add({'applyCss': value});
             });
 
-            $scope.$watch('nightOn', function(value) {
-                blackInkStorage.add({'nightOn': value});
-            });
-
-            $scope.$watch('nightAuto', function(value) {
-                blackInkStorage.add({'nightAuto': value});
-            });
-
-            var completted = $q.defer();
-            
-            locationService.getLocation().then(
-                function locationSuccess(position) {
-                    blackInkStorage.add({
-                        Latitude: Math.round(position.latitude*10000)/10000,
-                        Longitude: Math.round(position.longitude*10000)/10000
-                    }).then(
-                        function success(override){
-                            // console.log('isToday', override, $scope.Sunrise);
-                            if(override || !$scope.Sunrise || !$scope.Sunrise.isToday()) 
-                            {
-                                sunriseService.getSunrise($scope.Latitude, $scope.Longitude, override).then(
-                                    function mySuccess(response) {
-                                        //console.log('mySuccess:', response);
-                                        blackInkStorage.add({
-                                            Sunrise: response.Sunrise,
-                                            Sunset: response.Sunset
-                                        }).then(function() {
-                                            $scope.Sunrise = response.Sunrise;
-                                            $scope.Sunset = response.Sunset;
-                                        });
-                                        completted.resolve();
-                                    },
-                                    function myError(msg) {
-                                        console.log('getLocation.getSunrise.error:', msg);
-                                        console.error('getLocation.getSunrise.error:', msg);
-                                        completted.reject(msg);
-                                    });
-                            }
-                            else {
-                                completted.resolve();
-                            }
-                        },
-                        function addError(msg) {
-                            console.log('getLocation.add.error:', msg);
-                            console.error('getLocation.add.error:', msg);
-                            completted.reject(msg);
-                        }
-                    );
-                },
-                function locationError(msg) {
-                    console.log('getLocation.error:', msg);
-                    console.error('getLocation.error:', msg);
-                    completted.reject(msg);
+            $scope.$watch('errorMessage', function(value) {
+                if(value) {
+                    alert('Error: '+value);
+                    console.log("errorMessage", value);
                 }
-
-            );
+            });
 
             var getDefaultsDefer = $q.defer();
-            
-            completted.promise.then(
-                function completedSuccess() {
-                    console.log('completed');
-
-                    $scope.isNightTime = sunriseService.isNightTime($scope.Sunrise, $scope.Sunset);
-                },
-                function completedError(msg) {
-                    console.log('completed Error ',msg);
-                }
-            );
 
             getDefaultsDefer.promise.then(function(msgData) {
-                $scope.nightOn = msgData.nightOn;
                 $scope.applyCss = msgData.applyCss;
             });
         },
+
         function blackInkStorageError(err) {
             console.log('blackInkStorage.error:', err);
             console.error('blackInkStorage:', err);
             $scope.errorMessage = err;
         }
     );
-
 
     $scope.removeAll = function() {
         blackInkStorage.removeAll();
@@ -164,25 +169,12 @@ angular.module('blackInkApp').controller('BlackInkOptionsCtrl', function($scope,
         window.close();
     };
 
-    $scope.locationShowing = function(element, cls, show) {
-        console.log('locationShowing', element, cls, show);
-        if(show) {
-            console.log('isNightTime:', sunriseService.isNightTime($scope.Sunrise, $scope.Sunset));
-        }
-    };
-
-    $scope.nightMode = function(e) {
-        console.log($scope.nightOn);
-        // $scope.tabService.sendMessage({
-        //     type: "nightMode",
-        //     mode: $scope.nightOn,
-        //     cls: $scope.NightMode
-        // });
-        // $scope.badge('On', [0, 153, 51, 1]);
-    };
-
     $scope.fShare = function() {
         window.open("https://www.facebook.com/sharer?u=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fblack-ink%2Fjhpghaenkakfmpfkhokmglbhhooonbeg%3Fhl%3Den%26gl%3DCA","", "top=40,left=40,width=640,height=480");
+    };
+
+    $scope.refresh = function() {
+        $scope.blackInkStorage.removeAll();
     };
 
     // alert('loaded');

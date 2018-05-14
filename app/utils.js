@@ -71,16 +71,18 @@ if (!('forEach' in Array.prototype)) {
     };
 }
 
-if (!('forEachProp' in Object.prototype)) {
-    Object.prototype.forEachProp = function(action, that /*opt*/) {
-        var i = 0;
-        for (var name in this) {
-            if (this.hasOwnProperty(name)) {
-                action.call(that, name, this[name], i++, this);
-            }
+// if (!('forEachProp' in Object.prototype)) {
+//     Object.prototype.forEachProp = 
+function forEachProp (_this, action, that /*opt*/) {
+    var i = 0;
+    for (var name in _this) {
+        if (_this.hasOwnProperty(name)) {
+            action.call(that, name, _this[name], i++, _this);
         }
-    };
+    }
 }
+//     };
+// }
 
 if (!('map' in Array.prototype)) {
     Array.prototype.map= function(mapper, that /*opt*/) {
