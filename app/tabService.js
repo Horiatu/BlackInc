@@ -17,7 +17,7 @@ angular.module('blackInkApp').service('tabService', function ($q) {
         var reject = function(err) {
             err = "BlackInc Little - Warning!\n"+err;
             dfr.reject(err);
-            console.error('validateTab:', err);
+            console.log('validateTab:', err);
             chrome.browserAction.setTitle({
                 title: err,
                 tabId: tab.id
@@ -90,7 +90,7 @@ angular.module('blackInkApp').service('tabService', function ($q) {
                     function(err) {
                         if (err) {
                             dfr.reject(err);
-                            console.err('TabService::initTab', err);
+                            console.log('TabService::initTab', err);
                         } 
                     }
                 );
