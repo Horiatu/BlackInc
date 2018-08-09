@@ -7,7 +7,7 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
     $scope.initTabs = [];
 
     var defaults = {
-        InkColor: 'black',
+        InkColor: 'none',
         TextWeight: 'bold',
         linkStyle: '1',
         ShowHelp: 'inherit',

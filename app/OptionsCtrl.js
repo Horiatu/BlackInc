@@ -59,7 +59,7 @@ OptionsCtrl.controller('BlackInkOptionsCtrl',
     $scope.isNavMenuVisible = false;
 
     var defaults = {
-        InkColor: 'black',
+        InkColor: 'none',
         TextWeight: 'bold',
         linkStyle: 1,
         ShowHelp: 'inherit',
