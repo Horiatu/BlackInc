@@ -1,16 +1,3 @@
-// var ga = ga || [];
-// ga.push(['_setAccount', 'UA-109917224-3']);
-// ga.push(['_trackPageview']);
-
-// (function() {
-//     var ga = document.createElement('script');
-//     ga.type = 'text/javascript';
-//     ga.async = true;
-//     ga.src = 'https://ssl.google-analytics.com/ga.js';
-//     var s = document.getElementsByTagName('script')[0];
-//     s.parentNode.insertBefore(ga, s);
-// })();
-
 (function(i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function() {
@@ -40,10 +27,10 @@ OptionsCtrl.directive('resized', ['$window', function($window) {
     };
 
     function link(scope, element, attrs) {
-        scope.isNavMenuVisible = $window.getComputedStyle(document.getElementById('burgerMenu'), null).display != 'none';
+        scope.isNavMenuVisible = $window.getComputedStyle(document.getElementById('burgerMenu'), null).display !== 'none';
 
         angular.element($window).bind('resize', function() {
-            scope.isNavMenuVisible = $window.getComputedStyle(document.getElementById('burgerMenu'), null).display != 'none';
+            scope.isNavMenuVisible = $window.getComputedStyle(document.getElementById('burgerMenu'), null).display !== 'none';
             scope.$digest(); // manuall $digest required as resize event is outside of angular
         });
     }
@@ -111,7 +98,7 @@ OptionsCtrl.controller('BlackInkOptionsCtrl',
 
                     $scope.$watch('InkColor', function(value) {
                         if (value && value !== undefined) {
-                            if (ga) ga('send', 'event', 'InkColor', value);
+                            if (ga && blackInkStorage.Data.InkColor !== value) ga('send', 'event', 'InkColor', value);
                             blackInkStorage.add({
                                 'InkColor': value
                             });
@@ -120,7 +107,7 @@ OptionsCtrl.controller('BlackInkOptionsCtrl',
 
                     $scope.$watch('TextWeight', function(value) {
                         if (value !== null && value !== undefined) {
-                            if (ga) ga('send', 'event', 'TextWeight', value);
+                            if (ga && blackInkStorage.Data.TextWeight !== value) ga('send', 'event', 'TextWeight', value);
                             blackInkStorage.add({
                                 'TextWeight': value
                             });
@@ -129,7 +116,7 @@ OptionsCtrl.controller('BlackInkOptionsCtrl',
 
                     $scope.$watch('linkStyle', function(value) {
                         if (value !== null && value !== undefined) {
-                            if (ga) ga('send', 'event', 'LinkStyle', value);
+                            if (ga && blackInkStorage.Data.linkStyle !== value) ga('send', 'event', 'LinkStyle', value);
                             blackInkStorage.add({
                                 'linkStyle': value
                             });
@@ -137,38 +124,38 @@ OptionsCtrl.controller('BlackInkOptionsCtrl',
                     });
 
                     $scope.$watch('keyCtrl', function(checked) {
-                        if (ga) ga('send', 'event', 'keyCtrl', checked);
+                        if (ga && blackInkStorage.Data.keyCtrl !== value) ga('send', 'event', 'keyCtrl', checked);
                         blackInkStorage.add({
                             'keyCtrl': checked
                         });
                     });
                     $scope.$watch('keyShift', function(checked) {
-                        if (ga) ga('send', 'event', 'keyShift', checked);
+                        if (ga && blackInkStorage.Data.keyShift !== value) ga('send', 'event', 'keyShift', checked);
                         blackInkStorage.add({
                             'keyShift': checked
                         });
                     });
                     $scope.$watch('keyAlt', function(checked) {
-                        if (ga) ga('send', 'event', 'keyAlt', checked);
+                        if (ga && blackInkStorage.Data.keyAlt !== value) ga('send', 'event', 'keyAlt', checked);
                         blackInkStorage.add({
                             'keyAlt': checked
                         });
                     });
 
                     $scope.$watch('QTopics', function(checked) {
-                        if (ga) ga('send', 'event', 'QTopics', checked);
+                        if (ga && blackInkStorage.Data.QTopics !== checked) ga('send', 'event', 'QTopics', checked);
                         blackInkStorage.add({
                             'QTopics': checked
                         });
                     });
                     $scope.$watch('QStories', function(checked) {
-                        if (ga) ga('send', 'event', 'QStories', checked);
+                        if (ga && blackInkStorage.Data.QStories !== checked) ga('send', 'event', 'QStories', checked);
                         blackInkStorage.add({
                             'QStories': checked
                         });
                     });
                     $scope.$watch('QPromo', function(checked) {
-                        if (ga) ga('send', 'event', 'QPromo', checked);
+                        if (ga && blackInkStorage.Data.QPromo !== checked) ga('send', 'event', 'QPromo', checked);
                         blackInkStorage.add({
                             'QPromo': checked
                         });
@@ -197,6 +184,7 @@ OptionsCtrl.controller('BlackInkOptionsCtrl',
                 function blackInkStorageError(err) {
                     console.log('blackInkStorage.error:', err);
                     console.error('blackInkStorage:', err);
+                     if (ga) ga('send', 'event', 'Storage Error', err);
                     $scope.errorMessage = err;
                 }
             );
