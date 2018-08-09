@@ -229,7 +229,11 @@ angular.module('blackInkApp').controller('BlackInkCtrl', function($scope, $q, $h
     };
 
     $scope.badge = function(text, color) {
-        // alert('Badge: '+text);
+        // alert('Badge: '+ color);
+        if(color==='none') {
+            color='#0777ff';
+            text='--';
+        }
         chrome.browserAction.setBadgeBackgroundColor({
             color: color,
             tabId: $scope.tabId
