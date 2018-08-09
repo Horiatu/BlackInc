@@ -1,15 +1,15 @@
-// var _gaq = _gaq || [];
-// _gaq.push(['_setAccount', 'UA-109917224-3']);
-// _gaq.push(['_trackPageview']);
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-109917224-3']);
+_gaq.push(['_trackPageview']);
 
-// (function() {
-//     var ga = document.createElement('script');
-//     ga.type = 'text/javascript';
-//     ga.async = true;
-//     ga.src = 'https://ssl.google-analytics.com/ga.js';
-//     var s = document.getElementsByTagName('script')[0];
-//     s.parentNode.insertBefore(ga, s);
-// })();
+(function() {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = 'https://ssl.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+})();
 
 var manifest = chrome.runtime.getManifest();
 var thisVersion = manifest.version;
@@ -21,10 +21,12 @@ chrome.runtime.onInstalled.addListener(function(details) {
         this.versionMsg = "Version";
         if(details.reason == "install" || thisVersion === details.previousVersion)
         {
+            if(_gaq) _gaq.push(['_trackEvent', "New Install"]);
             this.versionMsg = "Installed new version";
         }
         else if(details.reason == "update")
         {
+            if(_gaq) _gaq.push(['_trackEvent', "Update"]);
             this.versionMsg = "Version updated from " + details.previousVersion + " to";
         }
         console.log(manifest.name + ": " + (this.versionMsg = this.versionMsg + " " + thisVersion));

@@ -1,15 +1,15 @@
-// var _gaq = _gaq || [];
-// _gaq.push(['_setAccount', 'UA-109917224-3']);
-// _gaq.push(['_trackPageview']);
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-109917224-3']);
+_gaq.push(['_trackPageview']);
 
-// (function() {
-//     var ga = document.createElement('script');
-//     ga.type = 'text/javascript';
-//     ga.async = true;
-//     ga.src = 'https://ssl.google-analytics.com/ga.js';
-//     var s = document.getElementsByTagName('script')[0];
-//     s.parentNode.insertBefore(ga, s);
-// })();
+(function() {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = 'https://ssl.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+})();
 
 var OptionsCtrl = angular.module('blackInkApp');
 OptionsCtrl.directive('resized', ['$window', function ($window) {
@@ -91,39 +91,48 @@ OptionsCtrl.controller('BlackInkOptionsCtrl',
 
             $scope.$watch('InkColor', function(value) {
                 if(value && value !== undefined) {
+                    if(_gaq) _gaq.push(['_trackEvent', 'InkColor', value]);
                     blackInkStorage.add({'InkColor': value});
                 }
             });
 
             $scope.$watch('TextWeight', function(value) {
                 if(value !== null && value !== undefined) {
+                    if(_gaq) _gaq.push(['_trackEvent', 'TextWeight', value]);
                     blackInkStorage.add({'TextWeight': value});
                 }
             });
 
             $scope.$watch('linkStyle', function(value) {
                 if(value !== null && value !== undefined) {
+                    if(_gaq) _gaq.push(['_trackEvent', 'linkStyle', value]);
                     blackInkStorage.add({'linkStyle': value});
                 }
             });
 
             $scope.$watch('keyCtrl', function(checked) {
+                if(_gaq) _gaq.push(['_trackEvent', 'keyCtrl', checked]);
                 blackInkStorage.add({'keyCtrl': checked});
             });
             $scope.$watch('keyShift', function(checked) {
+                if(_gaq) _gaq.push(['_trackEvent', 'keyShift', checked]);
                 blackInkStorage.add({'keyShift': checked});
             });
             $scope.$watch('keyAlt', function(checked) {
+                if(_gaq) _gaq.push(['_trackEvent', 'keyAlt', checked]);
                 blackInkStorage.add({'keyAlt': checked});
             });
 
             $scope.$watch('QTopics', function(checked) {
+                if(_gaq) _gaq.push(['_trackEvent', 'QTopics', checked]);
                 blackInkStorage.add({'QTopics': checked});
             });
             $scope.$watch('QStories', function(checked) {
+                if(_gaq) _gaq.push(['_trackEvent', 'QStories', checked]);
                 blackInkStorage.add({'QStories': checked});
             });
             $scope.$watch('QPromo', function(checked) {
+                if(_gaq) _gaq.push(['_trackEvent', 'QPromo', checked]);
                 blackInkStorage.add({'QPromo': checked});
             });
 
