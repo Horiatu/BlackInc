@@ -391,32 +391,61 @@ if (!BlackInkLoaded) {
                 });
             }
             if (!document.getElementById("opticFilters")) {
-                // filter: saturate(1.5) brightness(1.4) contrast(1.4) hue-rotate(8deg) sepia(0.09) grayscale(0.08) invert(0.01);
                 const filters = [
-                    { name: "brightness", min: 0, max: 3, value: 1, step: 0.1 },
-                    { name: "contrast", min: 0, max: 3, value: 1, step: 0.1 },
-                    { name: "grayscale", min: 0, max: 1, value: 0, step: 0.01 },
-                    { name: "hue-rotate", min: 0, max: 360, value: 0, step: 1 },
-                    { name: "invert", min: 0, max: 1, value: 0, step: 0.01 },
-                    { name: "saturate", min: 0, max: 3, value: 1, step: 0.01 },
-                    { name: "sepia", min: 0, max: 1, value: 0, step: 0.01 },
+                    { name: "brightness", min: 0, max: 3, value: 1, step: 0.1, units: "" },
+                    { name: "contrast", min: 0, max: 3, value: 1, step: 0.1, units: "" },
+                    { name: "grayscale", min: 0, max: 1, value: 0, step: 0.01, units: "" },
+                    { name: "hue-rotate", min: 0, max: 360, value: 0, step: 1, units: "deg" },
+                    { name: "invert", min: 0, max: 1, value: 0, step: 0.01, units: "" },
+                    { name: "saturate", min: 0, max: 3, value: 1, step: 0.01, units: "" },
+                    { name: "sepia", min: 0, max: 1, value: 0, step: 0.01, units: "" },
                 ];
                 let f = `
 <div class='blackInkHelp blackIncFiters' id='opticFilters' role='dialog'>
     <img class='blackInkLogo' alt='' ><h1>BlackInk Filters<hide>.</hide></h1>
-    <h2/>`.trim();
+    <h2/>
+    `.trim();
+
                 filters.forEach(filter => {
+                    const id = "blackInk_filter__" + filter.name.replace("-", "_");
                     f += `
-<label>
+<label for="blackInk-range__${filter.name}" >
 <div>${filter.name}</div>
-<input type="range" min="${filter.min}" max="${filter.max}" value="${filter.value}" step="${filter.step}" id="blackInk_range--${filter.name}">
 </label>
+
+<form oninput="x.value=Number(${id}.value)" style="display: inline-block;"> 
+<input type="range" id="${id}" data-filter="${filter.name}" data-units="${filter.units}" min="${filter.min}" max="${filter.max}" value="${filter.value}" step="${filter.step}"/>
+<output for="${id}" name="x" style="font-weight:normal !important;"></output>
+</form>
 `
+
                 });
 
                 f += `</div>
 `.trim();
                 $("body").append(f);
+
+                const getFilters = () => {
+                    return filters.reduce((css, filter) => {
+                        return css + ` ${filter.name}((${filter.newValue ? filter.newValue : filter.value})${filter.units})`
+                    }, "filter:");
+                }
+                filters.forEach(filter => {
+                    const id = "blackInk_filter__" + filter.name.replace("-", "_");
+                    $(`#${id}`).bind('input', function(event) {
+                        // filter: saturate(1.5) brightness(1.4) contrast(1.4) hue-rotate(8deg) sepia(0.09) grayscale(0.08) invert(0.01);
+                        try {
+                            // alert(event.target.dataset.filter + " " + event.target.value + event.target.dataset.units);
+                            const filter = filters.find(f => { return f.name == event.target.dataset.filter; });
+                            if (filter) {
+                                filter.newValue = event.target.value;
+                                alert(getFilters());
+                            }
+                        } catch (e) {
+                            alert("error " + e.message);
+                        }
+                    });
+                });
             }
             $('.blackInkLogo').attr('src', chrome.extension.getURL("/images/logos/32.png"));
 
