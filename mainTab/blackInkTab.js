@@ -148,6 +148,7 @@ if (!BlackInkLoaded) {
                             BlackInkModule.defaults.textWeight = req.textWeight;
 
                             BlackInkModule.manualCss = '<style id="' + BlackInkModule.cssId + '">' +
+                                // getFilters() +
                                 (req.QTopics ? '.SuggestedTopicsBundle * {color: gray !important;}' : '') +
                                 (req.QStories ? '.HyperLinkFeedStory * {color: gray !important;}' : '') +
                                 (req.QPromo ? '.Bundle.AdBundle * {color: gray !important;}' : '') +
@@ -427,8 +428,8 @@ if (!BlackInkLoaded) {
 
                 const getFilters = () => {
                     return filters.reduce((css, filter) => {
-                        return css + ` ${filter.name}((${filter.newValue ? filter.newValue : filter.value})${filter.units})`
-                    }, "filter:");
+                        return css + ` ${filter.name}(${filter.newValue ? filter.newValue : filter.value}${filter.units})`
+                    }, "filter:") + ";";
                 }
                 filters.forEach(filter => {
                     const id = "blackInk_filter__" + filter.name.replace("-", "_");
@@ -439,7 +440,11 @@ if (!BlackInkLoaded) {
                             const filter = filters.find(f => { return f.name == event.target.dataset.filter; });
                             if (filter) {
                                 filter.newValue = event.target.value;
-                                alert(getFilters());
+                                const id = BlackInkModule.cssId + '_Filters';
+                                // this._removeCss(id);
+                                const filtersCss = `<style id="${id}">body {${getFilters()}}</style>`;
+                                BlackInkModule.injectCss(id, filtersCss);
+                                // alert(getFilters());
                             }
                         } catch (e) {
                             alert("error " + e.message);
