@@ -5,43 +5,45 @@
 } */
 
 * {
-	-webkit-font-smoothing: antialiased;
-    text-shadow: rgba(0,0,0,.01) 0 0 1px;
+    -webkit-font-smoothing: antialiased;
+    text-shadow: rgba(0, 0, 0, .01) 0 0 1px;
 }
+
 
 /*a, article a, article a ~ * {
 	text-decoration: underline !important;
 }*/
 
 body {
-	background-color: white;
+    background-color: white;
 }
+
 
 /*p, span {
 	font-size: 110% !important;
 }*/
 
 .AccessAuditMarker {
-/*
+    /*
 	background:pink;
 	-webkit-filter: url('#pinkish') drop-shadow(0px 0px 2px red) drop-shadow(0px 0px 4px red);
 */
-	background:lightblue;
-	-webkit-filter: url('#blueish');
-	box-shadow: blue 0px 0px 10px 0px;
+    background: lightblue;
+    -webkit-filter: url('#blueish');
+    box-shadow: blue 0px 0px 10px 0px;
 }
 
 .AccessAuditHighlight {
-	---webkit-filter: drop-shadow(0px 0px 2px red) drop-shadow(0px 0px 4px red);
-	box-shadow: red 0px 0px 10px 0px;
+    ---webkit-filter: drop-shadow(0px 0px 2px red) drop-shadow(0px 0px 4px red);
+    box-shadow: red 0px 0px 10px 0px;
 }
 
 .blackInkHide {
-	display:none !important;
+    display: none !important;
 }
 
 .blackInkHelp {
-	position: fixed;
+    position: fixed;
     left: 10%;
     z-index: 10000;
     background: rgba(130, 170, 204, 0.95);
@@ -50,36 +52,55 @@ body {
     box-shadow: navy 0px 0px 10px 0px;
 }
 
-.blackInkHelp h1, .blackInkHelp h2, .blackInkHelp p {
-	font-family: Arial, Helvetica, sans-serif;
+.blackInkHelp h1,
+.blackInkHelp h2,
+.blackInkHelp p {
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .blackInkHelp h1 {
-	font-size: 18px !important;
-	font-weight: normal !important;
-	color: black !important;
-	margin: 8px 0 0 0;
+    font-size: 18px !important;
+    font-weight: normal !important;
+    color: black !important;
+    margin: 8px 0 0 0;
 }
 
 .blackInkHelp h2 {
-	font-size: 14px !important;
-	font-weight: normal !important;
-	border-bottom: white 1px solid;
-	margin-bottom: 8px;
-	margin-top: 4px;
-	color: black !important;
+    font-size: 14px !important;
+    font-weight: normal !important;
+    border-bottom: white 1px solid;
+    margin-bottom: 8px;
+    margin-top: 4px;
+    color: black !important;
 }
 
 .blackInkHelp p {
-	font-size: 12px !important;
-	font-weight: normal !important;
-	color: white !important;
-	margin: 0 0 8px 0;
-	line-height: 18px;
+    font-size: 12px !important;
+    font-weight: normal !important;
+    color: white !important;
+    margin: 0 0 8px 0;
+    line-height: 18px;
+}
+
+.blackInkHelp label div {
+    font-weight: normal !important;
+    width: 120px;
+    display: inline-block;
+}
+
+.blackIncFiters {
+    left: unset;
+    right: 10%;
+    bottom: 5%;
+    width: 400px;
+}
+
+.blackIncFiters input[type="range"] {
+    width: 200px;
 }
 
 hide {
-	color:transparent !important;
+    color: transparent !important;
 }
 
 myKey {
@@ -94,34 +115,32 @@ myKey {
     font-size: 12px;
     font-family: arial;
     margin: 0 1px;
-    filter: drop-shadow(1px 1px 2px rgba(127,127,127,0.9));
+    filter: drop-shadow(1px 1px 2px rgba(127, 127, 127, 0.9));
 }
 
 .helpTop {
-	top: 24px;
+    top: 24px;
 }
 
 .helpBottom {
-	bottom: 24px;
+    bottom: 24px;
 }
 
-#blackInkLogo {
-	float: right;
+.blackInkLogo {
+    float: right;
 }
 
 .blackFilter {
-	background-color: white;
+    background-color: white;
 }
 
 .blackFilter,
 .blackFilter img,
 .blackFilter video,
 .blackFilter .blackInkHelp {
-	-webkit-filter: url(#invertMatrix);
-	   -moz-filter: url(#invertMatrix);
-	    -ms-filter: url(#invertMatrix);
-	     -o-filter: url(#invertMatrix);
-	        filter: url(#invertMatrix);
+    -webkit-filter: url(#invertMatrix);
+    -moz-filter: url(#invertMatrix);
+    -ms-filter: url(#invertMatrix);
+    -o-filter: url(#invertMatrix);
+    filter: url(#invertMatrix);
 }
-
-

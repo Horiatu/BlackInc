@@ -359,7 +359,7 @@ if (!BlackInkLoaded) {
                     " role='dialog'" +
                     ">" +
 
-                    "<img id='blackInkLogo' alt=''><h1>BlackInk Help<hide>.</hide></h1>" +
+                    "<img class='blackInkLogo' alt=''><h1>BlackInk Help<hide>.</hide></h1>" +
 
                     "<h2>Hide Elements<hide>.</hide></h2>" +
                     "<p>Press <MyKey>Escape</MyKey> to cancel this mode<hide>.</hide><br/>" +
@@ -386,14 +386,41 @@ if (!BlackInkLoaded) {
 
                 $("body").append(s);
 
-                $('#blackInkLogo').attr('src', chrome.extension.getURL("/images/logos/32.png"));
-
                 document.getElementById("blackInkHelp").addEventListener("mouseenter", function(event) {
                     $(event.target).toggleClass('helpTop').toggleClass('helpBottom').focus();
                 });
             }
-        },
+            if (!document.getElementById("opticFilters")) {
+                // filter: saturate(1.5) brightness(1.4) contrast(1.4) hue-rotate(8deg) sepia(0.09) grayscale(0.08) invert(0.01);
+                const filters = [
+                    { name: "brightness", min: 0, max: 3, value: 1, step: 0.1 },
+                    { name: "contrast", min: 0, max: 3, value: 1, step: 0.1 },
+                    { name: "grayscale", min: 0, max: 1, value: 0, step: 0.01 },
+                    { name: "hue-rotate", min: 0, max: 360, value: 0, step: 1 },
+                    { name: "invert", min: 0, max: 1, value: 0, step: 0.01 },
+                    { name: "saturate", min: 0, max: 3, value: 1, step: 0.01 },
+                    { name: "sepia", min: 0, max: 1, value: 0, step: 0.01 },
+                ];
+                let f = `
+<div class='blackInkHelp blackIncFiters' id='opticFilters' role='dialog'>
+    <img class='blackInkLogo' alt='' ><h1>BlackInk Filters<hide>.</hide></h1>
+    <h2/>`.trim();
+                filters.forEach(filter => {
+                    f += `
+<label>
+<div>${filter.name}</div>
+<input type="range" min="${filter.min}" max="${filter.max}" value="${filter.value}" step="${filter.step}" id="blackInk_range--${filter.name}">
+</label>
+`
+                });
 
+                f += `</div>
+`.trim();
+                $("body").append(f);
+            }
+            $('.blackInkLogo').attr('src', chrome.extension.getURL("/images/logos/32.png"));
+
+        },
     };
 
     BlackInkModule.init();
