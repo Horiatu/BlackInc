@@ -122,6 +122,16 @@ if (!BlackInkLoaded) {
                                         e.stopPropagation();
                                         e.preventDefault();
                                         break;
+                                    case 'f':
+                                    case 'F':
+                                        $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
+                                        BlackInkModule.inSelectElementsMode = false;
+                                        $('.blackInkHelp').css('display', 'none');
+                                        $(window).unbind('keydown', arrowKeys);
+                                        e.stopPropagation();
+                                        e.preventDefault();
+
+                                        break;
                                 }
                                 // }
                             };
@@ -364,11 +374,9 @@ if (!BlackInkLoaded) {
                     "<myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F2</myKey> toggle invert colors.<br/>" +
                     "</p>" +
                     "</td>" +
-                    "<td style='text-align: right; vertical-align: top;'>" +
-                    "<p><myKey>R</myKey> resize TextArea</p>" +
-                    "</td > " +
-                    "<td style='text-align: right; vertical-align: top;'>" +
-                    "<p><myKey>F</myKey> Filters</p>" +
+                    "<td style='vertical-align: top;'>" +
+                    "<p><myKey>R</myKey> resize TextArea<br/>" +
+                    "<myKey>F</myKey> Filters</p>" +
                     "</td > " +
                     "</tr></table>" +
 
