@@ -26,8 +26,7 @@
         "tabs",
         "activeTab",
         "storage",
-        "contextMenus",
-        "<all_urls>"
+        "contextMenus"
     ],
 
     "web_accessible_resources": [
@@ -39,5 +38,6 @@
         "/mainTab/*.js",
         "/mainTab/*.html"
     ],
-    "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'"
+    "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google-analytics.com https://cdnjs.cloudflare.com; object-src 'self'"
+
 }

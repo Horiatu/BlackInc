@@ -1,4 +1,4 @@
-(function () {
-	'use strict';
-	angular.module("blackInkApp", ['ngAria']);
-})(); 
+(function() {
+    'use strict';
+    angular.module("blackInkApp", []);
+})();

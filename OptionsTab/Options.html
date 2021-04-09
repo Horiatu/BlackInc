@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang='en' ng-app='blackInkApp' ng-csp>
+<html lang="en" ng-app="blackInkApp" ng-csp>
 
 <head>
     <title>BlackInk Little - Options</title>
@@ -24,12 +24,12 @@
 
 </head>
 
-<body ng-controller='BlackInkOptionsCtrl' resized>
+<body ng-controller="BlackInkOptionsCtrl" resized>
     <div class="container-fluid form">
         <header class="brandBanner row bg-info justify-content-between">
             <div class="ml-3 pull-left">
                 <a class="projectName" href="#">
-                    <img src='/images/logos/128.png' alt="logo" />
+                    <img src="/images/logos/128.png" alt="logo" />
                     <span class="display-4">BlackInk Little</span>
                 </a>
             </div>
@@ -37,7 +37,7 @@
             <div class="btn-group dropleft">
                 <label for="burgerBtn" class="d-none d-md-inline-block d-lg-none mt-2">M E N U :</label>
                 <a id="burgerBtn" href="#" type="button" class="btn btn-primary-transparent d-lg-none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src='/images/burger.24.png' alt='menu'>
+                    <img src="/images/burger.24.png" alt="menu">
                 </a>
                 <div class="dropdown-menu" id="burgerMenu">
                     <a class="dropdown-item" href="#directions" ng-click="expand = !(boolChangeClass = true)">Directions</a>
@@ -67,19 +67,19 @@
         <div class="row bg-info">
             <div class="col-12">
                 <div class="float-left">
-                    <h2 class="text-white">Aren't you tired of low-contrast pages using gray ink for text?!</h2>
+                    <h2 class="text-white">Aren"t you tired of low-contrast pages using gray ink for text?!</h2>
                     <h2 class="text-warning">Installed or updated version {{version}} (see <a class="text-warning" href="#history" ng-click="expand = (boolChangeClass = true)">History</a>)</h2>
                 </div>
                 <div class="float-right">
-                    <input type="image" class='toolbarBtn' id='Share' alt='Share' title='Share on Facebook' src='/images/fShare.png' ng-click='fShare()' />
-                    <input type="image" class='toolbarBtn' id='Refresh' alt='Refresh' title='Clear Settings' src='/images/Refresh.png' ng-click='refresh()' />
+                    <input type="image" class="toolbarBtn" id="Share" alt="Share" title="Share on Facebook" src="/images/fShare.png" ng-click="fShare()" />
+                    <input type="image" class="toolbarBtn" id="Refresh" alt="Refresh" title="Clear Settings" src="/images/Refresh.png" ng-click="refresh()" />
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <!-- <form id='form'> -->
-            <section id="directions" class="col-lg-4 col-md-6 col-sm-12 mt-3" tabindex=0 style="order:1;">
+            <!-- <form id="form"> -->
+            <section id="directions" class="col-lg-4 col-md-6 col-sm-12 mt-3" tabindex="0" style="order:1;">
                 <legend>Directions</legend>
                 <p class="lead">Select your options here for text color and weight, then click the extension button to change the main dominant text on the page.<br/>
                 </p>
@@ -105,17 +105,19 @@
                         <br/> The <strong>BlackInk Help</strong> will show. To move the help out of the way, move the mouse pointer over it.
                         <br/> Once activated, you may toggle the enhanced mode, reverse collors or rotate links visual style using shortcut keys.<br/> Press
                         <MyKey>R</MyKey> over a TextArea elemet to make it Resizable.
+                        <br/> Press
+                        <MyKey>F</MyKey> to popup the Filter Dialog.
                     </p>
                 </figure>
             </section>
 
             <div class="col-lg-4 col-md-6 col-sm-12" style="order:0;">
-                <section id='options' class="mt-3" tabindex=0>
+                <section id="options" class="mt-3" tabindex="0">
                     <h3>Text Options</h3>
                     <div class="roundBorder" ng-hide="errorMessage!=''">
                         <table role="presentation">
                             <tr>
-                                <td style="color:{{InkColor}};font-weight:{{TextWeight}};padding-right:12px;">Color</td>
+                                <td style="color:{{InkColor}}; font-weight:{{TextWeight}}; padding-right:12px;">Color</td>
                                 <td>
                                     <label><input type="radio" name="color" ng-model="InkColor" value="black"/>Black</label>
                                 </td>
@@ -145,20 +147,20 @@
                     </div>
                 </section>
 
-                <section id='activation' class="mt-3" tabindex=0>
+                <section id="activation" class="mt-3" tabindex="0">
                     <h3>BlackInk Activation Key(s) and Page Shortcuts</h3>
-                    <div class='roundBorder'>
+                    <div class="roundBorder">
                         <p class="lead">Choose a special-key combination to activate BlackInk features from keyboard:</p>
                         <p class="lead">
                             <table role="presentation" id="ActivationKeyTbl">
                                 <tr>
-                                    <td><input type='checkbox' ng-model="keyCtrl">
+                                    <td><input type="checkbox" ng-model="keyCtrl">
                                         <myKey>Ctrl</myKey>
                                     </td>
-                                    <td><input type='checkbox' ng-model="keyShift">
+                                    <td><input type="checkbox" ng-model="keyShift">
                                         <myKey>Shift</myKey>
                                     </td>
-                                    <td><input type='checkbox' ng-model="keyAlt">
+                                    <td><input type="checkbox" ng-model="keyAlt">
                                         <myKey>Alt</myKey>
                                     </td>
                                 </tr>
@@ -182,14 +184,14 @@
                                 <myKey ng-if="keyCtrl">Ctrl</myKey>
                                 <myKey ng-if="keyShift">Shift</myKey>
                                 <myKey ng-if="keyAlt">Alt</myKey>
-                                <myKey>F3</myKey> <span class='linkStyle{{linkStyle}}'>link&nbsp;style</span>
+                                <myKey>F3</myKey> <span class="linkStyle{{linkStyle}}">link&nbsp;style</span>
                             </div>
 
                             <div class="mt-2">
-                                <label><input type='radio' name='linkStyle' value='0' ng-model='linkStyle'><span class='linkStyle0'>none</span></label>
-                                <label><input type='radio' name='linkStyle' value='1' ng-model='linkStyle'><span class='linkStyle1'>underlined</span></label>
-                                <label><input type='radio' name='linkStyle' value='2' ng-model='linkStyle'><span class='linkStyle2'>gray</span></label>
-                                <label><input type='radio' name='linkStyle' value='3' ng-model='linkStyle'><span class='linkStyle3'>reverse</span></label>
+                                <label><input type="radio" name="linkStyle" value="0" ng-model="linkStyle"><span class="linkStyle0">none</span></label>
+                                <label><input type="radio" name="linkStyle" value="1" ng-model="linkStyle"><span class="linkStyle1">underlined</span></label>
+                                <label><input type="radio" name="linkStyle" value="2" ng-model="linkStyle"><span class="linkStyle2">gray</span></label>
+                                <label><input type="radio" name="linkStyle" value="3" ng-model="linkStyle"><span class="linkStyle3">reverse</span></label>
                             </div>
                         </div>
 
@@ -200,21 +202,21 @@
                     </div>
                 </section>
 
-                <section id='quora' class="mt-3" tabindex=0>
+                <section id="quora" class="mt-3" tabindex=0>
                     <h3>Quora</h3>
-                    <div class='roundBorder'>
+                    <div class="roundBorder">
                         <p class="lead">Gray-Out sections:</p>
-                        <input type='checkbox' ng-model="QTopics">Suggested Topics<br/>
-                        <input type='checkbox' ng-model="QStories">Feed Stories<br/>
-                        <input type='checkbox' ng-model="QPromo">Promotions<br/>
+                        <input type="checkbox" ng-model="QTopics">Suggested Topics<br/>
+                        <input type="checkbox" ng-model="QStories">Feed Stories<br/>
+                        <input type="checkbox" ng-model="QPromo">Promotions<br/>
                     </div>
                 </section>
             </div>
 
             <div class="col-lg-4 col-md-6 col-sm-12" style="order:2;">
-                <section id="history" class="mt-3" tabindex=0 ng-keyup="($event.keyCode === 13 || $event.keyCode === 32) && (expand = !expand)">
+                <section id="history" class="mt-3" tabindex="0" ng-keyup="($event.keyCode === 13 || $event.keyCode === 32) && (expand = !expand)">
                     <h3><label>
-                        <div class='collapse'>
+                        <div class="collapse">
                             <img src="\images\triangle.png" ng-if="!expand"/>
                             <img src="\images\triangle.png" ng-if="expand" class="down"/>
                             <input type=checkbox ng-model="expand">
@@ -258,10 +260,15 @@
                             <li>Analytics - to serve you better.</li>
                             <li>Bug fixes.</li>
                         </ul>
-                        <h4>Version 2.0.1.12</h4>
+                        <h4>Version 2.0.1.14</h4>
                         <ul>
                             <li>Added functionality:
                                 <MyKey>R</MyKey> to make a TextArea element resizable.</li>
+                        </ul>
+                        <h4>Version 2.0.1.15</h4>
+                        <ul>
+                            <li>Added functionality:
+                                <MyKey>F</MyKey> for optical Filters.</li>
                         </ul>
                     </div>
                 </section>
@@ -271,15 +278,15 @@
         </div>
 
         <div class="row">
-            <div id="error" class="col-sm-12" col-md-12 col-lg-12 ' ng-show="errorMessage!=' '" ng-click="closeExtension()">
+            <div id="error" class="col-sm-12 col-md-12 col-lg-12 " ng-show="errorMessage!=' '" ng-click="closeExtension()">
                 <span ng-bind="errorMessage"></span>
             </div>
         </div>
     </div>
 
     <script type="text/javascript" src="/app/utils.js"></script>
-    <script type="text/javascript" src="/lib/angular/angular.min.js"></script>
-    <script type="text/javascript" src="/lib/angular-aria/angular-aria.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-aria/1.8.2/angular-aria.min.js"></script>
     <script type="text/javascript" src="/app/app.js"></script>
     <script type="text/javascript" src="/app/storageService.js"></script>
     <script type="text/javascript" src="/app/tabService.js"></script>
