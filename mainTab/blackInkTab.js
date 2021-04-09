@@ -366,10 +366,13 @@ if (!BlackInkLoaded) {
                     "</td>" +
                     "<td style='text-align: right; vertical-align: top;'>" +
                     "<p><myKey>R</myKey> resize TextArea</p>" +
-                    "</td > "
-                "</tr></table>" +
+                    "</td > " +
+                    "<td style='text-align: right; vertical-align: top;'>" +
+                    "<p><myKey>F</myKey> Filters</p>" +
+                    "</td > " +
+                    "</tr></table>" +
 
-                "</div>";
+                    "</div>";
                 s = s.replace(/[\s+|\n+]+/g, ' ').replace(/\>\s+\</g, '><');
                 // alert(s);
 
