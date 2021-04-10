@@ -80,6 +80,7 @@ body {
     color: white !important;
     margin: 0 0 8px 0;
     line-height: 18px;
+    filter: brightness(1) contrast(1) grayscale(0) hue-rotate(0deg) invert(0) saturate(1) sepia(0);
 }
 
 .blackInkHelp label div {
@@ -90,9 +91,10 @@ body {
 
 .blackIncFiters {
     left: unset;
-    right: 10%;
-    bottom: 5%;
+    right: 5%;
+    top: 5%;
     width: 400px;
+    filter: brightness(1) contrast(1) grayscale(0) hue-rotate(0deg) invert(0) saturate(1) sepia(0);
 }
 
 .blackIncFiters input[type="range"] {

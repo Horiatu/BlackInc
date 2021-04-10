@@ -405,9 +405,14 @@ if (!BlackInkLoaded) {
                     $(event.target).toggleClass('helpTop').toggleClass('helpBottom').focus();
                 });
             }
+            BlackInkModule.addFilters();
+            $('.blackInkLogo').attr('src', chrome.extension.getURL("/images/logos/32.png"));
+        },
+
+        addFilters: function() {
             if (!document.getElementById("opticFilters")) {
                 let f = `
-<div class='blackInkHelp blackIncFiters' id='opticFilters' role='dialog'>
+<div class='blackInkHelp blackIncFiters' id='opticFilters' role='dialog' style="display: none;">
     <img class='blackInkLogo' alt='' ><h1>BlackInk Filters<hide>.</hide></h1>
     <h2/>
     `.trim();
@@ -450,8 +455,6 @@ if (!BlackInkLoaded) {
                 });
                 // $("head").append(filtersCss);
             }
-            $('.blackInkLogo').attr('src', chrome.extension.getURL("/images/logos/32.png"));
-
         },
     };
 
