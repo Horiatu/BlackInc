@@ -427,6 +427,8 @@ if (!BlackInkLoaded) {
                 $("<h1></h1>").html("BlackInk Filters<hide>.</hide>").appendTo(filtersForm);
                 $("<h2></h2>").appendTo(filtersForm);
 
+                const ranges = [];
+
                 BlackInkModule.filters.forEach(filter => {
                     const id = "blackInk_filter__" + filter.name.replace("-", "_");
 
@@ -434,51 +436,59 @@ if (!BlackInkLoaded) {
 
                     ($("<label></label>", { "for": id }).html($("<div></div>").html(filter.name))).appendTo(itemWrapper);
 
-                    const form = $("<form></form>", {
-                        oninput: `x.value=Number("#${id}".value)`,
-                        style: "display: inline;"
-                    }).appendTo(itemWrapper);
+                    const output = $("<output></output>", {
+                        for: id,
+                        style: "font-weight:normal !important;"
+                    }).val(filter.value);
 
-                    $("<input></input>", {
+                    const range = $("<input></input>", {
                         type: "range",
                         "data-filter": filter.name,
                         "data-units": filter.units,
                         min: filter.min,
                         max: filter.max,
                         value: filter.value,
-                        step: filter.step
-                    }).appendTo(form);
-
-                    $("<output></output>", {
-                        for: id,
-                        style: "font-weight:normal !important;"
-                    }).appendTo(form);
-
-                });
-
-                $("<h2></h2>").appendTo(filtersForm);
-                $("<input></input>", { type: "button", "class": "blackIncFiters_input", value: "Reset" }).appendTo(filtersForm);
-                $("<input></input>", { type: "button", "class": "blackIncFiters_input", value: "Cancel", style: "float:right;" }).appendTo(filtersForm);
-                $("<input></input>", { type: "button", "class": "blackIncFiters_input", value: "Save", style: "float:right;" }).appendTo(filtersForm);
-
-                BlackInkModule.filters.forEach(filter => {
-                    const id = "blackInk_filter__" + filter.name.replace("-", "_");
-                    $(`#${id}`).bind('input', function(event) {
+                        step: filter.step,
+                        style: "margin-right: 8px;"
+                    }).appendTo(itemWrapper).on("input", (event) => {
                         event.preventDefault();
                         event.stopPropagation();
                         try {
                             const filter = BlackInkModule.filters.find(f => { return f.name == event.target.dataset.filter; });
                             if (filter) {
                                 filter.newValue = event.target.value;
-
+                                $(output).html(filter.newValue);
                                 BlackInkModule.updateFilters();
                             }
                         } catch (e) {
                             alert("error " + e.message);
                         }
                     });
+
+                    ranges.push(range);
+
+                    $(output).appendTo(itemWrapper);
+
                 });
-                // $("head").append(filtersCss);
+
+                $("<h2></h2>").appendTo(filtersForm);
+                $("<input></input>", { type: "button", "class": "blackIncFiters_input", value: "Reset" }).appendTo(filtersForm).on("click", () => {
+                    ranges.forEach(range => {
+                        const filter = BlackInkModule.filters.find(f => { return f.name == range[0].dataset.filter; });
+                        if (filter) {
+                            delete filter.newValue;
+                            $(range[0]).val(filter.value);
+                            const id = "blackInk_filter__" + filter.name.replace("-", "_");
+                            $(`output[for="${id}"]`).val(filter.value);
+                        }
+                    });
+                    BlackInkModule.updateFilters();
+                });
+                $("<input></input>", { type: "button", "class": "blackIncFiters_input", value: "Close", style: "float:right;" }).appendTo(filtersForm).on("click", () => {
+                    $(filtersForm).css("display", "none");
+                });
+                $("<input></input>", { type: "button", "class": "blackIncFiters_input", value: "Save", style: "float:right;" }).appendTo(filtersForm);
+
             }
         },
     };
