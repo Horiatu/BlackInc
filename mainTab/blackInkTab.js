@@ -412,35 +412,54 @@ if (!BlackInkLoaded) {
 
         addFilters: function() {
             if (!document.getElementById("opticFilters")) {
-                let f = `
-<div class='blackInkHelp blackIncFiters' id='opticFilters' role='dialog' style="display: none;">
-    <img class='blackInkLogo' alt='' ><h1>BlackInk Filters<hide>.</hide></h1>
-    <h2/>
-    `.trim();
+                const filtersForm = $("<div></div>", {
+                    id: "opticFilters",
+                    role: "dialog",
+                    "class": "blackInkHelp blackIncFiters",
+                    style: "display: none;"
+                }).appendTo("body");
+
+                $("<img></img>", {
+                    "class": "blackInkLogo",
+                    alt: "logo",
+                    src: chrome.extension.getURL("/images/logos/32.png")
+                }).appendTo(filtersForm);;
+                $("<h1></h1>").html("BlackInk Filters<hide>.</hide>").appendTo(filtersForm);
+                $("<h2></h2>").appendTo(filtersForm);
 
                 BlackInkModule.filters.forEach(filter => {
                     const id = "blackInk_filter__" + filter.name.replace("-", "_");
-                    f += `
-<label for="blackInk-range__${filter.name}" >
-<div>${filter.name}</div>
-</label>
 
-<form oninput="x.value=Number(${id}.value)" style="display: inline-block;"> 
-<input type="range" id="${id}" data-filter="${filter.name}" data-units="${filter.units}" min="${filter.min}" max="${filter.max}" value="${filter.value}" step="${filter.step}"/>
-<output for="${id}" style="font-weight:normal !important;"></output>
-</form>
-`;
+                    const itemWrapper = $("<div></div>").appendTo(filtersForm);
+
+                    ($("<label></label>", { "for": id }).html($("<div></div>").html(filter.name))).appendTo(itemWrapper);
+
+                    const form = $("<form></form>", {
+                        oninput: `x.value=Number("#${id}".value)`,
+                        style: "display: inline;"
+                    }).appendTo(itemWrapper);
+
+                    $("<input></input>", {
+                        type: "range",
+                        "data-filter": filter.name,
+                        "data-units": filter.units,
+                        min: filter.min,
+                        max: filter.max,
+                        value: filter.value,
+                        step: filter.step
+                    }).appendTo(form);
+
+                    $("<output></output>", {
+                        for: id,
+                        style: "font-weight:normal !important;"
+                    }).appendTo(form);
 
                 });
 
-                f += `
-<h2/>
-       <input type="button" class="blackIncFiters_input" value="Reset"/>
-       <input type="button" class="blackIncFiters_input" value="Cancel" style="float:right;"/>
-       <input type="button" class="blackIncFiters_input" value="Save" style="float:right;"/>
-</div>`;
-
-                $("body").append(f);
+                $("<h2></h2>").appendTo(filtersForm);
+                $("<input></input>", { type: "button", "class": "blackIncFiters_input", value: "Reset" }).appendTo(filtersForm);
+                $("<input></input>", { type: "button", "class": "blackIncFiters_input", value: "Cancel", style: "float:right;" }).appendTo(filtersForm);
+                $("<input></input>", { type: "button", "class": "blackIncFiters_input", value: "Save", style: "float:right;" }).appendTo(filtersForm);
 
                 BlackInkModule.filters.forEach(filter => {
                     const id = "blackInk_filter__" + filter.name.replace("-", "_");
