@@ -59,7 +59,7 @@ if (!BlackInkLoaded) {
 
                             var index = 0;
                             $(BlackInkModule.elementsFromPoint[index]).addClass('AccessAuditMarker');
-                            $('.blackInkHelp').css('display', 'inherit').focus();
+                            $('.blackInkHelp:not(".blackIncFiters")').css('display', 'inherit').focus();
 
                             var arrowKeys = function(e) {
                                 // console.log('arrowKeys', e);
@@ -83,7 +83,7 @@ if (!BlackInkLoaded) {
                                         $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
                                         $(BlackInkModule.elementsFromPoint[index]).addClass('blackInkHide');
                                         BlackInkModule.inSelectElementsMode = false;
-                                        $('.blackInkHelp').css('display', 'none');
+                                        $('.blackInkHelp:not(".blackIncFiters")').css('display', 'none');
                                         $(window).unbind('keydown', arrowKeys);
                                         e.stopPropagation();
                                         e.preventDefault();
@@ -91,7 +91,7 @@ if (!BlackInkLoaded) {
                                     case 'Escape':
                                         $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
                                         BlackInkModule.inSelectElementsMode = false;
-                                        $('.blackInkHelp').css('display', 'none');
+                                        $('.blackInkHelp:not(".blackIncFiters")').css('display', 'none');
                                         $(window).unbind('keydown', arrowKeys);
                                         e.stopPropagation();
                                         e.preventDefault();
@@ -100,7 +100,7 @@ if (!BlackInkLoaded) {
                                         $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
                                         $('.blackInkHide').removeClass('blackInkHide');
                                         BlackInkModule.inSelectElementsMode = false;
-                                        $('.blackInkHelp').css('display', 'none');
+                                        $('.blackInkHelp:not(".blackIncFiters")').css('display', 'none');
                                         $(window).unbind('keydown', arrowKeys);
                                         e.stopPropagation();
                                         e.preventDefault();
@@ -117,7 +117,7 @@ if (!BlackInkLoaded) {
                                         }
                                         $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
                                         BlackInkModule.inSelectElementsMode = false;
-                                        $('.blackInkHelp').css('display', 'none');
+                                        $('.blackInkHelp:not(".blackIncFiters")').css('display', 'none');
                                         $(window).unbind('keydown', arrowKeys);
                                         e.stopPropagation();
                                         e.preventDefault();
@@ -126,7 +126,8 @@ if (!BlackInkLoaded) {
                                     case 'F':
                                         $(BlackInkModule.elementsFromPoint[index]).removeClass('AccessAuditMarker');
                                         BlackInkModule.inSelectElementsMode = false;
-                                        $('.blackInkHelp').css('display', 'none');
+                                        $('.blackInkHelp:not(".blackIncFiters")').css('display', 'none');
+                                        $('.blackIncFiters').css('display', 'inherit');
                                         $(window).unbind('keydown', arrowKeys);
                                         e.stopPropagation();
                                         e.preventDefault();
@@ -326,7 +327,7 @@ if (!BlackInkLoaded) {
             { name: "contrast", min: 0, max: 3, value: 1, step: 0.1, units: "" },
             { name: "grayscale", min: 0, max: 1, value: 0, step: 0.01, units: "" },
             { name: "hue-rotate", min: 0, max: 360, value: 0, step: 1, units: "deg" },
-            { name: "invert", min: 0, max: 1, value: 0, step: 0.01, units: "" },
+            { name: "invert", min: 0, max: 1, value: 0, step: 1, units: "" },
             { name: "saturate", min: 0, max: 3, value: 1, step: 0.01, units: "" },
             { name: "sepia", min: 0, max: 1, value: 0, step: 0.01, units: "" },
         ],
@@ -426,13 +427,18 @@ if (!BlackInkLoaded) {
 
 <form oninput="x.value=Number(${id}.value)" style="display: inline-block;"> 
 <input type="range" id="${id}" data-filter="${filter.name}" data-units="${filter.units}" min="${filter.min}" max="${filter.max}" value="${filter.value}" step="${filter.step}"/>
-<output for="${id}" name="x" style="font-weight:normal !important;"></output>
+<output for="${id}" style="font-weight:normal !important;"></output>
 </form>
 `;
 
                 });
 
-                f += `</div>`;
+                f += `
+<h2/>
+       <input type="button" class="blackIncFiters_input" value="Reset"/>
+       <input type="button" class="blackIncFiters_input" value="Cancel" style="float:right;"/>
+       <input type="button" class="blackIncFiters_input" value="Save" style="float:right;"/>
+</div>`;
 
                 $("body").append(f);
 
