@@ -303,16 +303,7 @@ if (!BlackInkLoaded) {
 
         injectCss: function(id, css) {
             this._removeCss(id);
-            // var element = document.getElementById(id);
-            // if(element) {
-            //     element.parentNode.removeChild(element);
-            // }
             this._injectCss(css);
-            // if ($("head").length === 0) {
-            //     $("body").before(css);
-            // } else {
-            //     $("head").append(css);
-            // }
         },
 
         _removeCss: function(id) {
@@ -321,12 +312,35 @@ if (!BlackInkLoaded) {
                 element.parentNode.removeChild(element);
             }
         },
+
         _injectCss: function(css) {
             if ($("head").length === 0) {
                 $("body").before(css);
             } else {
                 $("head").append(css);
             }
+        },
+
+        filters: [
+            { name: "brightness", min: 0, max: 3, value: 1, step: 0.1, units: "" },
+            { name: "contrast", min: 0, max: 3, value: 1, step: 0.1, units: "" },
+            { name: "grayscale", min: 0, max: 1, value: 0, step: 0.01, units: "" },
+            { name: "hue-rotate", min: 0, max: 360, value: 0, step: 1, units: "deg" },
+            { name: "invert", min: 0, max: 1, value: 0, step: 0.01, units: "" },
+            { name: "saturate", min: 0, max: 3, value: 1, step: 0.01, units: "" },
+            { name: "sepia", min: 0, max: 1, value: 0, step: 0.01, units: "" },
+        ],
+
+        getFiltersCSS: (reset = false) => {
+            return BlackInkModule.filters.reduce((css, filter) => {
+                return css + ` ${filter.name}(${filter.newValue && !reset ? filter.newValue : filter.value}${filter.units})`;
+            }, "body { filter:") + ";}";
+        },
+
+        updateFilters: () => {
+            const filtersId = `${BlackInkModule.cssId}_Filters`;
+            const filtersCss = `<style id="${filtersId}">${BlackInkModule.getFiltersCSS()}</style>`;
+            BlackInkModule.injectCss(filtersId, filtersCss);
         },
 
         addFiltersAndHelp: function() {
@@ -392,22 +406,13 @@ if (!BlackInkLoaded) {
                 });
             }
             if (!document.getElementById("opticFilters")) {
-                const filters = [
-                    { name: "brightness", min: 0, max: 3, value: 1, step: 0.1, units: "" },
-                    { name: "contrast", min: 0, max: 3, value: 1, step: 0.1, units: "" },
-                    { name: "grayscale", min: 0, max: 1, value: 0, step: 0.01, units: "" },
-                    { name: "hue-rotate", min: 0, max: 360, value: 0, step: 1, units: "deg" },
-                    { name: "invert", min: 0, max: 1, value: 0, step: 0.01, units: "" },
-                    { name: "saturate", min: 0, max: 3, value: 1, step: 0.01, units: "" },
-                    { name: "sepia", min: 0, max: 1, value: 0, step: 0.01, units: "" },
-                ];
                 let f = `
 <div class='blackInkHelp blackIncFiters' id='opticFilters' role='dialog'>
     <img class='blackInkLogo' alt='' ><h1>BlackInk Filters<hide>.</hide></h1>
     <h2/>
     `.trim();
 
-                filters.forEach(filter => {
+                BlackInkModule.filters.forEach(filter => {
                     const id = "blackInk_filter__" + filter.name.replace("-", "_");
                     f += `
 <label for="blackInk-range__${filter.name}" >
@@ -418,39 +423,32 @@ if (!BlackInkLoaded) {
 <input type="range" id="${id}" data-filter="${filter.name}" data-units="${filter.units}" min="${filter.min}" max="${filter.max}" value="${filter.value}" step="${filter.step}"/>
 <output for="${id}" name="x" style="font-weight:normal !important;"></output>
 </form>
-`
+`;
 
                 });
 
-                f += `</div>
-`.trim();
+                f += `</div>`;
+
                 $("body").append(f);
 
-                const getFilters = () => {
-                    return filters.reduce((css, filter) => {
-                        return css + ` ${filter.name}(${filter.newValue ? filter.newValue : filter.value}${filter.units})`
-                    }, "filter:") + ";";
-                }
-                filters.forEach(filter => {
+                BlackInkModule.filters.forEach(filter => {
                     const id = "blackInk_filter__" + filter.name.replace("-", "_");
                     $(`#${id}`).bind('input', function(event) {
-                        // filter: saturate(1.5) brightness(1.4) contrast(1.4) hue-rotate(8deg) sepia(0.09) grayscale(0.08) invert(0.01);
+                        event.preventDefault();
+                        event.stopPropagation();
                         try {
-                            // alert(event.target.dataset.filter + " " + event.target.value + event.target.dataset.units);
-                            const filter = filters.find(f => { return f.name == event.target.dataset.filter; });
+                            const filter = BlackInkModule.filters.find(f => { return f.name == event.target.dataset.filter; });
                             if (filter) {
                                 filter.newValue = event.target.value;
-                                const id = BlackInkModule.cssId + '_Filters';
-                                // this._removeCss(id);
-                                const filtersCss = `<style id="${id}">body {${getFilters()}}</style>`;
-                                BlackInkModule.injectCss(id, filtersCss);
-                                // alert(getFilters());
+
+                                BlackInkModule.updateFilters();
                             }
                         } catch (e) {
                             alert("error " + e.message);
                         }
                     });
                 });
+                // $("head").append(filtersCss);
             }
             $('.blackInkLogo').attr('src', chrome.extension.getURL("/images/logos/32.png"));
 
