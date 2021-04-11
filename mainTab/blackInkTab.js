@@ -436,8 +436,8 @@ Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.
                     "class": "blackInkLogo",
                     alt: "logo",
                     src: chrome.extension.getURL("/images/logos/32.png")
-                }).appendTo(filtersForm);;
-                $("<h1></h1>").html("BlackInk Filters<hide>.</hide>").appendTo(filtersForm);
+                }).appendTo(filtersForm);
+                $("<h1></h1>").html("BlackInk Optical Filters<hide>.</hide>").appendTo(filtersForm);
                 $("<h2></h2>").appendTo(filtersForm);
 
                 const ranges = [];
