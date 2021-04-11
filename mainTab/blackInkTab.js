@@ -346,71 +346,84 @@ if (!BlackInkLoaded) {
 
         addFiltersAndHelp: function() {
             if (!document.getElementById("svgFilters")) {
-                var s =
-                    "<svg id='svgFilters' xmlns='http://www.w3.org/2000/svg' style='display:none'>\n" +
-                    "    <filter id='invertMatrix'>\n" +
-                    "        <feColorMatrix type='matrix' values='-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1 0 0 0 1 0'/>\n" +
-                    "    </filter>\n" +
-                    "    <filter id='pinkMatrix'>\n" +
-                    "        <feColorMatrix type='matrix' values='" +
-                    "       1     0.769 0.189 0 0 " +
-                    "       0     0.99  0     0 0 " +
-                    "       0     0     0.99  0 0 " +
-                    "       0     0     0     1 0 '/>\n" +
-                    "    </filter>\n" +
-                    "    <filter id='blueish'>\n" +
-                    "        <feColorMatrix type='matrix' values='" +
-                    "       0.272 0.534 0.131 0    0 " +
-                    "       0.272 0.534 0.131 0    0 " +
-                    "       0.393 0.769 0.189 0    0 " +
-                    "       0     0     0     0.95 0'/>\n" +
-                    "    </filter>\n" +
-                    "</svg>\n" +
+                const svgFilters = $("<svg></svg>", {
+                    id: "svgFilters",
+                    xmlns: "http://www.w3.org/2000/svg",
+                    style: "display:none"
+                }).appendTo("body");
 
-                    "<div" +
-                    " class='blackInkHelp helpTop'" +
-                    " id='blackInkHelp'" +
-                    " style='display:none;'" +
-                    " tabindex='0'" +
-                    " role='dialog'" +
-                    ">" +
+                const invertMatrix = $("<filter></filter>", {
+                    id: "invertMatrix"
+                }).appendTo(svgFilters);
+                $("<feColorMatrix></feColorMatrix>", {
+                    type: "matrix",
+                    values: "1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1  0 0 0 1 0"
+                }).appendTo(invertMatrix);
 
-                    "<img class='blackInkLogo' alt=''><h1>BlackInk Help<hide>.</hide></h1>" +
+                const pinkMatrix = $("<filter></filter>", {
+                    id: "pinkMatrix"
+                }).appendTo(svgFilters);
+                $("<feColorMatrix></feColorMatrix>", {
+                    type: "matrix",
+                    values: `
+                           1     0.769 0.189 0 0
+                           0     0.99  0     0 0
+                           0     0     0.99  0 0
+                           0     0     0     1 0`
+                }).appendTo(pinkMatrix);
 
-                    "<h2>Hide Elements<hide>.</hide></h2>" +
-                    "<p>Press <MyKey>Escape</MyKey> to cancel this mode<hide>.</hide><br/>" +
-                    "Press <MyKey>Arrow-Up</MyKey> or <MyKey>Arrow-Down</MyKey> to move parent or child element.<br/>" +
-                    "Press <MyKey>Enter</MyKey> or <MyKey>Space Bar</MyKey> to hide the selected element.<br/>" +
-                    "Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.</p>" +
+                const blueish = $("<filter></filter>", {
+                    id: "blueish"
+                }).appendTo(svgFilters);
+                $("<feColorMatrix></feColorMatrix>", {
+                    type: "matrix",
+                    values: `
+                           0.272 0.534 0.131 0    0
+                           0.272 0.534 0.131 0    0
+                           0.393 0.769 0.189 0    0
+                           0     0     0     0.95 0`
+                }).appendTo(blueish);
 
-                    "<h2>Other Commands<hide>.</hide></h2>" +
-                    "<table role='presentation'><tr>" +
-                    "<td style='text-align: left; vertical-align: top;'>" +
-                    "<p><myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F1</myKey> toggle black ink.<br/>" +
-                    "<myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F2</myKey> toggle invert colors.<br/>" +
-                    "</p>" +
-                    "</td>" +
-                    "<td style='vertical-align: top;'>" +
-                    "<p><myKey>R</myKey> resize TextArea<br/>" +
-                    "<myKey>F</myKey> Filters</p>" +
-                    "</td > " +
-                    "</tr></table>" +
-
-                    "</div>";
-                s = s.replace(/[\s+|\n+]+/g, ' ').replace(/\>\s+\</g, '><');
-                // alert(s);
-
-                $("body").append(s);
-
-                document.getElementById("blackInkHelp").addEventListener("mouseenter", function(event) {
+                const blackInkHelp = $("<div></div>", {
+                    id: "blackInkHelp",
+                    "class": "blackInkHelp helpTop",
+                    style: "display:none;",
+                    tabindex: "0",
+                    role: "dialog"
+                }).on("mouseenter", function(event) {
                     $(event.target).toggleClass('helpTop').toggleClass('helpBottom').focus();
-                });
-            }
-            BlackInkModule.addFilters();
-            $('.blackInkLogo').attr('src', chrome.extension.getURL("/images/logos/32.png"));
-        },
+                }).appendTo("body");
 
-        addFilters: function() {
+                $("<img></img>", {
+                    "class": "blackInkLogo",
+                    alt: "logo",
+                    src: chrome.extension.getURL("/images/logos/32.png")
+                }).appendTo(blackInkHelp);
+
+                $("<h1></h1>").html("BlackInk Help<hide>.</hide>").appendTo(blackInkHelp);
+                $("<h2></h2>").html("Hide Elements<hide>.</hide></h2>").appendTo(blackInkHelp);
+                $("<p></p>").html(`
+Press <MyKey>Escape</MyKey> to cancel this mode<hide>.</hide><br/>
+Press <MyKey>Arrow-Up</MyKey> or <MyKey>Arrow-Down</MyKey> to move parent or child element.<br/>
+Press <MyKey>Enter</MyKey> or <MyKey>Space Bar</MyKey> to hide the selected element.<br/>
+Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.                
+                `.trim()).appendTo(blackInkHelp);
+
+                $("<h2></h2>").html("Other Commands<hide>.</hide></h2>").appendTo(blackInkHelp);
+                const ocTable = $("<table role='presentation'></table>").appendTo(blackInkHelp);
+                const tr1 = $("<tr></tr>").appendTo(ocTable);
+                const td1 = $("<td style='text-align: left; vertical-align: top;'></td>").appendTo(tr1);
+                $("<p></p>").html(`
+<myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F1</myKey> toggle black ink.<br/>
+<myKey>Ctrl</myKey><myKey>Shift</myKey><myKey>F2</myKey> toggle invert colors.
+`.trim()).appendTo(td1);
+                const td2 = $("<td style='vertical-align: top;'></td>").appendTo(tr1);
+                $("<p></p>").html(`
+<myKey>R</myKey> resize TextArea<br/>
+<myKey>F</myKey> Filters`.trim()).appendTo(td2);
+
+            }
+
             if (!document.getElementById("opticFilters")) {
                 const filtersForm = $("<div></div>", {
                     id: "opticFilters",
