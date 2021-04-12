@@ -346,42 +346,13 @@ if (!BlackInkLoaded) {
 
         addFiltersAndHelp: function() {
             if (!document.getElementById("svgFilters")) {
-                const svgFilters = $("<svg></svg>", {
-                    id: "svgFilters",
-                    xmlns: "http://www.w3.org/2000/svg",
-                    style: "display:none"
-                }).appendTo("body");
 
-                const invertMatrix = $("<filter></filter>", {
-                    id: "invertMatrix"
-                }).appendTo(svgFilters);
-                const feInvert = document.createElementNS('http://www.microsoft.com/office/excel/', "feColorMatrix");
-                feInvert.setAttributeNS('http://www.microsoft.com/office/excel/', 'type', 'matrix');
-                feInvert.setAttributeNS('http://www.microsoft.com/office/excel/', 'values', '-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1  0 0 0 1 0');
-
-                // const pinkMatrix = $("<filter></filter>", {
-                //     id: "pinkMatrix"
-                // }).appendTo(svgFilters);
-                // $("<feColorMatrix></feColorMatrix>", {
-                //     type: "matrix",
-                //     values: `
-                //            1     0.769 0.189 0 0
-                //            0     0.99  0     0 0
-                //            0     0     0.99  0 0
-                //            0     0     0     1 0`
-                // }).appendTo(pinkMatrix);
-
-                // const blueish = $("<filter></filter>", {
-                //     id: "blueish"
-                // }).appendTo(svgFilters);
-                // $("<feColorMatrix></feColorMatrix>", {
-                //     type: "matrix",
-                //     values: `
-                //            0.272 0.534 0.131 0    0
-                //            0.272 0.534 0.131 0    0
-                //            0.393 0.769 0.189 0    0
-                //            0     0     0     0.95 0`
-                // }).appendTo(blueish);
+                $("body").append(`
+<svg id='svgFilters' xmlns='http://www.w3.org/2000/svg' style='display:none'>
+    <filter id='invertMatrix'>
+        <feColorMatrix type='matrix' values='-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1 0 0 0 1 0'/>
+    </filter>
+</svg>`);
 
                 const blackInkHelp = $("<div></div>", {
                     id: "blackInkHelp",
