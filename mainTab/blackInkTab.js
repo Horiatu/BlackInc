@@ -338,9 +338,9 @@ if (!BlackInkLoaded) {
             }, "body { filter:") + ";}";
         },
 
-        updateFilters: () => {
+        updateFilters: (reset = false) => {
             const filtersId = `${BlackInkModule.cssId}_Filters`;
-            const filtersCss = `<style id="${filtersId}">${BlackInkModule.getFiltersCSS()}</style>`;
+            const filtersCss = `<style id="${filtersId}">${BlackInkModule.getFiltersCSS(reset)}</style>`;
             BlackInkModule.injectCss(filtersId, filtersCss);
         },
 
@@ -407,7 +407,14 @@ Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.
                     alt: "logo",
                     src: chrome.extension.getURL("/images/logos/32.png")
                 }).appendTo(filtersForm);
-                $("<h1></h1>").html("BlackInk Optical Filters<hide>.</hide>").appendTo(filtersForm);
+                const header = $("<label></label>").appendTo(filtersForm);
+                const filtersSwitch = $("<input/>", {
+                    type: "checkbox",
+                    style: "margin-right: 8px"
+                }).on("change", ({ target }) => {
+                    BlackInkModule.updateFilters(!target.checked);
+                }).appendTo(header);
+                $("<h1></h1>", { style: 'display: inline;' }).html("BlackInk Optical Filters<hide>.</hide>").appendTo(header);
                 $("<h2></h2>").appendTo(filtersForm);
 
                 const ranges = [];
@@ -442,6 +449,7 @@ Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.
                         try {
                             const filter = BlackInkModule.filters.find(f => { return f.name == event.target.dataset.filter; });
                             if (filter) {
+                                filtersSwitch[0].checked = true;
                                 filter.newValue = event.target.value;
                                 $(output).html(filter.newValue);
                                 BlackInkModule.updateFilters();
