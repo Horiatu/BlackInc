@@ -447,7 +447,10 @@ Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.
 
                     const itemWrapper = $("<div></div>").appendTo(filtersForm);
 
-                    ($("<label></label>", { "for": id }).html($("<div></div>").html(filter.name))).appendTo(itemWrapper);
+                    ($("<label></label>", {
+                        "for": id,
+                        "class": "blackInk_filter__label"
+                    }).html($("<div></div>").html(filter.name))).appendTo(itemWrapper);
 
                     const output = $("<output></output>", {
                         for: id,

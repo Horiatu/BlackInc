@@ -144,6 +144,10 @@ myKey {
     background-color: white;
 }
 
+.blackInk_filter__label {
+    display: inline-flex;
+}
+
 .blackFilter,
 .blackFilter img,
 .blackFilter video,
