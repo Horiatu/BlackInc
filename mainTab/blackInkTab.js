@@ -527,11 +527,11 @@ Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.
                     });
                     BlackInkModule.updateFilters();
                 });
+                $("<a id='blackInk_colorPicker' href='https://www.w3schools.com/colors/colors_picker.asp' target='blank'>Color Picker</a>").appendTo(filtersForm);
                 $("<input></input>", { type: "button", "class": "blackIncFiters_input", value: "Close", style: "float:right;" }).appendTo(filtersForm).on("click", () => {
                     $(filtersForm).css("display", "none");
                 });
                 $("<input></input>", { type: "button", "class": "blackIncFiters_input", value: "Save", style: "float:right;" }).appendTo(filtersForm).on("click", () => {
-                    // debugger;
                     const filterValues = [];
                     BlackInkModule.filters.forEach(filter => {
                         const val = {}
@@ -542,10 +542,8 @@ Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.
                 });
             };
 
-            // debugger;
             BlackInkModule.getMemoryVal("FilterValues", null).then(filterValues => {
                 if (filterValues) {
-                    // debugger;
                     filterValues.forEach(newValue => {
                         const key = Object.keys(newValue)[0];
                         const val = newValue[key];

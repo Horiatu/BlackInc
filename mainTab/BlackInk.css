@@ -151,11 +151,19 @@ myKey {
 .blackFilter,
 .blackFilter img,
 .blackFilter video,
-.blackFilter .blackInkHelp,
-.blackFilter .opticFilters {
+.blackFilter .blackInkHelp {
     -webkit-filter: url(#invertMatrix);
     -moz-filter: url(#invertMatrix);
     -ms-filter: url(#invertMatrix);
     -o-filter: url(#invertMatrix);
     filter: url(#invertMatrix);
+}
+
+#blackInk_colorPicker {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+#blackInk_colorPicker:hover {
+    color: white;
 }
