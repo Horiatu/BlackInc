@@ -344,6 +344,52 @@ if (!BlackInkLoaded) {
             BlackInkModule.injectCss(filtersId, filtersCss);
         },
 
+        getMemoryVal: (key, defaultValue) => {
+            return new Promise((resolve, reject) => {
+                chrome.storage.sync.get('blackInk', ({ blackInk }) => {
+                    if (blackInk) {
+                        // console.log(blackInk);
+                        const val = blackInk[key];
+                        if (val) {
+                            resolve(val);
+                        } else {
+                            resolve(defaultValue);
+                        }
+                    } else {
+                        resolve(defaultValue);
+                    }
+                });
+            });
+        },
+
+        setMemoryVal: (newValues) => {
+            chrome.storage.sync.get('blackInk', ({ blackInk }) => {
+                if (!blackInk || blackInk === undefined) {
+                    blackInk = {};
+                }
+
+                var changed = false;
+                newValues.forEach(kv => {
+                    const key = Object.keys(kv)[0];
+                    const val = kv[key];
+                    if (!blackInk[key] || blackInk[key].toString() !== val.toString()) {
+                        // console.log('Add:', prop, val, _this.Data[prop]);
+                        blackInk[key] = val;
+                        changed = true;
+                    }
+                });
+
+                if (changed) {
+                    chrome.storage.sync.set({ 'blackInk': blackInk }, function() {
+                        chrome.storage.sync.get('blackInk', function({ blackInk }) {
+                            // debugger;
+                            console.log("blackInk", blackInk);
+                        });
+                    });
+                }
+            });
+        },
+
         addFiltersAndHelp: function() {
             if (!document.getElementById("svgFilters")) {
 
@@ -413,7 +459,13 @@ Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.
                     style: "margin-right: 8px"
                 }).on("change", ({ target }) => {
                     BlackInkModule.updateFilters(!target.checked);
+                    BlackInkModule.setMemoryVal([{ ApplyFilters: target.checked }]);
                 }).appendTo(header);
+                BlackInkModule.getMemoryVal("ApplyFilters", false).then(value => {
+                    // debugger;
+                    filtersSwitch[0].checked = value;
+                });
+
                 $("<h1></h1>", { style: 'display: inline;' }).html("BlackInk Optical Filters<hide>.</hide>").appendTo(header);
                 $("<h2></h2>").appendTo(filtersForm);
 
