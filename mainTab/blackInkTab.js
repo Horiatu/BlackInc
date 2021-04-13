@@ -372,8 +372,7 @@ if (!BlackInkLoaded) {
                 newValues.forEach(kv => {
                     const key = Object.keys(kv)[0];
                     const val = kv[key];
-                    if (!blackInk[key] || blackInk[key].toString() !== val.toString()) {
-                        // console.log('Add:', prop, val, _this.Data[prop]);
+                    if (!blackInk[key] || JSON.stringify(blackInk[key]) !== JSON.stringify(val)) {
                         blackInk[key] = val;
                         changed = true;
                     }
@@ -382,7 +381,6 @@ if (!BlackInkLoaded) {
                 if (changed) {
                     chrome.storage.sync.set({ 'blackInk': blackInk }, function() {
                         chrome.storage.sync.get('blackInk', function({ blackInk }) {
-                            // debugger;
                             console.log("blackInk", blackInk);
                         });
                     });
@@ -462,7 +460,6 @@ Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.
                     BlackInkModule.setMemoryVal([{ ApplyFilters: target.checked }]);
                 }).appendTo(header);
                 BlackInkModule.getMemoryVal("ApplyFilters", false).then(value => {
-                    // debugger;
                     filtersSwitch[0].checked = value;
                 });
 
@@ -472,6 +469,7 @@ Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.
                 const ranges = [];
 
                 BlackInkModule.filters.forEach(filter => {
+
                     const id = "blackInk_filter__" + filter.name.replace("-", "_");
 
                     const itemWrapper = $("<div></div>").appendTo(filtersForm);
@@ -514,7 +512,6 @@ Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.
                     ranges.push(range);
 
                     $(output).appendTo(itemWrapper);
-
                 });
 
                 $("<h2></h2>").appendTo(filtersForm);
@@ -533,10 +530,38 @@ Press <MyKey>Delete</MyKey> to unhide all previously hidden elements.
                 $("<input></input>", { type: "button", "class": "blackIncFiters_input", value: "Close", style: "float:right;" }).appendTo(filtersForm).on("click", () => {
                     $(filtersForm).css("display", "none");
                 });
-                $("<input></input>", { type: "button", "class": "blackIncFiters_input", value: "Save", style: "float:right;" }).appendTo(filtersForm);
+                $("<input></input>", { type: "button", "class": "blackIncFiters_input", value: "Save", style: "float:right;" }).appendTo(filtersForm).on("click", () => {
+                    // debugger;
+                    const filterValues = [];
+                    BlackInkModule.filters.forEach(filter => {
+                        const val = {}
+                        val[filter.name] = Number(filter.newValue ? filter.newValue : filter.value);
+                        filterValues.push(val);
+                    });
+                    BlackInkModule.setMemoryVal([{ "FilterValues": filterValues }]);
+                });
+            };
 
-            }
-        },
+            // debugger;
+            BlackInkModule.getMemoryVal("FilterValues", null).then(filterValues => {
+                if (filterValues) {
+                    // debugger;
+                    filterValues.forEach(newValue => {
+                        const key = Object.keys(newValue)[0];
+                        const val = newValue[key];
+                        const filter = BlackInkModule.filters.find(f => f.name == key);
+                        if (filter) {
+                            if (filter.value.toString() != val.toString()) {
+                                filter.newValue = Number(val);
+                            }
+                        }
+                    });
+
+                    BlackInkModule.updateFilters();
+                }
+            });
+
+        }
     };
 
     BlackInkModule.init();
